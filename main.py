@@ -81,9 +81,33 @@ def recibir_ingreso_usuario(turno_actual: list[str], generar_interfaz: any):
     return ingreso_del_usuario
 
 
-letras = ['A', 'C', 'D', 'G', 'J', 'L', 'M', 'P', 'S', 'V']
-jugadas = ['a', 'e', 'a', 'a']
-turno_actual = ["Jardín", "1.  m. Terreno donde se cultivan plantas con fines ornamentales"]
-mostrar_interfaz(letras, jugadas, turno_actual)
-ingreso_usuario = recibir_ingreso_usuario(turno_actual, lambda: mostrar_interfaz(letras, jugadas, turno_actual))
-print(f"El usuario ingresó '{ingreso_usuario}'")
+
+def interaccion_con_usuario(turnos):
+    """
+    Esta función se encarga de interactuar con el usuario. Recibe la lista de palabras que participan del juego y lo lleva a cabo.
+    """
+    letras = [turno[0][0].upper() for turno in turnos] # ['A', 'J']
+    jugadas=[]
+    
+    for turno in turnos: 
+        
+
+        mostrar_interfaz(letras, jugadas, turno)# turno paramatero opcional
+        ingreso_usuario = recibir_ingreso_usuario(turno, lambda: mostrar_interfaz(letras, jugadas, turno))
+        
+        if ingreso_usuario.lower()==turno[0]:
+            jugadas.append("a")
+        else:
+            jugadas.append("e")
+
+
+palabras = [
+    ['araña', "1.  f. Arácnido con tráqueas ..."],
+    ['jardín', "1.  m. Terreno donde se cultivan plantas con fines ornamentales"],
+    ]
+
+interaccion_con_usuario(palabras)
+
+
+
+
