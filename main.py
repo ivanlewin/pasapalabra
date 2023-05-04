@@ -54,40 +54,36 @@ def mostrar_interfaz(letras: list[str], jugadas: list[str], turno_actual: list[s
     print(f'Definición: {definicion_actual}')
 
 
-def recibir_ingreso_usuario(turno_actual,reiniciar_interfaz):
+def recibir_ingreso_usuario(turno_actual: list[str], generar_interfaz: any):
     """
     Esta función recibe el input del usuario y realiza las validaciones para asegurarse de que es correcto.
+
+    Parámetros:
+        * turno_actual `list[str, str]`: Una lista con dos strings; el primero es la palabra a adivinar, y el segundo es la definición de esa palabra.
+        * generar_interfaz `function`: Función que permite generar la interfaz de usuario.
+
+    Retorna:
+        `str`. Retorna un string con caracteres alfabéticos de la longitud de la palabra a adivinar en el turno actual.
     """
-    palabra_validad=None
-
-    palabra=input("Ingrese palabra: ")
-    while palabra_validad is None:
-
-        if not palabra.isalpha():
-            reiniciar_interfaz()
-            palabra=input("error, por favor ingrese solo letras: ")
-
-        elif len(palabra)!= len(turno_actual[0]):
-            reiniciar_interfaz()
-            palabra=input(f"error, por favor ingrese palbras con {len(turno_actual[0])} letras: ")
-        
+    palabra_valida = None
+    ingreso_del_usuario = input("Ingrese palabra: ")
+    while palabra_valida is None:
+        if not ingreso_del_usuario.isalpha():
+            generar_interfaz()
+            print("Error: por favor ingrese solo letras")
+            ingreso_del_usuario = input("Ingrese palabra: ")
+        elif len(ingreso_del_usuario) != len(turno_actual[0]):
+            generar_interfaz()
+            print(f"Error: por favor ingrese palabras de {len(turno_actual[0])} letras")
+            ingreso_del_usuario = input("Ingrese palabra: ")
         else:
-            palabra_validad=palabra
-        
-
-    return palabra
+            palabra_valida = ingreso_del_usuario
+    return ingreso_del_usuario
 
 
-
-
-
-
-
-letras = ['A', 'C', 'D', 'G', 'I', 'L', 'M', 'P', 'S', 'V']
+letras = ['A', 'C', 'D', 'G', 'J', 'L', 'M', 'P', 'S', 'V']
 jugadas = ['a', 'e', 'a', 'a']
 turno_actual = ["Jardín", "1.  m. Terreno donde se cultivan plantas con fines ornamentales"]
-
-mostrar_interfaz(letras,jugadas,turno_actual)
-ingreso_usuario=recibir_ingreso_usuario(turno_actual,lambda: mostrar_interfaz(letras,jugadas,turno_actual))
-
-print(f"el usuario ingreso {ingreso_usuario} ")
+mostrar_interfaz(letras, jugadas, turno_actual)
+ingreso_usuario = recibir_ingreso_usuario(turno_actual, lambda: mostrar_interfaz(letras, jugadas, turno_actual))
+print(f"El usuario ingresó '{ingreso_usuario}'")
