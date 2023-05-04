@@ -3,21 +3,28 @@ import os
 
 def limpiar_interfaz():
     """
-    Esta función limpia la consola del usuario
+    Esta función limpia la consola del usuario.
+
+    Parámetros:
+        No admite
+
+    Retorna:
+        `None`. Esta función únicamente manipula la consola para mostrar al usuario la interfaz del juego.
     """
     os.system('cls' if os.name == 'nt' else 'clear')
 
 
-def mostrar_interfaz(letras, jugadas, turno_actual):
+def mostrar_interfaz(letras: list[str], jugadas: list[str], turno_actual: list[str]):
     """
     Esta función muestra el progreso del juego en pantalla.
 
-    letras : list[str]
-        Las letras que participan en este juego
-    jugadas : list['a', 'e']:
-        El resultado de las jugadas ya realizadas por el usuario
-    turno_actual : list[str, str]:
-        Una lista con dos strings; el primero es la palabra a adivinar, y el segundo es la definición de esa palabra
+    Parámetros:
+        * letras `list[str]`: Una lista de las letras que participan en este juego.
+        * jugadas `list['a', 'e']`: El resultado de las jugadas ya realizadas por el usuario (debe ser una lista donde cada elemento es o bien 'a', para indicar un acierto, o bien 'e' para indicar un error).
+        * turno_actual `list[str, str]`: Una lista con dos strings; el primero es la palabra a adivinar, y el segundo es la definición de esa palabra.
+
+    Retorna:
+        `None`. Esta función únicamente manipula la consola para mostrar al usuario la interfaz del juego.
     """
     tablero_letras = ''
     for letra in letras:
@@ -43,7 +50,7 @@ def mostrar_interfaz(letras, jugadas, turno_actual):
     print(f'Aciertos: {aciertos}')
     print(f'Errores: {errores}')
     print(
-        f'Turno letra {letra_actual} - Palabra de {len(palabra_actual)} letras')
+        f'Turno letra {letra_actual.upper()} - Palabra de {len(palabra_actual)} letras')
     print(f'Definición: {definicion_actual}')
 
 
