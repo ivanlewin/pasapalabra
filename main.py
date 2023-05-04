@@ -54,15 +54,40 @@ def mostrar_interfaz(letras: list[str], jugadas: list[str], turno_actual: list[s
     print(f'Definición: {definicion_actual}')
 
 
-# # palabras = [
-# #     {'Araña': "1.  f. Arácnido con tráqueas ..."},
-# #     {'Jardín': "1.  m. Terreno donde se cultivan plantas con fines ornamentales"},
-# # ]
-# def interaccion_con_usuario(palabras):
-#     """
-#     Esta función se encarga de interactuar con el usuario. Recibe la lista de palabras que participan del juego y lo lleva a cabo.
-#     """
-#     # turno_actual = None
-#     letras = [palabra[0] for palabra in palabras.keys()]  # ['A', 'J']
-#     jugadas = ['a', 'e', 'a', 'a']
-#     mostrar_interfaz(letras, jugadas)
+def recibir_ingreso_usuario(turno_actual,reiniciar_interfaz):
+    """
+    Esta función recibe el input del usuario y realiza las validaciones para asegurarse de que es correcto.
+    """
+    palabra_validad=None
+
+    palabra=input("Ingrese palabra: ")
+    while palabra_validad is None:
+
+        if not palabra.isalpha():
+            reiniciar_interfaz()
+            palabra=input("error, por favor ingrese solo letras: ")
+
+        elif len(palabra)!= len(turno_actual[0]):
+            reiniciar_interfaz()
+            palabra=input(f"error, por favor ingrese palbras con {len(turno_actual[0])} letras: ")
+        
+        else:
+            palabra_validad=palabra
+        
+
+    return palabra
+
+
+
+
+
+
+
+letras = ['A', 'C', 'D', 'G', 'I', 'L', 'M', 'P', 'S', 'V']
+jugadas = ['a', 'e', 'a', 'a']
+turno_actual = ["Jardín", "1.  m. Terreno donde se cultivan plantas con fines ornamentales"]
+
+mostrar_interfaz(letras,jugadas,turno_actual)
+ingreso_usuario=recibir_ingreso_usuario(turno_actual,lambda: mostrar_interfaz(letras,jugadas,turno_actual))
+
+print(f"el usuario ingreso {ingreso_usuario} ")
