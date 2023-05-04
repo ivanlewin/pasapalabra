@@ -32,7 +32,7 @@ def mostrar_interfaz(letras: list[str], jugadas: list[str], turno_actual: list[s
         tablero_letras += celda
 
     tablero_jugadas = ''
-    for i in range(10):
+    for i in range(len(letras)):
         celda = f'[{jugadas[i]}]' if i < len(jugadas) else '[ ]'
         tablero_jugadas += celda
 
@@ -54,12 +54,12 @@ def mostrar_interfaz(letras: list[str], jugadas: list[str], turno_actual: list[s
     print(f'Definición: {definicion_actual}')
 
 
-def recibir_ingreso_usuario(turno_actual: list[str], generar_interfaz: any):
+def recibir_ingreso_usuario(palabra_actual: str, generar_interfaz: any):
     """
     Esta función recibe el input del usuario y realiza las validaciones para asegurarse de que es correcto.
 
     Parámetros:
-        * turno_actual `list[str, str]`: Una lista con dos strings; el primero es la palabra a adivinar, y el segundo es la definición de esa palabra.
+        * palabra_actual `str``: La palabra a adivinar en el turno actual.
         * generar_interfaz `function`: Función que permite generar la interfaz de usuario.
 
     Retorna:
@@ -72,42 +72,45 @@ def recibir_ingreso_usuario(turno_actual: list[str], generar_interfaz: any):
             generar_interfaz()
             print("Error: por favor ingrese solo letras")
             ingreso_del_usuario = input("Ingrese palabra: ")
-        elif len(ingreso_del_usuario) != len(turno_actual[0]):
+        elif len(ingreso_del_usuario) != len(palabra_actual):
             generar_interfaz()
-            print(f"Error: por favor ingrese palabras de {len(turno_actual[0])} letras")
+            print(
+                f"Error: por favor ingrese palabras de {len(turno_actual[0])} letras")
             ingreso_del_usuario = input("Ingrese palabra: ")
         else:
             palabra_valida = ingreso_del_usuario
     return ingreso_del_usuario
 
 
-
 def interaccion_con_usuario(turnos):
     """
     Esta función se encarga de interactuar con el usuario. Recibe la lista de palabras que participan del juego y lo lleva a cabo.
     """
-    letras = [turno[0][0].upper() for turno in turnos] # ['A', 'J']
-    jugadas=[]
-    
-    for turno in turnos: 
-        
+    letras = [turno[0][0].upper() for turno in turnos]
+    jugadas = []
 
-        mostrar_interfaz(letras, jugadas, turno)# turno paramatero opcional
-        ingreso_usuario = recibir_ingreso_usuario(turno, lambda: mostrar_interfaz(letras, jugadas, turno))
-        
-        if ingreso_usuario.lower()==turno[0]:
+    for turno in turnos:
+        palabra_actual: str = turno[0]
+
+        mostrar_interfaz(letras, jugadas, turno)
+        ingreso_usuario = recibir_ingreso_usuario(
+            palabra_actual, lambda: mostrar_interfaz(letras, jugadas, turno))
+
+        if ingreso_usuario.lower() == palabra_actual.lower():
             jugadas.append("a")
         else:
             jugadas.append("e")
 
+    mostrar_interfaz(letras, jugadas)
+
 
 palabras = [
-    ['araña', "1.  f. Arácnido con tráqueas ..."],
-    ['jardín', "1.  m. Terreno donde se cultivan plantas con fines ornamentales"],
-    ]
+    ["araña", "1.  f. Arácnido con tráqueas ..."],
+    ["balanza", "1.  f. Aparato que sirve para pesar"],
+    ["deambular", "1.  intr. Andar caminar sin dirección determinada"],
+    ["jardín", "1.  m. Terreno donde se cultivan plantas con fines ornamentales"],
+    ["naipe", "1.  m. Carta de la baraja"],
+    ["yen", "1.  m. Unidad monetaria del"],
+]
 
 interaccion_con_usuario(palabras)
-
-
-
-
