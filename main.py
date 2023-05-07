@@ -70,12 +70,11 @@ def recibir_ingreso_usuario(palabra_actual: str, generar_interfaz: any):
     while palabra_valida is None:
         if not ingreso_del_usuario.isalpha():
             generar_interfaz()
-            print("Error: por favor ingrese solo letras")
+            print("\nError: por favor ingrese solo letras")
             ingreso_del_usuario = input("Ingrese palabra: ")
         elif len(ingreso_del_usuario) != len(palabra_actual):
             generar_interfaz()
-            print(
-                f"Error: por favor ingrese palabras de {len(turno_actual[0])} letras")
+            print(f"\nError: por favor ingrese palabras de {len(palabra_actual)} letras")
             ingreso_del_usuario = input("Ingrese palabra: ")
         else:
             palabra_valida = ingreso_del_usuario
