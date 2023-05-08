@@ -34,7 +34,7 @@ def cantidad_palabras_por_letra(letra, lista):
 
     return cant_palabras_con_letra
 
-def total_palabras():
+def total_palabras_en_diccionario():
     '''
     Llamado a funcion cantidad_palabras(), suma la cantidad de palabras que hay en total dentro del diccionario
     '''
@@ -44,6 +44,3 @@ def total_palabras():
             total += cantidad_palabras_por_letra(letra, lista_ordenada)
     
     return total
-
-
-#falta mostrar cantidad de palabras por letra (VER Q HACER CON LAS VOCALES ACENTUADAS
