@@ -46,6 +46,9 @@ def total_palabras_en_diccionario():
     return total
 
 def total_palabras_por_letra():
+    '''
+    Muestra diccionario con cantidad de palabras por letra que hay en el diccionario filtrado.
+    '''
 
     dicc = {}
     
