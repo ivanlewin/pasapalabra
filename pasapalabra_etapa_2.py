@@ -44,3 +44,14 @@ def total_palabras_en_diccionario():
             total += cantidad_palabras_por_letra(letra, lista_ordenada)
     
     return total
+
+def total_palabras_por_letra():
+
+    dicc = {}
+    
+    lista_ordenada = ordenar_filtrar_diccionario()
+
+    for letra in LETRAS:
+        dicc[letra] = cantidad_palabras_por_letra(letra, lista_ordenada)
+
+    return dicc
