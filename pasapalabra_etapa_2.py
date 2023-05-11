@@ -1,13 +1,13 @@
 from datos import obtener_lista_definiciones
 
 MINIMO_CARACTERES_PALABRAS = 5
-LETRAS = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+LETRAS = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'] 
 
 def ordenar_filtrar_diccionario():
     '''
     Se recibe un lista de listas desordenada con palabras y sus definiciones.
     Filtra de acuerdo a minimo de caracteres que debe tener la palabra y ordena alfabeticamente.
-    Retorna lista ordenada y filtrada
+    Retorna lista ordenada y filtrada.
     '''
     lista_sin_orden = obtener_lista_definiciones()
     lista_con5_caracteres = []
