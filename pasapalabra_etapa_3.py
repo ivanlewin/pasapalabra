@@ -34,5 +34,4 @@ for i in range(100):
     lista_letras2 = obtener_letras_participantes()
     diccionario_filtrado = ordenar_filtrar_diccionario()
     print(recibir_lista_diccionario_filtrado(diccionario_filtrado,lista_letras2))
-
 """
