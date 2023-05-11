@@ -1,7 +1,7 @@
 from datos import obtener_lista_definiciones
 
 MINIMO_CARACTERES_PALABRAS = 5
-LETRAS = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'á', 'é', 'í', 'ó', 'ú']
+LETRAS = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
 def ordenar_filtrar_diccionario():
     '''
@@ -20,6 +20,10 @@ def ordenar_filtrar_diccionario():
 
     return lista
 
+def sacar_tildes(p):
+    return p.replace('á', 'a').replace('é', 'e').replace('í', 'i').replace('ó', 'o').replace('ú', 'u') 
+    
+
 def cantidad_palabras_por_letra(letra, lista):
     '''
     Retorna la cantidad de palabras por letra recibida por parametro dentro de la lista de listas
@@ -27,7 +31,9 @@ def cantidad_palabras_por_letra(letra, lista):
     palabras_con_letra = []
 
     for palabra in lista:
-        if palabra[0][0] == letra:
+        primera_letra = palabra[0][0]
+        primera_letra_sin_tildes = sacar_tildes(primera_letra)
+        if primera_letra_sin_tildes == letra:
             palabras_con_letra.append(palabra)
 
     cant_palabras_con_letra = len(palabras_con_letra)
