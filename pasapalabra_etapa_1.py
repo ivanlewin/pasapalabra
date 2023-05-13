@@ -212,7 +212,7 @@ def interaccion_con_usuario(turnos: list[list[str]]):
     mostrar_resumen(letras, jugadas, turnos, lista_palabras_ingresadas)  # -->
 
 
-palabras = [
+"""palabras = [
     ["araña", "1.  f. Arácnido con tráqueas ..."],
     ["balanza", "1.  f. Aparato que sirve para pesar"],
     ["deambular", "1.  intr. Andar caminar sin dirección determinada"],
@@ -221,4 +221,15 @@ palabras = [
     ["yen", "1.  m. Unidad monetaria del"],
 ]
 
-interaccion_con_usuario(palabras)
+interaccion_con_usuario(palabras)"""
+
+"""palabras = [
+    ["araña", "1.  f. Arácnido con tráqueas ..."],
+    ["balanza", "1.  f. Aparato que sirve para pesar"],
+    ["deambular", "1.  intr. Andar caminar sin dirección determinada"],
+    ["jardín", "1.  m. Terreno donde se cultivan plantas con fines ornamentales"],
+    ["naipe", "1.  m. Carta de la baraja"],
+    ["yen", "1.  m. Unidad monetaria del"],
+]
+
+interaccion_con_usuario(palabras)"""
