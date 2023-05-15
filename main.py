@@ -1,5 +1,7 @@
 import os
-
+ROJO="\x1b[0;31m"
+VERDE="\x1b[0;32m"
+RESET="\033[0;m"
 
 def limpiar_interfaz():
     """
@@ -32,7 +34,15 @@ def mostrar_tableros(letras: list[str], jugadas: list[str]):
 
     tablero_jugadas = ''
     for i in range(len(letras)):
-        celda = f'[{jugadas[i]}]' if i < len(jugadas) else '[ ]'
+        if i < len(jugadas) and jugadas[i] == "a":
+            # if i < len(jugadas) else '[ ]'
+            celda = f"[{VERDE}{jugadas[i]}{RESET}]"
+
+        elif i < len(jugadas) and jugadas[i] == "e":
+            celda = f"[{ROJO}{jugadas[i]}{RESET}]"
+
+        else:
+            celda = "[ ]"
         tablero_jugadas += celda
 
     print(tablero_letras)
@@ -56,12 +66,11 @@ def mostrar_turno_actual(jugadas: list[str], turno_actual: list[str]):
     palabra_actual, definicion_actual = turno_actual
     letra_actual = palabra_actual[0]
 
-    print(f'Aciertos: {aciertos}')
-    print(f'Errores: {errores}')
+    print(f'Aciertos: {VERDE}{aciertos}{RESET}')
+    print(f'Errores: {ROJO}{errores}{RESET}')
     print(
-        f'Turno letra {letra_actual.upper()} - Palabra de {len(palabra_actual)} letras')
-    print(f'Definición: {definicion_actual}')
-
+        f'Turno letra {VERDE}{letra_actual.upper()}{RESET} - Palabra de {VERDE}{len(palabra_actual)}{RESET} letras')
+    print(f'\x1b[4;37mDefinición\033[0;m: {definicion_actual}\n') 
 
 def mostrar_palabra_correcta(jugadas: list[str], turno_previo: list[str]):
     """
@@ -78,7 +87,8 @@ def mostrar_palabra_correcta(jugadas: list[str], turno_previo: list[str]):
     ultima_jugada = jugadas[-1] if len(jugadas) > 0 else None
     palabra_correcta = turno_previo[0]
     if ultima_jugada == "e" and palabra_correcta:
-        print(f"Incorrecto, la palabra correcta es: {palabra_correcta}")
+        print(
+            f"{ROJO}Incorrecto{RESET}, la palabra correcta es: {palabra_correcta}")
 
 
 # =None hace que sea un parametro opcional
@@ -124,13 +134,14 @@ def recibir_ingreso_usuario(palabra_actual: str, generar_interfaz: any):
         if not ingreso_del_usuario.isalpha():
             generar_interfaz()
             print()
-            print("Error: por favor ingrese solo letras")
+            print(
+                f"{ROJO}Error{RESET}: por favor ingrese solo {ROJO}letras{RESET}")
             ingreso_del_usuario = input("Ingrese palabra: ")
         elif len(ingreso_del_usuario) != len(palabra_actual):
             generar_interfaz()
             print()
             print(
-                f"Error: por favor ingrese palabras de {len(palabra_actual)} letras")
+                f"{ROJO}Error{RESET}: por favor ingrese palabras de {ROJO}{len(palabra_actual)}{RESET} letras")
             ingreso_del_usuario = input("Ingrese palabra: ")
         else:
             palabra_valida = ingreso_del_usuario
@@ -163,13 +174,13 @@ def mostrar_resumen(letras: list[str], jugadas: list[str], turnos: list[list[str
         ingreso = lista_palabras_ingresadas[i]
         if jugada == "e":
             print(
-                f"Turno letra {letra.upper()} - Palabra de {len(palabra)} letras - {ingreso} - error - Palabra Correcta: {palabra}")
+                f"Turno letra {ROJO}{letra.upper()}{RESET} - Palabra de {len(palabra)} letras - {ingreso} - {ROJO} error {RESET}- Palabra Correcta: {VERDE}{palabra}{RESET}")
         else:
             print(
-                f"Turno letra {letra.upper()} - Palabra de {len(palabra)} letras - {ingreso} - acierto")
+                f"Turno letra {VERDE}{letra.upper()}{RESET} - Palabra de {len(palabra)} letras - {ingreso} -{VERDE} acierto{RESET} ")
 
     print()
-    print("Puntaje final: 100 ganaste!!")
+    print(f"Puntaje final:{VERDE} 100{RESET} ganaste!!")
 
 
 def interaccion_con_usuario(turnos: list[list[str]]):
