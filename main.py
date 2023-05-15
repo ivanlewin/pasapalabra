@@ -5,6 +5,10 @@ from  diccionario_palabras import *
 def interaccion_con_usuario(turnos: list[list[str]]):
     """
     Esta función se encarga de interactuar con el usuario. Recibe la lista de palabras que participan del juego y lo lleva a cabo.
+
+    Autores:
+    * Brizuela, Natanael Daniel
+    * Armari, Valentino
     """
     letras = [turno[0][0].upper() for turno in turnos]
     jugadas = []
@@ -33,6 +37,13 @@ def interaccion_con_usuario(turnos: list[list[str]]):
 
 
 def integracion_de_juego():
+    """
+    Esta función se encarga de integrar todas las funciones previas para que el juego opere correctamente.
+
+    Autores:
+    * Brizuela, Natanael Daniel
+    * Armari, Valentino
+    """
     lista_letras2 = obtener_letras_participantes()
     diccionario_filtrado = ordenar_filtrar_diccionario()
     lista_con_definiciones = recibir_lista_diccionario_filtrado(

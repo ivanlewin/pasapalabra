@@ -10,6 +10,9 @@ def ordenar_filtrar_diccionario():
     Se recibe un lista de listas desordenada con palabras y sus definiciones.
     Filtra de acuerdo a minimo de caracteres que debe tener la palabra y ordena alfabeticamente.
     Retorna lista ordenada y filtrada.
+    Autores:
+        * Neme, Agustin Nadim
+        * Galvani, Juan Ignacio
     '''
     lista_sin_orden = obtener_lista_definiciones()
     lista_con5_caracteres = []
@@ -29,6 +32,10 @@ def sacar_tildes(p):
 def cantidad_palabras_por_letra(letra, lista):
     '''
     Retorna la cantidad de palabras por letra recibida por parametro dentro de la lista de listas
+
+    Autores:
+        * Neme, Agustin Nadim
+        * Galvani, Juan Ignacio
     '''
     palabras_con_letra = []
 
@@ -45,6 +52,10 @@ def cantidad_palabras_por_letra(letra, lista):
 def total_palabras_en_diccionario():
     '''
     Llamado a funcion cantidad_palabras(), suma la cantidad de palabras que hay en total dentro del diccionario
+
+    Autores:
+        * Neme, Agustin Nadim
+        * Galvani, Juan Ignacio
     '''
     total = 0
     lista_ordenada = ordenar_filtrar_diccionario()
@@ -56,6 +67,10 @@ def total_palabras_en_diccionario():
 def total_palabras_por_letra():
     '''
     Muestra diccionario con cantidad de palabras por letra que hay en el diccionario filtrado.
+
+    Autores:
+        * Neme, Agustin Nadim
+        * Galvani, Juan Ignacio
     '''
 
     dicc = {}
@@ -70,6 +85,10 @@ def total_palabras_por_letra():
 def obtener_letras_participantes():
     '''
     Crear una lista de 10 letras aleatorias de la lista de letras permitidas para el rosco.
+
+    Autores:
+        * Neme, Agustin Nadim
+        * Galvani, Juan Ignacio
     '''
     return random.sample(LETRAS, 10)
 

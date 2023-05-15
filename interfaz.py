@@ -12,6 +12,10 @@ def limpiar_interfaz():
 
     Retorna:
         `None`. Esta función únicamente manipula la consola para mostrar al usuario la interfaz del juego.
+
+    Autores:
+        * Lewin, Iván
+        * Brizuela, Natanael Daniel
     """
     os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -24,8 +28,12 @@ def mostrar_tableros(letras: list[str], jugadas: list[str]):
         * letras `list[str]`: Una lista de las letras que participan en este juego.
         * jugadas `list['a', 'e']`: El resultado de las jugadas ya realizadas por el usuario (debe ser una lista donde cada elemento es o bien 'a', para indicar un acierto, o bien 'e' para indicar un error).
 
-    Retorna:
+    Retorna:  
         `None`. Esta función únicamente manipula la consola para mostrar al usuario la interfaz del juego.
+
+    Autores:
+        * Lewin, Iván
+        * Brizuela, Natanael Daniel
     """
     tablero_letras = ''
     for letra in letras:
@@ -59,6 +67,10 @@ def mostrar_turno_actual(jugadas: list[str], turno_actual: list[str]):
 
     Retorna:
         `None`. Esta función únicamente manipula la consola para mostrar al usuario la interfaz del juego.
+    
+    Autores:
+        * Lewin, Iván
+        * Brizuela, Natanael Daniel  
     """
     aciertos = jugadas.count('a')
     errores = jugadas.count('e')
@@ -82,6 +94,10 @@ def mostrar_palabra_correcta(jugadas: list[str], turno_previo: list[str]):
 
     Retorna:
         `None`. Esta función únicamente manipula la consola para mostrar al usuario la interfaz del juego.
+
+    Autores:
+        * Lewin, Iván
+        * Brizuela, Natanael Daniel
     """
 
     ultima_jugada = jugadas[-1] if len(jugadas) > 0 else None
@@ -105,6 +121,10 @@ def mostrar_interfaz_del_juego(letras: list[str], jugadas: list[str], turno_actu
 
     Retorna:
         `None`. Esta función únicamente manipula la consola para mostrar al usuario la interfaz del juego.
+
+    Autores:
+        * Lewin, Iván
+        * Brizuela, Natanael Daniel
     """
     limpiar_interfaz()
     mostrar_tableros(letras, jugadas)
@@ -125,6 +145,10 @@ def recibir_ingreso_usuario(palabra_actual: str, generar_interfaz: any):
 
     Retorna:
         `str`. Retorna un string con caracteres alfabéticos de la longitud de la palabra a adivinar en el turno actual.
+
+    Autores:
+        * Lewin, Iván
+        * Brizuela, Natanael Daniel
     """
 
     palabra_valida = None
@@ -161,6 +185,10 @@ def mostrar_resumen(letras: list[str], jugadas: list[str], turnos: list[list[str
 
     Retorna:
         `None`. Esta función únicamente manipula la consola para mostrar al usuario la interfaz del juego.
+
+    Autores:
+        * Lewin, Iván
+        * Brizuela, Natanael Daniel
     """
     limpiar_interfaz()
     mostrar_tableros(letras, jugadas)
