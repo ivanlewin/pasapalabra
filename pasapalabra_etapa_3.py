@@ -36,11 +36,6 @@ def recibir_lista_diccionario_filtrado(diccionario_filtrado, letras_participante
 
 
 # FUNCION QUE ITERA 100 VECES PARA PRUEBAS
-for i in range(5):
-    lista_letras2 = obtener_letras_participantes()
-    diccionario_filtrado = ordenar_filtrar_diccionario()
-    print(recibir_lista_diccionario_filtrado(diccionario_filtrado, lista_letras2))
-
 """
 FUNCION QUE ITERA 100 VECES PARA PRUEBAS
 for i in range(100):
