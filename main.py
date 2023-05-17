@@ -39,8 +39,8 @@ def integracion_de_juego():
         * Brizuela, Natanael Daniel
     """
     lista_letras2 = obtener_letras_participantes()
-    diccionario_filtrado = ordenar_filtrar_diccionario()
-    lista_con_definiciones = recibir_lista_diccionario_filtrado(diccionario_filtrado, lista_letras2)
+    definiciones_filtradas = ordenar_filtrar_lista_de_listas()
+    lista_con_definiciones = recibir_lista_definiciones_filtrado(definiciones_filtradas, lista_letras2)
 
     interaccion_con_usuario(lista_con_definiciones)
 
