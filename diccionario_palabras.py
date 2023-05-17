@@ -1,16 +1,22 @@
-from datos import obtener_lista_definiciones
 import random
 
+from datos import obtener_lista_definiciones
 
 MINIMO_CARACTERES_PALABRAS = 5
-LETRAS = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'] 
+LETRAS_SIN_TILDES = 'abcdefghijklmnñopqrstuvwxyz'
+LETRAS_CON_TILDES = 'aábcdeéfghiíjklmnñoópqrstuúvwxyz'
+
 
 def ordenar_filtrar_diccionario():
-    '''
+    """
     Se recibe un lista de listas desordenada con palabras y sus definiciones.
     Filtra de acuerdo a minimo de caracteres que debe tener la palabra y ordena alfabeticamente.
     Retorna lista ordenada y filtrada.
-    '''
+
+    Autores:
+        * Galvani, Juan Ignacio
+        * Neme, Agustin Nadim
+    """
     lista_sin_orden = obtener_lista_definiciones()
     lista_con5_caracteres = []
 
@@ -18,18 +24,23 @@ def ordenar_filtrar_diccionario():
         if len(palabra[0]) >= MINIMO_CARACTERES_PALABRAS:
             lista_con5_caracteres.append(palabra)
 
-    lista = sorted(lista_con5_caracteres, key= lambda x:x[0])
+    lista = sorted(lista_con5_caracteres, key=lambda x: x[0])
 
     return lista
 
+
 def sacar_tildes(p):
-    return p.replace('á', 'a').replace('é', 'e').replace('í', 'i').replace('ó', 'o').replace('ú', 'u') 
-    
+    return p.replace('á', 'a').replace('é', 'e').replace('í', 'i').replace('ó', 'o').replace('ú', 'u')
+
 
 def cantidad_palabras_por_letra(letra, lista):
-    '''
+    """
     Retorna la cantidad de palabras por letra recibida por parametro dentro de la lista de listas
-    '''
+
+    Autores:
+        * Galvani, Juan Ignacio
+        * Neme, Agustin Nadim
+    """
     palabras_con_letra = []
 
     for palabra in lista:
@@ -42,41 +53,55 @@ def cantidad_palabras_por_letra(letra, lista):
 
     return cant_palabras_con_letra
 
+
 def total_palabras_en_diccionario():
-    '''
+    """
     Llamado a funcion cantidad_palabras(), suma la cantidad de palabras que hay en total dentro del diccionario
-    '''
+
+    Autores:
+        * Galvani, Juan Ignacio
+        * Neme, Agustin Nadim
+    """
     total = 0
     lista_ordenada = ordenar_filtrar_diccionario()
-    for letra in LETRAS:
-            total += cantidad_palabras_por_letra(letra, lista_ordenada)
-    
+    for letra in LETRAS_SIN_TILDES:
+        total += cantidad_palabras_por_letra(letra, lista_ordenada)
+
     return total
 
+
 def total_palabras_por_letra():
-    '''
+    """
     Muestra diccionario con cantidad de palabras por letra que hay en el diccionario filtrado.
-    '''
+
+    Autores:
+        * Galvani, Juan Ignacio
+        * Neme, Agustin Nadim
+    """
 
     dicc = {}
-    
+
     lista_ordenada = ordenar_filtrar_diccionario()
 
-    for letra in LETRAS:
+    for letra in LETRAS_SIN_TILDES:
         dicc[letra] = cantidad_palabras_por_letra(letra, lista_ordenada)
 
     return dicc
 
+
 def obtener_letras_participantes():
-    '''
+    """
     Crear una lista de 10 letras aleatorias de la lista de letras permitidas para el rosco.
-    '''
-    return random.sample(LETRAS, 10)
+
+    Autores:
+        * Galvani, Juan Ignacio
+        * Neme, Agustin Nadim
+    """
+    return random.sample(LETRAS_SIN_TILDES, 10)
 
 
 def recibir_lista_diccionario_filtrado(diccionario_filtrado, letras_participantes):
 
-    letras_castellano = "aábcdeéfghiíjklmnñoópqrstuúvwxyz"
     lista_palabras_participantes = []
 
     for letra in letras_participantes:
@@ -96,8 +121,7 @@ def recibir_lista_diccionario_filtrado(diccionario_filtrado, letras_participante
         # print(palabra_para_esta_letra)
         lista_palabras_participantes.append(palabra_para_esta_letra)
 
-    # sorted(lista_palabras_participantes, key=lambda i: letras_castellano.index(i[0]))
-    return sorted(lista_palabras_participantes, key=lambda i: letras_castellano.index(i[0][0]))
+    return sorted(lista_palabras_participantes, key=lambda i: LETRAS_CON_TILDES.index(i[0][0]))
 
 
 # FUNCION QUE ITERA 100 VECES PARA PRUEBAS
