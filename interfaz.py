@@ -1,7 +1,35 @@
 import os
-ROJO="\x1b[0;31m"
-VERDE="\x1b[0;32m"
-RESET="\033[0;m"
+import doctest
+
+
+def mostrar_texto_con_color(texto: str, color: str):
+    """
+    Esta función recibe un texto y le agrega códigos de color del estandar ANSI para que se visualicen en la consola de color verde o rojo
+
+    Parámetros:
+        * texto `str`: El texto al que se desea agregar el color.
+        * color `str`: El color deseado. Los valores permitidos son "verde" o "rojo"
+
+    Retorna:  
+        `str`. Si se pasa un color válido como argumento, la función retornará el texto modificado de forma tal que se visualizará con ese color en la consola.
+        Caso contrario, la función retornará el texto original sin modificarlo.
+
+    Autores:
+        * Brizuela, Natanael Daniel
+        * Lewin, Iván
+    """
+
+    ROJO = "\x1b[0;31m"
+    VERDE = "\x1b[0;32m"
+    RESET = "\033[0;m"
+
+    texto_con_color = texto
+    if color == "verde":
+        texto_con_color = VERDE + texto + RESET
+    elif color == "rojo":
+        texto_con_color = ROJO + texto + RESET
+    return texto_con_color
+
 
 def limpiar_interfaz():
     """
@@ -12,6 +40,10 @@ def limpiar_interfaz():
 
     Retorna:
         `None`. Esta función únicamente manipula la consola para mostrar al usuario la interfaz del juego.
+
+    Autores:
+        * Brizuela, Natanael Daniel
+        * Lewin, Iván
     """
     os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -24,9 +56,30 @@ def mostrar_tableros(letras: list[str], jugadas: list[str]):
         * letras `list[str]`: Una lista de las letras que participan en este juego.
         * jugadas `list['a', 'e']`: El resultado de las jugadas ya realizadas por el usuario (debe ser una lista donde cada elemento es o bien 'a', para indicar un acierto, o bien 'e' para indicar un error).
 
-    Retorna:
+    Retorna:  
         `None`. Esta función únicamente manipula la consola para mostrar al usuario la interfaz del juego.
+
+    Autores:
+        * Brizuela, Natanael Daniel
+        * Lewin, Iván
+
+    >>> mostrar_tableros(['A', 'B', 'C', 'D', 'E'], [])
+    [A][B][C][D][E]
+    [ ][ ][ ][ ][ ]
+    >>> mostrar_tableros(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'], [])
+    [A][B][C][D][E][F][G][H][I][J]
+    [ ][ ][ ][ ][ ][ ][ ][ ][ ][ ]
+    >>> mostrar_tableros(['A', 'B', 'C', 'D', 'E'], ['a', 'a', 'e'])
+    [A][B][C][D][E]
+    [\x1b[0;32ma\033[0;m][\x1b[0;32ma\033[0;m][\x1b[0;31me\033[0;m][ ][ ]
+    >>> mostrar_tableros(['A', 'B', 'C', 'D', 'E'], ['a', 'a', 'e', 'a', 'e'])
+    [A][B][C][D][E]
+    [\x1b[0;32ma\033[0;m][\x1b[0;32ma\033[0;m][\x1b[0;31me\033[0;m][\x1b[0;32ma\033[0;m][\x1b[0;31me\033[0;m]
+    >>> mostrar_tableros(['A', 'B', 'C', 'D', 'E'], ['a', 'a', 'e', 'a', 'e', 'a', 'a'])
+    [A][B][C][D][E]
+    [\x1b[0;32ma\033[0;m][\x1b[0;32ma\033[0;m][\x1b[0;31me\033[0;m][\x1b[0;32ma\033[0;m][\x1b[0;31me\033[0;m]
     """
+
     tablero_letras = ''
     for letra in letras:
         celda = f'[{letra}]'
@@ -34,15 +87,12 @@ def mostrar_tableros(letras: list[str], jugadas: list[str]):
 
     tablero_jugadas = ''
     for i in range(len(letras)):
-        if i < len(jugadas) and jugadas[i] == "a":
-            # if i < len(jugadas) else '[ ]'
-            celda = f"[{VERDE}{jugadas[i]}{RESET}]"
-
-        elif i < len(jugadas) and jugadas[i] == "e":
-            celda = f"[{ROJO}{jugadas[i]}{RESET}]"
-
-        else:
-            celda = "[ ]"
+        celda = "[ ]"
+        if i < len(jugadas):
+            if jugadas[i] == "a":
+                celda = f"[{mostrar_texto_con_color(jugadas[i], 'verde')}]"
+            else:
+                celda = f"[{mostrar_texto_con_color(jugadas[i], 'rojo')}]"
         tablero_jugadas += celda
 
     print(tablero_letras)
@@ -59,6 +109,10 @@ def mostrar_turno_actual(jugadas: list[str], turno_actual: list[str]):
 
     Retorna:
         `None`. Esta función únicamente manipula la consola para mostrar al usuario la interfaz del juego.
+
+    Autores:
+        * Brizuela, Natanael Daniel
+        * Lewin, Iván
     """
     aciertos = jugadas.count('a')
     errores = jugadas.count('e')
@@ -66,13 +120,13 @@ def mostrar_turno_actual(jugadas: list[str], turno_actual: list[str]):
     palabra_actual, definicion_actual = turno_actual
     letra_actual = palabra_actual[0]
 
-    print(f'Aciertos: {VERDE}{aciertos}{RESET}')
-    print(f'Errores: {ROJO}{errores}{RESET}')
-    print(
-        f'Turno letra {VERDE}{letra_actual.upper()}{RESET} - Palabra de {VERDE}{len(palabra_actual)}{RESET} letras')
-    print(f'\x1b[4;37mDefinición\033[0;m: {definicion_actual}\n') 
+    print(f"Aciertos: {mostrar_texto_con_color(str(aciertos), 'verde')}")
+    print(f"Errores: {mostrar_texto_con_color(str(errores), 'rojo')}")
+    print(f"Turno letra {letra_actual.upper()} - Palabra de {len(palabra_actual)} letras")
+    print(f"Definición: {definicion_actual}\n")
 
-def mostrar_palabra_correcta(jugadas: list[str], turno_previo: list[str]):
+
+def mostrar_feedback(jugadas: list[str], turno_previo: list[str]):
     """
     Si el intento del usuario en el turno anterior fue un error, esta función muestra la palabra correcta en pantalla.
 
@@ -82,16 +136,26 @@ def mostrar_palabra_correcta(jugadas: list[str], turno_previo: list[str]):
 
     Retorna:
         `None`. Esta función únicamente manipula la consola para mostrar al usuario la interfaz del juego.
+
+    Autores:
+        * Brizuela, Natanael Daniel
+        * Lewin, Iván
+
+    >>> mostrar_feedback(['a', 'a' 'e', 'e', 'a'], ["entorpecer", "1.  tr. Poner torpe U. t. c. prnl."])
+    \x1b[0;32m¡Correcto!\033[0;m
+    >>> mostrar_feedback(['a', 'a' 'e', 'e', 'e'], ["entorpecer", "1.  tr. Poner torpe U. t. c. prnl."])
+    \x1b[0;31m¡Incorrecto!\033[0;m La palabra correcta era 'entorpecer'
     """
 
     ultima_jugada = jugadas[-1] if len(jugadas) > 0 else None
     palabra_correcta = turno_previo[0]
-    if ultima_jugada == "e" and palabra_correcta:
-        print(
-            f"{ROJO}Incorrecto{RESET}, la palabra correcta es: {palabra_correcta}")
+    if palabra_correcta:
+        if ultima_jugada == "a":
+            print(mostrar_texto_con_color('¡Correcto!', 'verde'))
+        else:
+            print(f"{mostrar_texto_con_color('¡Incorrecto!', 'rojo')} La palabra correcta era '{palabra_correcta}'")
 
 
-# =None hace que sea un parametro opcional
 def mostrar_interfaz_del_juego(letras: list[str], jugadas: list[str], turno_actual: list[str], turno_previo: list[str] = None):
     """
     Esta función es la encargada de generar la interfaz del juego, que incluye el tablero de letras participantes, el tablero de jugadas realizadas, la 
@@ -105,12 +169,16 @@ def mostrar_interfaz_del_juego(letras: list[str], jugadas: list[str], turno_actu
 
     Retorna:
         `None`. Esta función únicamente manipula la consola para mostrar al usuario la interfaz del juego.
+
+    Autores:
+        * Brizuela, Natanael Daniel
+        * Lewin, Iván
     """
     limpiar_interfaz()
     mostrar_tableros(letras, jugadas)
-    print()
     if turno_previo is not None:
-        mostrar_palabra_correcta(jugadas, turno_previo)
+        print()
+        mostrar_feedback(jugadas, turno_previo)
     print()
     mostrar_turno_actual(jugadas, turno_actual)
 
@@ -125,24 +193,25 @@ def recibir_ingreso_usuario(palabra_actual: str, generar_interfaz: any):
 
     Retorna:
         `str`. Retorna un string con caracteres alfabéticos de la longitud de la palabra a adivinar en el turno actual.
+
+    Autores:
+        * Brizuela, Natanael Daniel
+        * Lewin, Iván
     """
 
     palabra_valida = None
     ingreso_del_usuario = input("Ingrese palabra: ")
 
     while palabra_valida is None:
-        if not ingreso_del_usuario.isalpha():
+        if len(ingreso_del_usuario) == 0:
             generar_interfaz()
-            print()
-            print(
-                f"{ROJO}Error{RESET}: por favor ingrese solo {ROJO}letras{RESET}")
-            ingreso_del_usuario = input("Ingrese palabra: ")
+            ingreso_del_usuario = input(f"{mostrar_texto_con_color('¡Error!', 'rojo')} Por favor, ingrese palabras de {len(palabra_actual)} letras: ")
+        elif not ingreso_del_usuario.isalpha():
+            generar_interfaz()
+            ingreso_del_usuario = input(f"{mostrar_texto_con_color('¡Error!', 'rojo')} Por favor, ingrese solo letras: ")
         elif len(ingreso_del_usuario) != len(palabra_actual):
             generar_interfaz()
-            print()
-            print(
-                f"{ROJO}Error{RESET}: por favor ingrese palabras de {ROJO}{len(palabra_actual)}{RESET} letras")
-            ingreso_del_usuario = input("Ingrese palabra: ")
+            ingreso_del_usuario = input(f"{mostrar_texto_con_color('¡Error!', 'rojo')} Por favor, ingrese palabras de {len(palabra_actual)} letras: ")
         else:
             palabra_valida = ingreso_del_usuario
 
@@ -161,6 +230,10 @@ def mostrar_resumen(letras: list[str], jugadas: list[str], turnos: list[list[str
 
     Retorna:
         `None`. Esta función únicamente manipula la consola para mostrar al usuario la interfaz del juego.
+
+    Autores:
+        * Brizuela, Natanael Daniel
+        * Lewin, Iván
     """
     limpiar_interfaz()
     mostrar_tableros(letras, jugadas)
@@ -172,15 +245,16 @@ def mostrar_resumen(letras: list[str], jugadas: list[str], turnos: list[list[str
         turno = turnos[i]
         palabra = turno[0]
         ingreso = lista_palabras_ingresadas[i]
-        if jugada == "e":
-            print(
-                f"Turno letra {ROJO}{letra.upper()}{RESET} - Palabra de {len(palabra)} letras - {ingreso} - {ROJO} error {RESET}- Palabra Correcta: {VERDE}{palabra}{RESET}")
+        texto = f"Turno letra {letra.upper()} - Palabra de {len(palabra)} letras - {ingreso} - "
+        if jugada == "a":
+            texto += (mostrar_texto_con_color('acierto', 'verde'))
         else:
-            print(
-                f"Turno letra {VERDE}{letra.upper()}{RESET} - Palabra de {len(palabra)} letras - {ingreso} -{VERDE} acierto{RESET} ")
+            texto += (f"{mostrar_texto_con_color('error', 'rojo')} - Palabra Correcta: {palabra}")
+        print(texto)
 
     print()
-    print(f"Puntaje final:{VERDE} 100{RESET} ganaste!!")
+    print(f"Puntaje final: 100 puntos")
 
 
-
+if __name__ == '__main__':
+    print(doctest.testmod())
