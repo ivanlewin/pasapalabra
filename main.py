@@ -6,6 +6,12 @@ def interaccion_con_usuario(turnos: list[list[str]]):
     """
     Esta función se encarga de interactuar con el usuario. Recibe la lista de palabras que participan del juego y lo lleva a cabo.
 
+    Parámetros:
+        * turnos `list[list[str, str]]`: La lista de las palabras del juego: Cada elemento es una lista de strings donde el primer elemento es la palabra a adivinar, y el segundo es la definición de esa palabra.
+
+    Retorna:
+        `None`
+
     Autores:
         * Armari, Valentino
         * Brizuela, Natanael Daniel
@@ -27,12 +33,18 @@ def interaccion_con_usuario(turnos: list[list[str]]):
         else:
             jugadas.append('e')
 
-    mostrar_resumen(letras, jugadas, turnos, lista_palabras_ingresadas)  # -->
+    mostrar_resumen(letras, jugadas, turnos, lista_palabras_ingresadas)
 
 
 def integracion_de_juego():
     """
     Esta función se encarga de integrar todas las funciones previas para que el juego opere correctamente.
+
+    Parámetros:
+        - No admite
+
+    Retorna:
+        `None`
 
     Autores:
         * Armari, Valentino

@@ -111,7 +111,7 @@ def mostrar_turno_actual(jugadas: list[str], turno_actual: list[str]):
         `None`. Esta función únicamente manipula la consola para mostrar al usuario la interfaz del juego.
 
     Autores:
-        * Brizuela, Natanael Daniel  
+        * Brizuela, Natanael Daniel
         * Lewin, Iván
     """
     aciertos = jugadas.count('a')

@@ -11,7 +11,7 @@ def ordenar_filtrar_lista_de_listas():
     """
     Filtra de acuerdo a minimo de caracteres que debe tener la palabra y ordena alfabeticamente.
 
-    Parametro:
+    Parámetros:
         No recibe ningun parametro, manipula la lista de listas provista en la consigna.
 
     Retorna:
@@ -33,23 +33,33 @@ def ordenar_filtrar_lista_de_listas():
     return lista
 
 
-def sacar_tildes(letra):
-    '''
-    Reemplaza las vocales acentuadas por mismas vocales no acentuadas
-    '''
-    return letra.replace('á', 'a').replace('é', 'e').replace('í', 'i').replace('ó', 'o').replace('ú', 'u')
-
-
-def cantidad_palabras_por_letra(letra : chr, lista : list[list[str]]):
+def sacar_tildes(texto):
     """
-    Retorna la cantidad de palabras por letra recibida por parametro dentro de la lista de listas
+    Reemplaza las vocales acentuadas por mismas vocales no acentuadas en el texto ingresado.
 
-    Parametro:
-        letra : 'chr' Aquella letra que se solicite saber que la cantidad que hay
-        lista : 'list[str]' Una lista con dos strings, el primero es la palabara y el segundo la definicion de la palabra.
+    Parámetros:
+        * texto `str`: El texto que se desea obtener sin tildes.
+
+    Retorna:  
+        `str`. En caso de que el texto sea una vocal, lo retorna sin tildes. Caso contrario, retorna el mismo texto ingresada.
+
+    Autores:
+        * Galvani, Juan Ignacio
+        * Neme, Agustin Nadim
+    """
+    return texto.replace('á', 'a').replace('é', 'e').replace('í', 'i').replace('ó', 'o').replace('ú', 'u')
+
+
+def cantidad_palabras_por_letra(letra: str, lista: list[list[str]]):
+    """
+    Retorna la cantidad de palabras que empiezan con la letra provista. No tiene en cuenta las tildes.
+
+    Parámetros:
+        * letra `str`: Una cadena de longitud 1. Debe ser una letra del alfabeto en español.
+        * lista `list[list[str]]`: Una lista de listas. En cada lista anidada, el primer elemento es una palabara y el segundo, la definición de la misma.
 
     Retorna:
-        En un int, el numero de veces que se ha encontrado la palabra comenzada con el parametro 'letra' que se envio.
+        `int`. El número de palabras que comienzan con la letra provista, sin tener en cuenta las tildes.
 
     Autores:
         * Galvani, Juan Ignacio
@@ -71,10 +81,12 @@ def cantidad_palabras_por_letra(letra : chr, lista : list[list[str]]):
 def total_palabras_en_lista_de_listas():
     """
     Llamado a funcion cantidad_palabras_por_letra(), suma la cantidad de palabras que hay en total dentro de la lista de listas.
-    Parametros:
+
+    Parámetros:
         No recibe
+
     Retorna:
-        En un int, el numero total de palabras que se encuentran a lo largo de toda la lista de listas, luego de ser filtrada por caracteres mayores o iguales a 5 caracteres.
+        `int`. El número total de palabras que se encuentran a lo largo de toda la lista de listas, de longitud igual o mayor a 5.
 
     Autores:
         * Galvani, Juan Ignacio
@@ -92,10 +104,12 @@ def total_palabras_en_lista_de_listas():
 def total_palabras_por_letra():
     """
     Muestra diccionario con cantidad de palabras por letra que hay en el diccionario filtrado.
-    Parametros:
+
+    Parámetros:
         No recibe
+
     Retorna:
-        Diccionario con clave : letra y valor : cantidad de veces que una palabra comienza con la letra
+        `dict`. Diccionario con clave 'letra' y valor : 'cantidad de veces que una palabra comienza con la letra'
 
     Autores:
         * Galvani, Juan Ignacio
@@ -110,11 +124,12 @@ def total_palabras_por_letra():
 
     return dicc
 
+
 def obtener_letras_participantes():
     """
     Crear una lista de 10 letras aleatorias de la lista de letras permitidas para el rosco.
 
-    Parametros:
+    Parámetros:
         No recibe
 
     Retorna:
@@ -124,22 +139,25 @@ def obtener_letras_participantes():
         * Galvani, Juan Ignacio
         * Neme, Agustin Nadim
     """
-    
+
     return random.sample(LETRAS_SIN_TILDES, 10)
 
 
-def recibir_lista_definiciones_filtrado(lista_definiciones_filtrada : list[list[str]], letras_participantes : list[str]):
-    '''
-    Parametro:
+def recibir_lista_definiciones_filtrado(lista_definiciones_filtrada: list[list[str]], letras_participantes: list[str]):
+    """
+    Retorna una lista de palabras seleccionadas aleatoriamente, donde cada palabra comienza con una de las letras participantes.
+
+    Parámetros:
         lista_definiciones_filtrada 'list[str]': 
         letras_participantes 'list[str]' : Una lista que contiene letras aleatorias permitidas para usar en el rosco.
+
     Retorna:
         'list' : Una lista de definiciones validas para jugar ordenadas de forma alfabetica, unicamente con aquellas palabras dentro 'letras_parcipantes'.
 
     Autores:
         * Galvani, Juan Ignacio
         * Neme, Agustin Nadim
-    '''
+    """
 
     lista_palabras_participantes = []
 
@@ -147,7 +165,7 @@ def recibir_lista_definiciones_filtrado(lista_definiciones_filtrada : list[list[
         palabras_candidatas = []
 
         for item in lista_definiciones_filtrada:
-            
+
             palabra = item[0]
             palabra_sin_tildes = sacar_tildes(palabra)
 
