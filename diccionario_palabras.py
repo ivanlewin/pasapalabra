@@ -1,5 +1,5 @@
 import random
-
+import doctest
 from datos import obtener_lista_definiciones
 
 MINIMO_CARACTERES_PALABRAS = 5
@@ -46,6 +46,17 @@ def sacar_tildes(texto):
     Autores:
         * Galvani, Juan Ignacio
         * Neme, Agustin Nadim
+
+    >>> sacar_tildes("néctar")
+    'nectar'
+    >>> sacar_tildes("vaivén")
+    'vaiven'
+    >>> sacar_tildes("yesería")
+    'yeseria'
+    >>> sacar_tildes("vacilación")
+    'vacilacion'
+    >>> sacar_tildes("búho")
+    'buho'
     """
     return texto.replace('á', 'a').replace('é', 'e').replace('í', 'i').replace('ó', 'o').replace('ú', 'u')
 
@@ -188,3 +199,6 @@ for i in range(100):
     print(recibir_lista_diccionario_filtrado(diccionario_filtrado,lista_letras2))
 
 """
+
+if __name__ == '__main__':
+    print(doctest.testmod())
