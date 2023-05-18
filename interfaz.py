@@ -218,6 +218,27 @@ def recibir_ingreso_usuario(palabra_actual: str, generar_interfaz: any):
     return ingreso_del_usuario
 
 
+def calcular_puntaje_de_la_partida(jugadas):
+    """
+    Esta función recibe una lista de jugadas (caracteres 'a' o 'e') y retorna el puntaje obtenido. Cada acierto suma 10 puntos y cada error resta 3 puntos.
+    >>> calcular_puntaje_de_la_partida([])
+    0
+    >>> calcular_puntaje_de_la_partida(['a', 'a', 'a'])
+    30
+    >>> calcular_puntaje_de_la_partida(['a', 'e', 'a', 'e', 'e', 'e', 'e'])
+    5
+    >>> calcular_puntaje_de_la_partida(['a', 'e', 'z'])
+    7
+    >>> calcular_puntaje_de_la_partida(['e', 'e', 'e'])
+    -9
+    """
+
+    aciertos = jugadas.count('a')
+    errores = jugadas.count('e')
+
+    return (aciertos * 10) + (errores * -3)
+
+
 def mostrar_resumen(letras: list[str], jugadas: list[str], turnos: list[list[str]], lista_palabras_ingresadas: list[str]):
     """
     Esta función muestra el resumen luego de finalizar el juego.
@@ -237,6 +258,7 @@ def mostrar_resumen(letras: list[str], jugadas: list[str], turnos: list[list[str
     """
     limpiar_interfaz()
     mostrar_tableros(letras, jugadas)
+    puntaje_partida = calcular_puntaje_de_la_partida(jugadas)
 
     print()
     for i in range(len(letras)):
@@ -253,7 +275,8 @@ def mostrar_resumen(letras: list[str], jugadas: list[str], turnos: list[list[str
         print(texto)
 
     print()
-    print(f"Puntaje final: 100 puntos")
+    print(f"Puntaje de la partida: {puntaje_partida} puntos")
+
 
 
 if __name__ == '__main__':

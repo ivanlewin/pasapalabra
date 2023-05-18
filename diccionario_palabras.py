@@ -1,5 +1,6 @@
-import random
 import doctest
+import random
+
 from datos import obtener_lista_definiciones
 
 MINIMO_CARACTERES_PALABRAS = 5
@@ -75,6 +76,13 @@ def cantidad_palabras_por_letra(letra: str, lista: list[list[str]]):
     Autores:
         * Galvani, Juan Ignacio
         * Neme, Agustin Nadim
+
+    >>> cantidad_palabras_por_letra('a', [['arbol', '...'], ['barro', '....'], ['árbitro', '...'], ['araña', '...']])
+    3
+    >>> cantidad_palabras_por_letra('b', [['arbol', '...'], ['barro', '....'], ['árbitro', '...'], ['araña', '...']])
+    1
+    >>> cantidad_palabras_por_letra('c', [['arbol', '...'], ['barro', '....'], ['árbitro', '...'], ['araña', '...']])
+    0
     """
     palabras_con_letra = []
 
@@ -89,7 +97,7 @@ def cantidad_palabras_por_letra(letra: str, lista: list[list[str]]):
     return cant_palabras_con_letra
 
 
-def total_palabras_en_lista_de_listas():
+def total_palabras_en_diccionario():
     """
     Llamado a funcion cantidad_palabras_por_letra(), suma la cantidad de palabras que hay en total dentro de la lista de listas.
 
@@ -103,10 +111,9 @@ def total_palabras_en_lista_de_listas():
         * Galvani, Juan Ignacio
         * Neme, Agustin Nadim
     """
-
     total = 0
     lista_ordenada = ordenar_filtrar_lista_de_listas()
-    for letra in LETRAS_SIN_TILDES:
+    for letra in LETRAS_CON_TILDES:
         total += cantidad_palabras_por_letra(letra, lista_ordenada)
 
     return total
