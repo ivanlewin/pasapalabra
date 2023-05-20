@@ -2,7 +2,7 @@ from diccionario_palabras import *
 from interfaz import *
 
 
-def interaccion_con_usuario(turnos: list[list[str]]):
+def interaccion_con_usuario(lista_con_definiciones: list[list[str]]):
     """
     Esta función se encarga de interactuar con el usuario. Recibe la lista de palabras que participan del juego y lo lleva a cabo.
 
@@ -16,13 +16,14 @@ def interaccion_con_usuario(turnos: list[list[str]]):
         * Armari, Valentino
         * Brizuela, Natanael Daniel
     """
-    letras = [turno[0][0].upper() for turno in turnos]
+    letras = [entrada_palabra[0][0].upper() for entrada_palabra in lista_con_definiciones]
     jugadas = []
     lista_palabras_ingresadas = []
 
-    for i in range(len(turnos)):
-        turno_actual = turnos[i]
-        turno_previo = turnos[i-1] if i > 0 else None
+    for i in range(len(lista_con_definiciones)):
+
+        turno_actual = lista_con_definiciones[i]
+        turno_previo = lista_con_definiciones[i-1] if i > 0 else None
         palabra_actual: str = turno_actual[0]
 
         mostrar_interfaz_del_juego(letras, jugadas, turno_actual, turno_previo)
@@ -33,10 +34,10 @@ def interaccion_con_usuario(turnos: list[list[str]]):
         else:
             jugadas.append('e')
 
-    mostrar_resumen(letras, jugadas, turnos, lista_palabras_ingresadas)
+    return (letras, jugadas, lista_palabras_ingresadas)
 
 
-def integracion_de_juego():
+def jugar_partida():
     """
     Esta función se encarga de integrar todas las funciones previas para que el juego opere correctamente.
 
@@ -51,10 +52,30 @@ def integracion_de_juego():
         * Brizuela, Natanael Daniel
     """
     lista_letras2 = obtener_letras_participantes()
-    definiciones_filtradas = ordenar_filtrar_lista_de_listas()
-    lista_con_definiciones = recibir_lista_definiciones_filtrado(definiciones_filtradas, lista_letras2)
+    diccionario_filtrado = ordenar_filtrar_lista_de_listas()
+    lista_con_definiciones = recibir_lista_definiciones_filtrado(diccionario_filtrado, lista_letras2)
 
-    interaccion_con_usuario(lista_con_definiciones)
+    letras, jugadas, intentos = interaccion_con_usuario(lista_con_definiciones)
+
+    mostrar_resumen(letras, jugadas, lista_con_definiciones, intentos)
+    return calcular_puntaje_de_la_partida(jugadas)
 
 
-integracion_de_juego()
+def desea_seguir_jugando():
+    ingreso = sacar_tildes(input("¿Desea seguir jugando? (ingrese 'si' o 'no'): ").lower())
+    while ingreso not in ('si', 'no'):
+        ingreso = sacar_tildes(input("Por favor, ingrese 'si' o 'no'. ¿Desea seguir jugando?: ").lower())
+    return ingreso == 'si'
+
+
+def jugar_mientras_el_usuario_quiera():
+    puntaje = 0
+    continuar_jugando = True
+    while continuar_jugando:
+        puntaje += jugar_partida()
+        continuar_jugando = desea_seguir_jugando()
+
+    print(f"Puntaje del juego: {puntaje} puntos")
+
+
+jugar_mientras_el_usuario_quiera()
