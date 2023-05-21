@@ -212,6 +212,9 @@ def recibir_ingreso_usuario(palabra_actual: str, generar_interfaz: any):
         elif len(ingreso_del_usuario) != len(palabra_actual):
             generar_interfaz()
             ingreso_del_usuario = input(f"{mostrar_texto_con_color('¡Error!', 'rojo')} Por favor, ingrese palabras de {len(palabra_actual)} letras: ")
+        elif palabra_actual[0] != ingreso_del_usuario[0]:
+            generar_interfaz()
+            ingreso_del_usuario = input(f"{mostrar_texto_con_color('¡Error!', 'rojo')} Por favor, la palabra debe comenzar con {palabra_actual[0].upper()}: ")   
         else:
             palabra_valida = ingreso_del_usuario
 
