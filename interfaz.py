@@ -313,7 +313,7 @@ def mostrar_total_de_palabras(diccionario_de_palabras: list[list[str]]):
     total_por_letra = total_palabras_por_letra(diccionario_de_palabras)
     total_en_diccionario = sum(total_por_letra.values())
 
-    for letra in total_por_letra:
+    for letra in LETRAS_SIN_TILDES:
         cantidad = total_por_letra[letra]
         if cantidad != 1:
             print(f"Hay {cantidad} palabras que comienzan con la letra '{letra}'.")
