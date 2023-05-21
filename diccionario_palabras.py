@@ -1,15 +1,13 @@
 import doctest
 import random
 
-from datos import obtener_lista_definiciones
-
 MINIMO_CARACTERES_PALABRAS = 5
 LETRAS_SIN_TILDES = 'abcdefghijklmnñopqrstuvwxyz'
 LETRAS_CON_TILDES = 'aábcdeéfghiíjklmnñoópqrstuúvwxyz'
 CANTIDAD_LETRAS = 10
 
 
-def ordenar_filtrar_lista_de_listas():
+def ordenar_filtrar_lista_de_listas(diccionario_de_palabras):
     """
     Filtra de acuerdo a minimo de caracteres que debe tener la palabra y ordena alfabeticamente.
 
@@ -23,14 +21,13 @@ def ordenar_filtrar_lista_de_listas():
         * Galvani, Juan Ignacio
         * Neme, Agustin Nadim
     """
-    lista_sin_orden = obtener_lista_definiciones()
     lista_con5_caracteres = []
 
-    for palabra in lista_sin_orden:
+    for palabra in diccionario_de_palabras:
         if len(palabra[0]) >= MINIMO_CARACTERES_PALABRAS:
             palabra_aplanada = aplanar_texto(palabra[0])
             definicion = palabra[1]
-            lista_con5_caracteres.append([palabra_aplanada,definicion])
+            lista_con5_caracteres.append([palabra_aplanada, definicion])
 
     lista = sorted(lista_con5_caracteres, key=lambda x: x[0])
 
@@ -81,6 +78,7 @@ def aplanar_texto(texto):
         .replace('ö', 'o')
         .replace('ü', 'u')
     )
+
 
 def cantidad_palabras_por_letra(letra: str, lista: list[list[str]]):
     """
@@ -139,7 +137,7 @@ def total_palabras_en_diccionario():
     return total
 
 
-def total_palabras_por_letra():
+def total_palabras_por_letra(diccionario_de_palabras):
     """
     Muestra diccionario con cantidad de palabras por letra que hay en el diccionario filtrado.
 
@@ -154,13 +152,16 @@ def total_palabras_por_letra():
         * Neme, Agustin Nadim
     """
 
-    dicc = {}
-    lista_ordenada = ordenar_filtrar_lista_de_listas()
+    cantidad_de_palabras_por_letra = {}
 
-    for letra in LETRAS_SIN_TILDES:
-        dicc[letra] = cantidad_palabras_por_letra(letra, lista_ordenada)
+    for palabra, definicion in diccionario_de_palabras:
+        letra_inicial = palabra[0]
+        if letra_inicial in cantidad_de_palabras_por_letra:
+            cantidad_de_palabras_por_letra[letra_inicial] = cantidad_de_palabras_por_letra[letra_inicial] + 1
+        else:
+            cantidad_de_palabras_por_letra[letra_inicial] = 1
 
-    return dicc
+    return cantidad_de_palabras_por_letra
 
 
 def obtener_letras_participantes():
@@ -217,12 +218,12 @@ def recibir_lista_definiciones_filtrado(lista_definiciones_filtrada: list[list[s
     return sorted(lista_palabras_participantes, key=lambda i: LETRAS_CON_TILDES.index(i[0][0]))
 
 
-
 def testear_cien_veces():
     for i in range(100):
         lista_letras2 = obtener_letras_participantes()
         diccionario_filtrado = ordenar_filtrar_lista_de_listas()
-        print(recibir_lista_definiciones_filtrado(diccionario_filtrado,lista_letras2))
+        print(recibir_lista_definiciones_filtrado(diccionario_filtrado, lista_letras2))
+
 
 if __name__ == '__main__':
     print(doctest.testmod())

@@ -1,3 +1,4 @@
+from datos import obtener_lista_definiciones
 from diccionario_palabras import *
 from interfaz import *
 
@@ -37,7 +38,7 @@ def interaccion_con_usuario(lista_con_definiciones: list[list[str]]):
     return (letras, jugadas, lista_palabras_ingresadas)
 
 
-def jugar_partida():
+def ejecutar_partida(diccionario_de_palabras):
     """
     Esta función se encarga de integrar todas las funciones previas para que el juego opere correctamente.
 
@@ -51,9 +52,8 @@ def jugar_partida():
         * Armari, Valentino
         * Brizuela, Natanael Daniel
     """
-    lista_letras2 = obtener_letras_participantes()
-    diccionario_filtrado = ordenar_filtrar_lista_de_listas()
-    lista_con_definiciones = recibir_lista_definiciones_filtrado(diccionario_filtrado, lista_letras2)
+    listas_participantes = obtener_letras_participantes()
+    lista_con_definiciones = recibir_lista_definiciones_filtrado(diccionario_de_palabras, listas_participantes)
 
     letras, jugadas, intentos = interaccion_con_usuario(lista_con_definiciones)
 
@@ -61,22 +61,20 @@ def jugar_partida():
     return calcular_puntaje_de_la_partida(jugadas)
 
 
-def desea_seguir_jugando():
-    ingreso = aplanar_texto(input("¿Desea seguir jugando? (ingrese 'si' o 'no'): "))
-    while ingreso not in ('si', 'no'):
-        ingreso = aplanar_texto(input("Por favor, ingrese 'si' o 'no'. ¿Desea seguir jugando?: "))
-    return ingreso == 'si'
+def ejecutar_juego():
+    diccionario_de_palabras = obtener_lista_definiciones()
+    diccionario_de_palabras = ordenar_filtrar_lista_de_listas(diccionario_de_palabras)
+    mostrar_total_de_palabras(diccionario_de_palabras)
 
-
-def jugar_mientras_el_usuario_quiera():
-    puntaje = 0
+    puntaje_total = 0
     continuar_jugando = True
-    mostrar_total_de_palabras()
     while continuar_jugando:
-        puntaje += jugar_partida()
-        continuar_jugando = desea_seguir_jugando()
+        puntaje_de_la_partida = ejecutar_partida(diccionario_de_palabras)
+        puntaje_total += puntaje_de_la_partida
+        continuar_jugando = preguntar_seguir_jugando()
 
-    print(f"Puntaje del juego: {puntaje} puntos")
+    print(f"Puntaje del juego: {puntaje_total} puntos")
 
 
-jugar_mientras_el_usuario_quiera()
+if __name__ == '__main__':
+    ejecutar_juego()
