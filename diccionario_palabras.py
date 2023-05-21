@@ -39,10 +39,10 @@ def aplanar_texto(texto):
     Pasa el texto a minuscula, elimina diéresis y tildes de las vocales.
 
     Parámetros:
-        * texto `str`: El texto que se desea obtener sin tildes.
+        * texto `str`: El texto que se desea aplanar.
 
     Retorna:  
-        `str`. En caso de que el texto sea una vocal, lo retorna sin tildes. Caso contrario, retorna el mismo texto ingresada.
+        `str`. El texto recibido, en minúscula y sin tildes ni diéresis.
 
     Autores:
         * Galvani, Juan Ignacio
@@ -67,16 +67,16 @@ def aplanar_texto(texto):
     return (
         texto
         .lower()
-        .replace('á', 'a')
-        .replace('é', 'e')
-        .replace('í', 'i')
-        .replace('ó', 'o')
-        .replace('ú', 'u')
-        .replace('ä', 'a')
-        .replace('ë', 'e')
-        .replace('ï', 'i')
-        .replace('ö', 'o')
-        .replace('ü', 'u')
+        .replace("á", "a")
+        .replace("é", "e")
+        .replace("í", "i")
+        .replace("ó", "o")
+        .replace("ú", "u")
+        .replace("ä", "a")
+        .replace("ë", "e")
+        .replace("ï", "i")
+        .replace("ö", "o")
+        .replace("ü", "u")
     )
 
 
@@ -225,6 +225,6 @@ def testear_cien_veces():
         print(recibir_lista_definiciones_filtrado(diccionario_filtrado, lista_letras2))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     print(doctest.testmod())
     testear_cien_veces()

@@ -180,7 +180,7 @@ def mostrar_interfaz_del_juego(letras: list[str], jugadas: list[str], turno_actu
     if turno_previo is not None:
         print()
         mostrar_feedback(jugadas, turno_previo)
-    print() 
+    print()
     mostrar_turno_actual(jugadas, turno_actual)
 
 
@@ -222,7 +222,7 @@ def recibir_ingreso_usuario(palabra_actual: str, generar_interfaz: any):
     return ingreso_del_usuario
 
 
-def calcular_puntaje_de_la_partida(jugadas):
+def calcular_puntaje_de_la_partida(jugadas: list[str]):
     """
     Esta función recibe una lista de jugadas (caracteres 'a' o 'e') y retorna el puntaje obtenido. Cada acierto suma 10 puntos y cada error resta 3 puntos.
 
@@ -296,12 +296,12 @@ def mostrar_resumen_de_la_partida(letras: list[str], jugadas: list[str], turnos:
     print(f"Puntaje de la partida: {puntaje_partida} puntos")
 
 
-def mostrar_total_de_palabras(diccionario_de_palabras):
+def mostrar_total_de_palabras(diccionario_de_palabras: list[list[str]]):
     """
     Esta función muestra el total de palabras del diccionario, primero letra por letra, y luego el total de todo el diccionario.
 
     Parámetros:
-        - No admite.
+        * diccionario_de_palabras `list[list[str]]`: El diccionario completo de palabras. Es una lista de listas, en cada item; el primer elemento es la palabra a adivinar, y el segundo es la definición de esa palabra.
 
     Retorna:
         `None`. Esta función únicamente manipula la consola para mostrar al la información.
@@ -326,6 +326,19 @@ def mostrar_total_de_palabras(diccionario_de_palabras):
 
 
 def preguntar_seguir_jugando():
+    """
+    Esta función se encarga de preguntarle al usuario si desea continuar jugando.
+
+    Parámetros:
+        No admite
+
+    Retorna:
+        `bool`. Retorna `True` si el usuario respondió afirmativamente y `False` en caso contrario.
+
+    Autores:
+        * Brizuela, Natanael Daniel
+        * Lewin, Iván
+    """
     ingreso_del_usuario = aplanar_texto(input("¿Desea seguir jugando?: "))
     while ingreso_del_usuario not in ('si', 'no'):
         print(f"Por favor, ingrese 'si' o 'no'. ", end="")
@@ -333,38 +346,35 @@ def preguntar_seguir_jugando():
     return ingreso_del_usuario == 'si'
 
 
-def verificar_intento(ingreso_usuario:str,palabra_actual:str):
+def verificar_intento(ingreso_usuario: str, palabra_actual: str):
     """
-    Esta funcion verifica que el ingreso del usuario se corresponda con la palabra a adivinar
+    Esta función verifica que el ingreso del usuario se corresponda con la palabra a adivinar.
 
     Parámetros:
-        - ingreso_usuario:str
-        - palabra_actual:str
+        * ingreso_usuario `str`: El ingreso del usuario.
+        * palabra_actual `str`: La palabra a adivinar.
 
     Retorna:
-        `str`. Retorna la letra 'a' si es acertada o 'e' en caso contrario
+        `str`. Retorna la letra 'a' si es un acierto o la letre 'e' en caso contrario.
 
     Autores:
         * Brizuela, Natanael Daniel
         * Lewin, Iván
+        * Neme, Agustin Nadim
 
     Esta funcion re
 
-    >>> verificar_intento("AlmuÉrzo","almuerzo")
+    >>> verificar_intento("AlmuÉrzo", "almuerzo")
     'a'
-    >>> verificar_intento("almurso","almuerzo")
+    >>> verificar_intento("almurso", "almuerzo")
     'e'
     """
-    acierto=""
-
+    acierto = ""
     if aplanar_texto(ingreso_usuario) == palabra_actual:
-        acierto="a"
-
-    else: 
-        acierto="e"
-
+        acierto = "a"
+    else:
+        acierto = "e"
     return acierto
-
 
 
 if __name__ == '__main__':

@@ -5,18 +5,19 @@ from interfaz import *
 
 def generar_letras(lista_con_definiciones: list[list[str]]):
     """
-    Esta funcion genera una lista de letras participantes.
+    Esta función genera una lista de letras participantes.
+
     Parámetros:
-        - lista_con_definiciones: list[list[str]]
+        * lista_con_definiciones: list[list[str]]
 
     Retorna:
-        - Letras: list[str]
+        `list[str]`
 
     Autores:
         * Armari, Valentino
         * Brizuela, Natanael Daniel
     """
-    letras=[entrada_palabra[0][0].upper() for entrada_palabra in lista_con_definiciones]
+    letras = [entrada_palabra[0][0].upper() for entrada_palabra in lista_con_definiciones]
 
     return letras
 
@@ -38,13 +39,12 @@ def ejecutar_partida(diccionario_de_palabras):
     listas_participantes = obtener_letras_participantes()
     lista_con_definiciones = recibir_lista_definiciones_filtrado(diccionario_de_palabras, listas_participantes)
 
-    letras=generar_letras(lista_con_definiciones)
+    letras = generar_letras(lista_con_definiciones)
 
     jugadas = []
     intentos = []
 
     for i in range(len(lista_con_definiciones)):
-
         turno_actual = lista_con_definiciones[i]
         turno_previo = lista_con_definiciones[i-1] if i > 0 else None
         palabra_actual: str = turno_actual[0]
@@ -53,7 +53,7 @@ def ejecutar_partida(diccionario_de_palabras):
         ingreso_usuario = recibir_ingreso_usuario(palabra_actual, lambda: mostrar_interfaz_del_juego(letras, jugadas, turno_actual))
         intentos.append(ingreso_usuario)
 
-        acierto=verificar_intento(ingreso_usuario,palabra_actual)
+        acierto = verificar_intento(ingreso_usuario, palabra_actual)
         jugadas.append(acierto)
 
     mostrar_resumen_de_la_partida(letras, jugadas, lista_con_definiciones, intentos)
@@ -78,4 +78,3 @@ def ejecutar_juego():
 
 if __name__ == '__main__':
     ejecutar_juego()
-    
