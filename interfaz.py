@@ -180,7 +180,7 @@ def mostrar_interfaz_del_juego(letras: list[str], jugadas: list[str], turno_actu
     if turno_previo is not None:
         print()
         mostrar_feedback(jugadas, turno_previo)
-    print()
+    print() 
     mostrar_turno_actual(jugadas, turno_actual)
 
 
@@ -326,6 +326,40 @@ def preguntar_seguir_jugando():
         print(f"Por favor, ingrese 'si' o 'no'. ", end="")
         ingreso_del_usuario = aplanar_texto(input("¿Desea seguir jugando?: "))
     return ingreso_del_usuario == 'si'
+
+
+def verificar_intento(ingreso_usuario:str,palabra_actual:str):
+    """
+    Esta funcion verifica que el ingreso del usuario se corresponda con la palabra a adivinar
+
+    Parámetros:
+        - ingreso_usuario:str
+        - palabra_actual:str
+
+    Retorna:
+        `str`. Retorna la letra 'a' si es acertada o 'e' en caso contrario
+
+    Autores:
+        * Brizuela, Natanael Daniel
+        * Lewin, Iván
+
+    Esta funcion re
+
+    >>> verificar_intento("AlmuÉrzo","almuerzo")
+    'a'
+    >>> verificar_intento("almurso","almuerzo")
+    'e'
+    """
+    acierto=""
+
+    if aplanar_texto(ingreso_usuario) == palabra_actual:
+        acierto="a"
+
+    else: 
+        acierto="e"
+
+    return acierto
+
 
 
 if __name__ == '__main__':
