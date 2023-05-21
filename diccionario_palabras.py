@@ -6,6 +6,7 @@ from datos import obtener_lista_definiciones
 MINIMO_CARACTERES_PALABRAS = 5
 LETRAS_SIN_TILDES = 'abcdefghijklmnñopqrstuvwxyz'
 LETRAS_CON_TILDES = 'aábcdeéfghiíjklmnñoópqrstuúvwxyz'
+CANTIDAD_LETRAS = 10
 
 
 def ordenar_filtrar_lista_de_listas():
@@ -177,7 +178,7 @@ def obtener_letras_participantes():
         * Neme, Agustin Nadim
     """
 
-    return random.sample(LETRAS_SIN_TILDES, 10)
+    return random.sample(LETRAS_SIN_TILDES, CANTIDAD_LETRAS)
 
 
 def recibir_lista_definiciones_filtrado(lista_definiciones_filtrada: list[list[str]], letras_participantes: list[str]):
@@ -225,4 +226,4 @@ def testear_cien_veces():
 
 if __name__ == '__main__':
     print(doctest.testmod())
-    #testear_cien_veces()
+    testear_cien_veces()
