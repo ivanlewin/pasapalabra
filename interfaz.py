@@ -1,5 +1,6 @@
 import os
 import doctest
+from diccionario_palabras import *
 
 
 def mostrar_texto_con_color(texto: str, color: str):
@@ -200,27 +201,41 @@ def recibir_ingreso_usuario(palabra_actual: str, generar_interfaz: any):
     """
 
     palabra_valida = None
-    ingreso_del_usuario = input("Ingrese palabra: ")
+    ingreso_del_usuario = aplanar_texto(input("Ingrese una palabra: "))
 
     while palabra_valida is None:
-        if len(ingreso_del_usuario) == 0:
+        if len(ingreso_del_usuario) != len(palabra_actual):
             generar_interfaz()
-            ingreso_del_usuario = input(f"{mostrar_texto_con_color('¡Error!', 'rojo')} Por favor, ingrese palabras de {len(palabra_actual)} letras: ")
+            print(f"{mostrar_texto_con_color('¡Error!', 'rojo')} Su ingreso debe ser una palabra de {len(palabra_actual)} letras. ", end="")
+            ingreso_del_usuario = aplanar_texto(input("Ingrese una palabra: "))
         elif not ingreso_del_usuario.isalpha():
             generar_interfaz()
-            ingreso_del_usuario = input(f"{mostrar_texto_con_color('¡Error!', 'rojo')} Por favor, ingrese solo letras: ")
-        elif len(ingreso_del_usuario) != len(palabra_actual):
+            print(f"{mostrar_texto_con_color('¡Error!', 'rojo')} Su ingreso solo debe contener letras. ", end="")
+            ingreso_del_usuario = aplanar_texto(input("Ingrese una palabra: "))
+        elif palabra_actual[0] != ingreso_del_usuario[0]:
             generar_interfaz()
-            ingreso_del_usuario = input(f"{mostrar_texto_con_color('¡Error!', 'rojo')} Por favor, ingrese palabras de {len(palabra_actual)} letras: ")
+            print(f"{mostrar_texto_con_color('¡Error!', 'rojo')} Su ingreso debe comenzar con la letra '{palabra_actual[0].upper()}'. ", end="")
+            ingreso_del_usuario = aplanar_texto(input("Ingrese una palabra: "))
         else:
             palabra_valida = ingreso_del_usuario
 
     return ingreso_del_usuario
 
 
-def calcular_puntaje_de_la_partida(jugadas):
+def calcular_puntaje_de_la_partida(jugadas: list[str]):
     """
     Esta función recibe una lista de jugadas (caracteres 'a' o 'e') y retorna el puntaje obtenido. Cada acierto suma 10 puntos y cada error resta 3 puntos.
+
+    Parámetros:
+        * jugadas `list['a', 'e']`: El resultado de las jugadas ya realizadas por el usuario (debe ser una lista donde cada elemento es o bien 'a', para indicar un acierto, o bien 'e' para indicar un error).
+
+    Retorna:
+        `int`. Un entero que representa el puntaje de la partida.
+
+    Autores:
+        * Armari, Valentino
+        * Lewin, Iván
+
     >>> calcular_puntaje_de_la_partida([])
     0
     >>> calcular_puntaje_de_la_partida(['a', 'a', 'a'])
@@ -232,14 +247,12 @@ def calcular_puntaje_de_la_partida(jugadas):
     >>> calcular_puntaje_de_la_partida(['e', 'e', 'e'])
     -9
     """
-
     aciertos = jugadas.count('a')
     errores = jugadas.count('e')
-
     return (aciertos * 10) + (errores * -3)
 
 
-def mostrar_resumen(letras: list[str], jugadas: list[str], turnos: list[list[str]], lista_palabras_ingresadas: list[str]):
+def mostrar_resumen_de_la_partida(letras: list[str], jugadas: list[str], turnos: list[list[str]], lista_palabras_ingresadas: list[str]):
     """
     Esta función muestra el resumen luego de finalizar el juego.
 
@@ -275,8 +288,93 @@ def mostrar_resumen(letras: list[str], jugadas: list[str], turnos: list[list[str
         print(texto)
 
     print()
+    aciertos = jugadas.count('a')
+    errores = jugadas.count('e')
+    print(f"Aciertos: {mostrar_texto_con_color(str(aciertos), 'verde')}")
+    print(f"Errores: {mostrar_texto_con_color(str(errores), 'rojo')}")
+    print()
     print(f"Puntaje de la partida: {puntaje_partida} puntos")
 
+
+def mostrar_total_de_palabras(diccionario_de_palabras: list[list[str]]):
+    """
+    Esta función muestra el total de palabras del diccionario, primero letra por letra, y luego el total de todo el diccionario.
+
+    Parámetros:
+        * diccionario_de_palabras `list[list[str]]`: El diccionario completo de palabras. Es una lista de listas, en cada item; el primer elemento es la palabra a adivinar, y el segundo es la definición de esa palabra.
+
+    Retorna:
+        `None`. Esta función únicamente manipula la consola para mostrar al la información.
+
+    Autores:
+        * Brizuela, Natanael Daniel
+        * Lewin, Iván
+    """
+    total_por_letra = total_palabras_por_letra(diccionario_de_palabras)
+    total_en_diccionario = sum(total_por_letra.values())
+
+    for letra in LETRAS_SIN_TILDES:
+        cantidad = total_por_letra[letra]
+        if cantidad != 1:
+            print(f"Hay {cantidad} palabras que comienzan con la letra '{letra}'.")
+        else:
+            print(f"Hay {cantidad} palabra que comienza con la letra '{letra}'.")
+    print()
+    print(f"En total hay {total_en_diccionario} palabras.")
+    print()
+    input("Presione Enter (Inicio) para iniciar el juego ")
+
+
+def preguntar_seguir_jugando():
+    """
+    Esta función se encarga de preguntarle al usuario si desea continuar jugando.
+
+    Parámetros:
+        No admite
+
+    Retorna:
+        `bool`. Retorna `True` si el usuario respondió afirmativamente y `False` en caso contrario.
+
+    Autores:
+        * Brizuela, Natanael Daniel
+        * Lewin, Iván
+    """
+    ingreso_del_usuario = aplanar_texto(input("¿Desea seguir jugando?: "))
+    while ingreso_del_usuario not in ('si', 'no'):
+        print(f"Por favor, ingrese 'si' o 'no'. ", end="")
+        ingreso_del_usuario = aplanar_texto(input("¿Desea seguir jugando?: "))
+    return ingreso_del_usuario == 'si'
+
+
+def verificar_intento(ingreso_usuario: str, palabra_actual: str):
+    """
+    Esta función verifica que el ingreso del usuario se corresponda con la palabra a adivinar.
+
+    Parámetros:
+        * ingreso_usuario `str`: El ingreso del usuario.
+        * palabra_actual `str`: La palabra a adivinar.
+
+    Retorna:
+        `str`. Retorna la letra 'a' si es un acierto o la letre 'e' en caso contrario.
+
+    Autores:
+        * Brizuela, Natanael Daniel
+        * Lewin, Iván
+        * Neme, Agustin Nadim
+
+    Esta funcion re
+
+    >>> verificar_intento("AlmuÉrzo", "almuerzo")
+    'a'
+    >>> verificar_intento("almurso", "almuerzo")
+    'e'
+    """
+    acierto = ""
+    if aplanar_texto(ingreso_usuario) == palabra_actual:
+        acierto = "a"
+    else:
+        acierto = "e"
+    return acierto
 
 
 if __name__ == '__main__':
