@@ -197,15 +197,13 @@ def recibir_lista_definiciones_filtrado(lista_definiciones_filtrada: list[list[s
     return sorted(lista_palabras_participantes, key=lambda i: LETRAS_CON_TILDES.index(i[0][0]))
 
 
-# FUNCION QUE ITERA 100 VECES PARA PRUEBAS
-"""
-FUNCION QUE ITERA 100 VECES PARA PRUEBAS
-for i in range(100):
-    lista_letras2 = obtener_letras_participantes()
-    diccionario_filtrado = ordenar_filtrar_diccionario()
-    print(recibir_lista_diccionario_filtrado(diccionario_filtrado,lista_letras2))
 
-"""
+def testear_cien_veces():
+    for i in range(100):
+        lista_letras2 = obtener_letras_participantes()
+        diccionario_filtrado = ordenar_filtrar_lista_de_listas()
+        print(recibir_lista_definiciones_filtrado(diccionario_filtrado,lista_letras2))
 
 if __name__ == '__main__':
     print(doctest.testmod())
+    #testear_cien_veces()
