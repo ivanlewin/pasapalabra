@@ -1,6 +1,6 @@
 import os
 import doctest
-
+from diccionario_palabras import *
 
 def mostrar_texto_con_color(texto: str, color: str):
     """
@@ -280,7 +280,20 @@ def mostrar_resumen(letras: list[str], jugadas: list[str], turnos: list[list[str
     print()
     print(f"Puntaje de la partida: {puntaje_partida} puntos")
 
+def mostrar_total_de_palabras():
 
+    total_por_letra = total_palabras_por_letra()
+    total_en_diccionario = total_palabras_en_diccionario()
+
+    for letra in total_por_letra:
+        cantidad = total_por_letra[letra]
+        if cantidad != 1:
+            print(f"Hay {cantidad} palabras que comienzan con {letra}")
+        else:
+            print(f"Hay {cantidad} palabra que comienza con {letra}")
+    print()
+    print(f"En el diccionario hay un total de {total_en_diccionario} palabras.")
+    input("Presione enter para continuar:")
 
 if __name__ == '__main__':
     print(doctest.testmod())

@@ -29,7 +29,7 @@ def interaccion_con_usuario(lista_con_definiciones: list[list[str]]):
         mostrar_interfaz_del_juego(letras, jugadas, turno_actual, turno_previo)
         ingreso_usuario = recibir_ingreso_usuario(palabra_actual, lambda: mostrar_interfaz_del_juego(letras, jugadas, turno_actual))
         lista_palabras_ingresadas.append(ingreso_usuario)
-        if ingreso_usuario.lower() == palabra_actual.lower():
+        if aplanar_texto(ingreso_usuario) == palabra_actual:
             jugadas.append('a')
         else:
             jugadas.append('e')
@@ -62,15 +62,16 @@ def jugar_partida():
 
 
 def desea_seguir_jugando():
-    ingreso = sacar_tildes(input("¿Desea seguir jugando? (ingrese 'si' o 'no'): ").lower())
+    ingreso = aplanar_texto(input("¿Desea seguir jugando? (ingrese 'si' o 'no'): "))
     while ingreso not in ('si', 'no'):
-        ingreso = sacar_tildes(input("Por favor, ingrese 'si' o 'no'. ¿Desea seguir jugando?: ").lower())
+        ingreso = aplanar_texto(input("Por favor, ingrese 'si' o 'no'. ¿Desea seguir jugando?: "))
     return ingreso == 'si'
 
 
 def jugar_mientras_el_usuario_quiera():
     puntaje = 0
     continuar_jugando = True
+    mostrar_total_de_palabras()
     while continuar_jugando:
         puntaje += jugar_partida()
         continuar_jugando = desea_seguir_jugando()
