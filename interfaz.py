@@ -2,6 +2,7 @@ import os
 import doctest
 from diccionario_palabras import *
 
+
 def mostrar_texto_con_color(texto: str, color: str):
     """
     Esta función recibe un texto y le agrega códigos de color del estandar ANSI para que se visualicen en la consola de color verde o rojo
@@ -200,21 +201,21 @@ def recibir_ingreso_usuario(palabra_actual: str, generar_interfaz: any):
     """
 
     palabra_valida = None
-    ingreso_del_usuario = input("Ingrese palabra: ")
+    ingreso_del_usuario = aplanar_texto(input("Ingrese una palabra: "))
 
     while palabra_valida is None:
-        if len(ingreso_del_usuario) == 0:
+        if len(ingreso_del_usuario) != len(palabra_actual):
             generar_interfaz()
-            ingreso_del_usuario = input(f"{mostrar_texto_con_color('¡Error!', 'rojo')} Por favor, ingrese palabras de {len(palabra_actual)} letras: ")
+            print(f"{mostrar_texto_con_color('¡Error!', 'rojo')} Su ingreso debe ser una palabra de {len(palabra_actual)} letras. ", end="")
+            ingreso_del_usuario = aplanar_texto(input("Ingrese una palabra: "))
         elif not ingreso_del_usuario.isalpha():
             generar_interfaz()
-            ingreso_del_usuario = input(f"{mostrar_texto_con_color('¡Error!', 'rojo')} Por favor, ingrese solo letras: ")
-        elif len(ingreso_del_usuario) != len(palabra_actual):
-            generar_interfaz()
-            ingreso_del_usuario = input(f"{mostrar_texto_con_color('¡Error!', 'rojo')} Por favor, ingrese palabras de {len(palabra_actual)} letras: ")
+            print(f"{mostrar_texto_con_color('¡Error!', 'rojo')} Su ingreso solo debe contener letras. ", end="")
+            ingreso_del_usuario = aplanar_texto(input("Ingrese una palabra: "))
         elif palabra_actual[0] != ingreso_del_usuario[0]:
             generar_interfaz()
-            ingreso_del_usuario = input(f"{mostrar_texto_con_color('¡Error!', 'rojo')} Por favor, la palabra debe comenzar con {palabra_actual[0].upper()}: ")   
+            print(f"{mostrar_texto_con_color('¡Error!', 'rojo')} Su ingreso debe comenzar con la letra '{palabra_actual[0].upper()}'. ", end="")
+            ingreso_del_usuario = aplanar_texto(input("Ingrese una palabra: "))
         else:
             palabra_valida = ingreso_del_usuario
 
@@ -224,6 +225,17 @@ def recibir_ingreso_usuario(palabra_actual: str, generar_interfaz: any):
 def calcular_puntaje_de_la_partida(jugadas):
     """
     Esta función recibe una lista de jugadas (caracteres 'a' o 'e') y retorna el puntaje obtenido. Cada acierto suma 10 puntos y cada error resta 3 puntos.
+
+    Parámetros:
+        * jugadas `list['a', 'e']`: El resultado de las jugadas ya realizadas por el usuario (debe ser una lista donde cada elemento es o bien 'a', para indicar un acierto, o bien 'e' para indicar un error).
+
+    Retorna:
+        `int`. Un entero que representa el puntaje de la partida.
+
+    Autores:
+        * Armari, Valentino
+        * Lewin, Iván
+
     >>> calcular_puntaje_de_la_partida([])
     0
     >>> calcular_puntaje_de_la_partida(['a', 'a', 'a'])
@@ -235,10 +247,8 @@ def calcular_puntaje_de_la_partida(jugadas):
     >>> calcular_puntaje_de_la_partida(['e', 'e', 'e'])
     -9
     """
-
     aciertos = jugadas.count('a')
     errores = jugadas.count('e')
-
     return (aciertos * 10) + (errores * -3)
 
 
@@ -280,20 +290,43 @@ def mostrar_resumen(letras: list[str], jugadas: list[str], turnos: list[list[str
     print()
     print(f"Puntaje de la partida: {puntaje_partida} puntos")
 
-def mostrar_total_de_palabras():
 
-    total_por_letra = total_palabras_por_letra()
-    total_en_diccionario = total_palabras_en_diccionario()
+def mostrar_total_de_palabras(diccionario_de_palabras):
+    """
+    Esta función muestra el total de palabras del diccionario, primero letra por letra, y luego el total de todo el diccionario.
+
+    Parámetros:
+        - No admite.
+
+    Retorna:
+        `None`. Esta función únicamente manipula la consola para mostrar al la información.
+
+    Autores:
+        * Brizuela, Natanael Daniel
+        * Lewin, Iván
+    """
+    total_por_letra = total_palabras_por_letra(diccionario_de_palabras)
+    total_en_diccionario = sum(total_por_letra.values())
 
     for letra in total_por_letra:
         cantidad = total_por_letra[letra]
         if cantidad != 1:
-            print(f"Hay {cantidad} palabras que comienzan con {letra}")
+            print(f"Hay {cantidad} palabras que comienzan con la letra '{letra}'.")
         else:
-            print(f"Hay {cantidad} palabra que comienza con {letra}")
+            print(f"Hay {cantidad} palabra que comienza con la letra '{letra}'.")
     print()
-    print(f"En el diccionario hay un total de {total_en_diccionario} palabras.")
-    input("Presione enter para continuar:")
+    print(f"En total hay {total_en_diccionario} palabras.")
+    print()
+    input("Presione Enter (Inicio) para iniciar el juego.")
+
+
+def preguntar_seguir_jugando():
+    ingreso_del_usuario = aplanar_texto(input("¿Desea seguir jugando?: "))
+    while ingreso_del_usuario not in ('si', 'no'):
+        print(f"Por favor, ingrese 'si' o 'no'. ", end="")
+        ingreso_del_usuario = aplanar_texto(input("¿Desea seguir jugando?: "))
+    return ingreso_del_usuario == 'si'
+
 
 if __name__ == '__main__':
     print(doctest.testmod())
