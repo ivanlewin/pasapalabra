@@ -252,7 +252,7 @@ def calcular_puntaje_de_la_partida(jugadas):
     return (aciertos * 10) + (errores * -3)
 
 
-def mostrar_resumen(letras: list[str], jugadas: list[str], turnos: list[list[str]], lista_palabras_ingresadas: list[str]):
+def mostrar_resumen_de_la_partida(letras: list[str], jugadas: list[str], turnos: list[list[str]], lista_palabras_ingresadas: list[str]):
     """
     Esta función muestra el resumen luego de finalizar el juego.
 
@@ -288,6 +288,11 @@ def mostrar_resumen(letras: list[str], jugadas: list[str], turnos: list[list[str
         print(texto)
 
     print()
+    aciertos = jugadas.count('a')
+    errores = jugadas.count('e')
+    print(f"Aciertos: {mostrar_texto_con_color(str(aciertos), 'verde')}")
+    print(f"Errores: {mostrar_texto_con_color(str(errores), 'rojo')}")
+    print()
     print(f"Puntaje de la partida: {puntaje_partida} puntos")
 
 
@@ -317,7 +322,7 @@ def mostrar_total_de_palabras(diccionario_de_palabras):
     print()
     print(f"En total hay {total_en_diccionario} palabras.")
     print()
-    input("Presione Enter (Inicio) para iniciar el juego.")
+    input("Presione Enter (Inicio) para iniciar el juego ")
 
 
 def preguntar_seguir_jugando():

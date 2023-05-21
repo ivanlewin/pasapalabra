@@ -56,7 +56,7 @@ def ejecutar_partida(diccionario_de_palabras):
         acierto=verificar_intento(ingreso_usuario,palabra_actual)
         jugadas.append(acierto)
 
-    mostrar_resumen(letras, jugadas, lista_con_definiciones, intentos)
+    mostrar_resumen_de_la_partida(letras, jugadas, lista_con_definiciones, intentos)
     return calcular_puntaje_de_la_partida(jugadas)
 
 
@@ -70,6 +70,7 @@ def ejecutar_juego():
     while continuar_jugando:
         puntaje_de_la_partida = ejecutar_partida(diccionario_de_palabras)
         puntaje_total += puntaje_de_la_partida
+        print()
         continuar_jugando = preguntar_seguir_jugando()
 
     print(f"Puntaje del juego: {puntaje_total} puntos")
