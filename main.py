@@ -36,8 +36,8 @@ def ejecutar_partida(diccionario_de_palabras):
         * Armari, Valentino
         * Brizuela, Natanael Daniel
     """
-    listas_participantes = obtener_letras_participantes()
-    lista_con_definiciones = recibir_lista_definiciones_filtrado(diccionario_de_palabras, listas_participantes)
+    letras_participantes = obtener_letras_participantes()
+    lista_con_definiciones = recibir_lista_definiciones_filtrado(diccionario_de_palabras, letras_participantes)
 
     letras = generar_letras(lista_con_definiciones)
 

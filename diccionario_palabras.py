@@ -1,6 +1,8 @@
 import doctest
 import random
 
+from datos import obtener_lista_definiciones
+
 MINIMO_CARACTERES_PALABRAS = 5
 LETRAS_SIN_TILDES = 'abcdefghijklmnñopqrstuvwxyz'
 LETRAS_CON_TILDES = 'aábcdeéfghiíjklmnñoópqrstuúvwxyz'
@@ -220,9 +222,10 @@ def recibir_lista_definiciones_filtrado(lista_definiciones_filtrada: list[list[s
 
 def testear_cien_veces():
     for i in range(100):
-        lista_letras2 = obtener_letras_participantes()
-        diccionario_filtrado = ordenar_filtrar_lista_de_listas()
-        print(recibir_lista_definiciones_filtrado(diccionario_filtrado, lista_letras2))
+        letras_participantes = obtener_letras_participantes()
+        diccionario_de_palabras = obtener_lista_definiciones()
+        diccionario_de_palabras = ordenar_filtrar_lista_de_listas(diccionario_de_palabras)
+        print(recibir_lista_definiciones_filtrado(diccionario_de_palabras, letras_participantes))
 
 
 if __name__ == "__main__":
