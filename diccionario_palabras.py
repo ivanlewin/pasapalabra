@@ -27,16 +27,18 @@ def ordenar_filtrar_lista_de_listas():
 
     for palabra in lista_sin_orden:
         if len(palabra[0]) >= MINIMO_CARACTERES_PALABRAS:
-            lista_con5_caracteres.append(palabra)
+            palabra_aplanada = aplanar_texto(palabra[0])
+            definicion = palabra[1]
+            lista_con5_caracteres.append([palabra_aplanada,definicion])
 
     lista = sorted(lista_con5_caracteres, key=lambda x: x[0])
 
     return lista
 
 
-def sacar_tildes(texto):
+def aplanar_texto(texto):
     """
-    Reemplaza las vocales acentuadas por mismas vocales no acentuadas en el texto ingresado.
+    Pasa el texto a minuscula, elimina diéresis y tildes de las vocales.
 
     Parámetros:
         * texto `str`: El texto que se desea obtener sin tildes.
@@ -48,19 +50,36 @@ def sacar_tildes(texto):
         * Galvani, Juan Ignacio
         * Neme, Agustin Nadim
 
-    >>> sacar_tildes("néctar")
+    >>> aplanar_texto("néctar")
     'nectar'
-    >>> sacar_tildes("vaivén")
+    >>> aplanar_texto("vaivén")
     'vaiven'
-    >>> sacar_tildes("yesería")
+    >>> aplanar_texto("yesería")
     'yeseria'
-    >>> sacar_tildes("vacilación")
+    >>> aplanar_texto("vacilación")
     'vacilacion'
-    >>> sacar_tildes("búho")
+    >>> aplanar_texto("búho")
     'buho'
+    >>> aplanar_texto("PERRO")
+    'perro'
+    >>> aplanar_texto("PiNgüInO")
+    'pinguino'
     """
-    return texto.replace('á', 'a').replace('é', 'e').replace('í', 'i').replace('ó', 'o').replace('ú', 'u')
 
+    return (
+        texto
+        .lower()
+        .replace('á', 'a')
+        .replace('é', 'e')
+        .replace('í', 'i')
+        .replace('ó', 'o')
+        .replace('ú', 'u')
+        .replace('ä', 'a')
+        .replace('ë', 'e')
+        .replace('ï', 'i')
+        .replace('ö', 'o')
+        .replace('ü', 'u')
+    )
 
 def cantidad_palabras_por_letra(letra: str, lista: list[list[str]]):
     """
@@ -88,7 +107,7 @@ def cantidad_palabras_por_letra(letra: str, lista: list[list[str]]):
 
     for palabra in lista:
         primera_letra = palabra[0][0]
-        primera_letra_sin_tildes = sacar_tildes(primera_letra)
+        primera_letra_sin_tildes = aplanar_texto(primera_letra)
         if primera_letra_sin_tildes == letra:
             palabras_con_letra.append(palabra)
 
@@ -185,7 +204,7 @@ def recibir_lista_definiciones_filtrado(lista_definiciones_filtrada: list[list[s
         for item in lista_definiciones_filtrada:
 
             palabra = item[0]
-            palabra_sin_tildes = sacar_tildes(palabra)
+            palabra_sin_tildes = aplanar_texto(palabra)
 
             if palabra_sin_tildes[0] == letra:
                 definicion = item[1]
