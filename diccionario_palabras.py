@@ -14,10 +14,11 @@ def ordenar_filtrar_lista_de_listas(diccionario_de_palabras):
     Filtra de acuerdo a minimo de caracteres que debe tener la palabra y ordena alfabeticamente.
 
     Parámetros:
-        No recibe ningun parametro, manipula la lista de listas provista en la consigna.
+        * lista `list[list[str]]`: Primer elemento es la palabra y el segundo elemento es la definicion de la misma. 
 
     Retorna:
-        Lista de listas con aquellas palabras que tengan una longitud mayor o igual a 5 caracteres.
+        * lista `list[list[str]]`: En cada lista anidada, el primer elemento es una palabara y el segundo, la definición de la misma, 
+        con aquellas palabras que tengan una longitud mayor o igual a 5 caracteres.
 
     Autores:
         * Galvani, Juan Ignacio
