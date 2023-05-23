@@ -37,7 +37,7 @@ def limpiar_interfaz():
     Esta función limpia la consola del usuario.
 
     Parámetros:
-        No admite
+        No recibe
 
     Retorna:
         `None`. Esta función únicamente manipula la consola para mostrar al usuario la interfaz del juego.
@@ -330,7 +330,7 @@ def preguntar_seguir_jugando():
     Esta función se encarga de preguntarle al usuario si desea continuar jugando.
 
     Parámetros:
-        No admite
+        No recibe
 
     Retorna:
         `bool`. Retorna `True` si el usuario respondió afirmativamente y `False` en caso contrario.

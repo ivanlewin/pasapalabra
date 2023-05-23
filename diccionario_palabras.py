@@ -175,7 +175,7 @@ def obtener_letras_participantes():
         No recibe
 
     Retorna:
-        Lista de 10 letras aleatorias permitidas para el rosco
+        `list[str]` Una lista de 10 letras aleatorias permitidas para el rosco
 
     Autores:
         * Galvani, Juan Ignacio
@@ -190,11 +190,11 @@ def recibir_lista_definiciones_filtrado(lista_definiciones_filtrada: list[list[s
     Retorna una lista de palabras seleccionadas aleatoriamente, donde cada palabra comienza con una de las letras participantes.
 
     Parámetros:
-        lista_definiciones_filtrada 'list[str]': 
-        letras_participantes 'list[str]' : Una lista que contiene letras aleatorias permitidas para usar en el rosco.
+        lista_definiciones_filtrada `list[str]`: 
+        letras_participantes `list[str]` : Una lista que contiene letras aleatorias permitidas para usar en el rosco.
 
     Retorna:
-        'list' : Una lista de definiciones validas para jugar ordenadas de forma alfabetica, unicamente con aquellas palabras dentro 'letras_parcipantes'.
+        `list`. Una lista de definiciones validas para jugar ordenadas de forma alfabetica, unicamente con aquellas palabras dentro `letras_parcipantes'.
 
     Autores:
         * Galvani, Juan Ignacio
@@ -222,6 +222,19 @@ def recibir_lista_definiciones_filtrado(lista_definiciones_filtrada: list[list[s
 
 
 def testear_cien_veces():
+    """
+    Esta función ejecuta 100 veces las funciones que utilizamos para obtener el rosco y la lista aleatoria de letras participantes del juego.
+
+    Parámetros:
+        No recibe
+
+    Retorna:
+        `None`
+
+    Autores:
+        * Galvani, Juan Ignacio
+        * Neme, Agustin Nadim
+    """
     for i in range(100):
         letras_participantes = obtener_letras_participantes()
         diccionario_de_palabras = obtener_lista_definiciones()
@@ -231,4 +244,4 @@ def testear_cien_veces():
 
 if __name__ == "__main__":
     print(doctest.testmod())
-    testear_cien_veces()
+    # testear_cien_veces()

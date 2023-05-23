@@ -27,7 +27,7 @@ def ejecutar_partida(diccionario_de_palabras):
     Esta función se encarga de integrar todas las funciones previas para que el juego opere correctamente.
 
     Parámetros:
-        - No admite
+        - No recibe
 
     Retorna:
         `None`
@@ -61,6 +61,19 @@ def ejecutar_partida(diccionario_de_palabras):
 
 
 def ejecutar_juego():
+    """
+    Esta función es la principal orquestadora del juego. Se encarga de obtener el rosco, llevar el conteo del puntaje y permitir al usuario juegue tantas partidas como desee.
+
+    Parámetros:
+        - No recibe
+
+    Retorna:
+        `None`
+
+    Autores:
+        * Armari, Valentino
+        * Brizuela, Natanael Daniel
+    """
     diccionario_de_palabras = obtener_lista_definiciones()
     diccionario_de_palabras = ordenar_filtrar_lista_de_listas(diccionario_de_palabras)
     mostrar_total_de_palabras(diccionario_de_palabras)
