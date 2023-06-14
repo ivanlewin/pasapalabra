@@ -344,11 +344,13 @@ def mostrar_total_de_palabras(diccionario_de_palabras: List[List[str]]):
     letras = ordenar_en_español(list(letras))
 
     for letra in letras:
-        cantidad = cantidad_de_palabras_por_letra[letra]
-        if cantidad != 1:
-            print(f"Hay {cantidad} palabras que comienzan con la letra '{letra}'.")
-        else:
+        cantidad = cantidad_de_palabras_por_letra[letra] if letra in cantidad_de_palabras_por_letra.keys() else None
+        if cantidad is None or cantidad == 0:
+            print(f"No hay palabras que comienzan con la letra '{letra}'.")
+        elif cantidad == 1:
             print(f"Hay {cantidad} palabra que comienza con la letra '{letra}'.")
+        else:
+            print(f"Hay {cantidad} palabras que comienzan con la letra '{letra}'.")
     print()
     print(f"En total hay {cantidad_total_de_palabras} palabras.")
     print()

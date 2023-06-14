@@ -1,5 +1,7 @@
 from typing import List
 from interfaz import *
+from manejo_archivos import *
+from diccionario_palabras import *
 
 LONGITUD_PALABRA_MINIMA = 5
 CANTIDAD_LETRAS_ROSCO = 10
@@ -58,6 +60,11 @@ def ejecutar_juego():
     """
     diccionario_de_palabras = generar_diccionario(LONGITUD_PALABRA_MINIMA)
     mostrar_total_de_palabras(diccionario_de_palabras)
+
+    # diccionario_de_palabras = devolver_diccionario()        #creo el diccionario de palabras
+    # lista_del_diccionario=hacerlo_lista(diccionario_de_palabras)    #para poder usarlo sin modificar nuestra estructura lo convierto a una lista
+    # diccionario_de_palabras = ordenar_filtrar_lista_de_listas(lista_del_diccionario)
+    # mostrar_total_de_palabras(lista_del_diccionario)
 
     puntaje_total = 0
     continuar_jugando = True
