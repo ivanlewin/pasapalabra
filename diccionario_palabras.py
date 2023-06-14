@@ -1,7 +1,7 @@
 import doctest
 import random
 
-from datos import obtener_lista_definiciones
+#from datos import obtener_lista_definiciones
 
 MINIMO_CARACTERES_PALABRAS = 5
 LETRAS_SIN_TILDES = 'abcdefghijklmnñopqrstuvwxyz'
@@ -245,3 +245,6 @@ def testear_cien_veces():
 if __name__ == "__main__":
     print(doctest.testmod())
     # testear_cien_veces()
+
+
+#arreglar el probelma de coso

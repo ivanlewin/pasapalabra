@@ -314,11 +314,11 @@ def mostrar_total_de_palabras(diccionario_de_palabras: list[list[str]]):
     total_en_diccionario = sum(total_por_letra.values())
 
     for letra in LETRAS_SIN_TILDES:
-        cantidad = total_por_letra[letra]
-        if cantidad != 1:
+        cantidad = total_por_letra[letra] if letra in total_por_letra.keys() else None
+        if cantidad is not None:
             print(f"Hay {cantidad} palabras que comienzan con la letra '{letra}'.")
         else:
-            print(f"Hay {cantidad} palabra que comienza con la letra '{letra}'.")
+            print(f"no Hay  palabra que comienza con la letra '{letra}'.")                    #para que funcione tuve que contar con la posiblidad de que la letra no tenga palabra
     print()
     print(f"En total hay {total_en_diccionario} palabras.")
     print()

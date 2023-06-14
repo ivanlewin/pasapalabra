@@ -1,7 +1,7 @@
-from datos import obtener_lista_definiciones
+
 from diccionario_palabras import *
 from interfaz import *
-
+from manejo_archivos import *
 
 def generar_letras(lista_con_definiciones: list[list[str]]):
     """
@@ -74,9 +74,13 @@ def ejecutar_juego():
         * Armari, Valentino
         * Brizuela, Natanael Daniel
     """
-    diccionario_de_palabras = obtener_lista_definiciones()
-    diccionario_de_palabras = ordenar_filtrar_lista_de_listas(diccionario_de_palabras)
-    mostrar_total_de_palabras(diccionario_de_palabras)
+
+    diccionario_de_palabras = devolver_diccionario()        #creo el diccionario de palabras
+    lista_del_diccionario=hacerlo_lista(diccionario_de_palabras)    #para poder usarlo sin modificar nuestra estructura lo convierto a una lista
+
+    
+    diccionario_de_palabras = ordenar_filtrar_lista_de_listas(lista_del_diccionario)
+    mostrar_total_de_palabras(lista_del_diccionario)
 
     puntaje_total = 0
     continuar_jugando = True
