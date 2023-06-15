@@ -1,9 +1,9 @@
 import doctest
 import random
 
-#from datos import obtener_lista_definiciones
+# from datos import obtener_lista_definiciones
 
-MINIMO_CARACTERES_PALABRAS = 5
+MINIMO_CARACTERES_PALABRAS = 10
 LETRAS_SIN_TILDES = 'abcdefghijklmnñopqrstuvwxyz'
 LETRAS_CON_TILDES = 'aábcdeéfghiíjklmnñoópqrstuúvwxyz'
 CANTIDAD_LETRAS = 10
@@ -215,8 +215,10 @@ def recibir_lista_definiciones_filtrado(lista_definiciones_filtrada: list[list[s
                 definicion = item[1]
                 palabras_candidatas.append([palabra, definicion])
 
-        palabra_para_esta_letra = random.choice(palabras_candidatas)
-        lista_palabras_participantes.append(palabra_para_esta_letra)
+        palabra_para_esta_letra = random.choice(
+            palabras_candidatas) if len(palabras_candidatas) != 0 else None
+        if palabra_para_esta_letra is not None:
+            lista_palabras_participantes.append(palabra_para_esta_letra)
 
     return sorted(lista_palabras_participantes, key=lambda i: LETRAS_CON_TILDES.index(i[0][0]))
 
@@ -238,8 +240,10 @@ def testear_cien_veces():
     for i in range(100):
         letras_participantes = obtener_letras_participantes()
         diccionario_de_palabras = obtener_lista_definiciones()
-        diccionario_de_palabras = ordenar_filtrar_lista_de_listas(diccionario_de_palabras)
-        print(recibir_lista_definiciones_filtrado(diccionario_de_palabras, letras_participantes))
+        diccionario_de_palabras = ordenar_filtrar_lista_de_listas(
+            diccionario_de_palabras)
+        print(recibir_lista_definiciones_filtrado(
+            diccionario_de_palabras, letras_participantes))
 
 
 if __name__ == "__main__":
@@ -247,4 +251,4 @@ if __name__ == "__main__":
     # testear_cien_veces()
 
 
-#arreglar el probelma de coso
+# arreglar el probelma de coso

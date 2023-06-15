@@ -3,6 +3,7 @@ from diccionario_palabras import *
 from interfaz import *
 from manejo_archivos import *
 
+
 def generar_letras(lista_con_definiciones: list[list[str]]):
     """
     Esta función genera una lista de letras participantes.
@@ -17,7 +18,8 @@ def generar_letras(lista_con_definiciones: list[list[str]]):
         * Armari, Valentino
         * Brizuela, Natanael Daniel
     """
-    letras = [entrada_palabra[0][0].upper() for entrada_palabra in lista_con_definiciones]
+    letras = [entrada_palabra[0][0].upper()
+              for entrada_palabra in lista_con_definiciones]
 
     return letras
 
@@ -37,7 +39,8 @@ def ejecutar_partida(diccionario_de_palabras):
         * Brizuela, Natanael Daniel
     """
     letras_participantes = obtener_letras_participantes()
-    lista_con_definiciones = recibir_lista_definiciones_filtrado(diccionario_de_palabras, letras_participantes)
+    lista_con_definiciones = recibir_lista_definiciones_filtrado(
+        diccionario_de_palabras, letras_participantes)
 
     letras = generar_letras(lista_con_definiciones)
 
@@ -50,13 +53,15 @@ def ejecutar_partida(diccionario_de_palabras):
         palabra_actual: str = turno_actual[0]
 
         mostrar_interfaz_del_juego(letras, jugadas, turno_actual, turno_previo)
-        ingreso_usuario = recibir_ingreso_usuario(palabra_actual, lambda: mostrar_interfaz_del_juego(letras, jugadas, turno_actual))
+        ingreso_usuario = recibir_ingreso_usuario(
+            palabra_actual, lambda: mostrar_interfaz_del_juego(letras, jugadas, turno_actual))
         intentos.append(ingreso_usuario)
 
         acierto = verificar_intento(ingreso_usuario, palabra_actual)
         jugadas.append(acierto)
 
-    mostrar_resumen_de_la_partida(letras, jugadas, lista_con_definiciones, intentos)
+    mostrar_resumen_de_la_partida(
+        letras, jugadas, lista_con_definiciones, intentos)
     return calcular_puntaje_de_la_partida(jugadas)
 
 
@@ -75,11 +80,13 @@ def ejecutar_juego():
         * Brizuela, Natanael Daniel
     """
 
-    diccionario_de_palabras = devolver_diccionario()        #creo el diccionario de palabras
-    lista_del_diccionario=hacerlo_lista(diccionario_de_palabras)    #para poder usarlo sin modificar nuestra estructura lo convierto a una lista
+    # creo el diccionario de palabras
+    diccionario_de_palabras = devolver_diccionario()
+    # para poder usarlo sin modificar nuestra estructura lo convierto a una lista
+    lista_del_diccionario = hacerlo_lista(diccionario_de_palabras)
 
-    
-    diccionario_de_palabras = ordenar_filtrar_lista_de_listas(lista_del_diccionario)
+    diccionario_de_palabras = ordenar_filtrar_lista_de_listas(
+        lista_del_diccionario)
     mostrar_total_de_palabras(lista_del_diccionario)
 
     puntaje_total = 0
