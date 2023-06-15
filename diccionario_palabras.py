@@ -5,7 +5,6 @@ from typing import List
 from datos import obtener_lista_definiciones
 from main import LETRAS_CON_TILDES
 
-
 def generar_diccionario(longitud_minima_palabras: int):
     """
     Esta función genera el diccionario con todas las palabras disponibles para el juego, de acuerdo con el mínimo de caracteres
@@ -186,6 +185,11 @@ def generar_rosco(diccionario_de_palabras: List[List[str]], letras_participantes
                 palabras_candidatas.append([palabra, definicion])
         palabra_seleccionada = random.choice(palabras_candidatas)
         lista_palabras_participantes.append(palabra_seleccionada)
+
+        palabra_para_esta_letra = random.choice(
+            palabras_candidatas) if len(palabras_candidatas) != 0 else None
+        if palabra_para_esta_letra is not None:
+            lista_palabras_participantes.append(palabra_para_esta_letra)
 
     return sorted(lista_palabras_participantes, key=lambda i: LETRAS_CON_TILDES.find(i[0][0]))
 
