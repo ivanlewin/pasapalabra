@@ -1,69 +1,79 @@
 import doctest
 import random
+from typing import List
 
 from datos import obtener_lista_definiciones
-
-MINIMO_CARACTERES_PALABRAS = 5
-LETRAS_SIN_TILDES = 'abcdefghijklmnñopqrstuvwxyz'
-LETRAS_CON_TILDES = 'aábcdeéfghiíjklmnñoópqrstuúvwxyz'
-CANTIDAD_LETRAS = 10
+from main import *
 
 
-def ordenar_filtrar_lista_de_listas(diccionario_de_palabras):
+def generar_diccionario(longitud_minima_palabras: int):
     """
-    Filtra de acuerdo a minimo de caracteres que debe tener la palabra y ordena alfabeticamente.
+    Esta función genera el diccionario con todas las palabras disponibles para el juego, de acuerdo con el mínimo de caracteres
+    requerido.
 
-    Parámetros:
-        * lista `list[list[str]]`: Primer elemento es la palabra y el segundo elemento es la definicion de la misma. 
+    Parámetros
+    ----------
+    longitud_minima_palabras : int
+        La mínima longitud que deben tener las palabras para que puedan ser incluidas en el diccionario.
 
-    Retorna:
-        * lista `list[list[str]]`: En cada lista anidada, el primer elemento es una palabara y el segundo, la definición de la misma, 
-        con aquellas palabras que tengan una longitud mayor o igual a 5 caracteres.
+    Retorna
+    -------
+    List[List[str]]
+        El diccionario con las palabras disponibles para el juego.
+        Es una lista de listas de strings. Cada sublista tiene dos elementos; el primero es la palabra "aplanada" y el segundo, su definición.
 
-    Autores:
-        * Galvani, Juan Ignacio
-        * Neme, Agustin Nadim
+    Autores
+    -------
+    * Galvani, Juan Ignacio
+    * Neme, Agustin Nadim
     """
-    lista_con5_caracteres = []
+    lista_definiciones = obtener_lista_definiciones()
 
-    for palabra in diccionario_de_palabras:
-        if len(palabra[0]) >= MINIMO_CARACTERES_PALABRAS:
-            palabra_aplanada = aplanar_texto(palabra[0])
-            definicion = palabra[1]
-            lista_con5_caracteres.append([palabra_aplanada, definicion])
+    lista_aplanada = []
+    for palabra, definicion in lista_definiciones:
+        if len(palabra) >= longitud_minima_palabras:
+            palabra_aplanada = aplanar(palabra)
+            lista_aplanada.append([palabra_aplanada, definicion])
 
-    lista = sorted(lista_con5_caracteres, key=lambda x: x[0])
+    lista = sorted(lista_aplanada, key=lambda x: x[0])
 
     return lista
 
 
-def aplanar_texto(texto):
+def aplanar(texto: str):
     """
-    Pasa el texto a minuscula, elimina diéresis y tildes de las vocales.
+    Convierte el texto provisto a minúscula y elimina diéresis y tildes de las vocales.
 
-    Parámetros:
-        * texto `str`: El texto que se desea aplanar.
+    Parámetros
+    ----------
+    texto : str
+        El texto que se desea aplanar.
 
-    Retorna:  
-        `str`. El texto recibido, en minúscula y sin tildes ni diéresis.
+    Retorna
+    -------  
+    str
+        El texto aplanado.
 
-    Autores:
-        * Galvani, Juan Ignacio
-        * Neme, Agustin Nadim
+    Autores
+    -------
+    * Galvani, Juan Ignacio
+    * Neme, Agustin Nadim
 
-    >>> aplanar_texto("néctar")
+    Ejemplos
+    --------
+    >>> aplanar("néctar")
     'nectar'
-    >>> aplanar_texto("vaivén")
+    >>> aplanar("vaivén")
     'vaiven'
-    >>> aplanar_texto("yesería")
+    >>> aplanar("yesería")
     'yeseria'
-    >>> aplanar_texto("vacilación")
+    >>> aplanar("vacilación")
     'vacilacion'
-    >>> aplanar_texto("búho")
+    >>> aplanar("búho")
     'buho'
-    >>> aplanar_texto("PERRO")
+    >>> aplanar("PERRO")
     'perro'
-    >>> aplanar_texto("PiNgüInO")
+    >>> aplanar("PiNgüInO")
     'pinguino'
     """
 
@@ -83,76 +93,27 @@ def aplanar_texto(texto):
     )
 
 
-def cantidad_palabras_por_letra(letra: str, lista: list[list[str]]):
-    """
-    Retorna la cantidad de palabras que empiezan con la letra provista. No tiene en cuenta las tildes.
-
-    Parámetros:
-        * letra `str`: Una cadena de longitud 1. Debe ser una letra del alfabeto en español.
-        * lista `list[list[str]]`: Una lista de listas. En cada lista anidada, el primer elemento es una palabara y el segundo, la definición de la misma.
-
-    Retorna:
-        `int`. El número de palabras que comienzan con la letra provista, sin tener en cuenta las tildes.
-
-    Autores:
-        * Galvani, Juan Ignacio
-        * Neme, Agustin Nadim
-
-    >>> cantidad_palabras_por_letra('a', [['arbol', '...'], ['barro', '....'], ['árbitro', '...'], ['araña', '...']])
-    3
-    >>> cantidad_palabras_por_letra('b', [['arbol', '...'], ['barro', '....'], ['árbitro', '...'], ['araña', '...']])
-    1
-    >>> cantidad_palabras_por_letra('c', [['arbol', '...'], ['barro', '....'], ['árbitro', '...'], ['araña', '...']])
-    0
-    """
-    palabras_con_letra = []
-
-    for palabra in lista:
-        primera_letra = palabra[0][0]
-        primera_letra_sin_tildes = aplanar_texto(primera_letra)
-        if primera_letra_sin_tildes == letra:
-            palabras_con_letra.append(palabra)
-
-    cant_palabras_con_letra = len(palabras_con_letra)
-
-    return cant_palabras_con_letra
-
-
-def total_palabras_en_diccionario():
-    """
-    Llamado a funcion cantidad_palabras_por_letra(), suma la cantidad de palabras que hay en total dentro de la lista de listas.
-
-    Parámetros:
-        No recibe
-
-    Retorna:
-        `int`. El número total de palabras que se encuentran a lo largo de toda la lista de listas, de longitud igual o mayor a 5.
-
-    Autores:
-        * Galvani, Juan Ignacio
-        * Neme, Agustin Nadim
-    """
-    total = 0
-    lista_ordenada = ordenar_filtrar_lista_de_listas()
-    for letra in LETRAS_CON_TILDES:
-        total += cantidad_palabras_por_letra(letra, lista_ordenada)
-
-    return total
-
-
-def total_palabras_por_letra(diccionario_de_palabras):
+def calcular_cantidad_de_palabras_por_letra(diccionario_de_palabras: List[List[str]]):
     """
     Muestra diccionario con cantidad de palabras por letra que hay en el diccionario filtrado.
 
-    Parámetros:
-        No recibe
+    Parámetros
+    ----------
+    diccionario_de_palabras : List[List[str]]
+        El diccionario de palabras participantes del juego.
+        Es una lista de listas de strings. Cada sublista tiene dos elementos; el primero es la palabra "aplanada" y el segundo, su definición.
 
-    Retorna:
-        `dict`. Diccionario con clave 'letra' y valor : 'cantidad de veces que una palabra comienza con la letra'
+    Retorna
+    -------
+    dict
+        Un diccionario con la cantidad de palabras que comienzan por cada letra.
+        Las claves del diccionario son cada una de las letras iniciales de las palabras presentes en `diccionario_de_palabras`
+        y los valores son la cantidad de palabras que comienzan por cada una de esas letras.
 
-    Autores:
-        * Galvani, Juan Ignacio
-        * Neme, Agustin Nadim
+    Autores
+    -------
+    * Galvani, Juan Ignacio
+    * Neme, Agustin Nadim
     """
 
     cantidad_de_palabras_por_letra = {}
@@ -167,81 +128,88 @@ def total_palabras_por_letra(diccionario_de_palabras):
     return cantidad_de_palabras_por_letra
 
 
-def obtener_letras_participantes():
+def generar_letras_participantes(letras_permitidas: str, cantidad_de_letras: int):
     """
-    Crear una lista de 10 letras aleatorias de la lista de letras permitidas para el rosco.
+    Genera una lista aleatoria a partir de las letras permitidas de forma aleatoria
 
-    Parámetros:
-        No recibe
+    Parámetros
+    ----------
+    letras_permitidas : str
+        El listado de letras permitidas
+    cantidad_de_letras : int
+        El número de letras a obtener
 
-    Retorna:
-        `list[str]` Una lista de 10 letras aleatorias permitidas para el rosco
+    Retorna
+    -------
+    List[str]
+        Una lista aleatoria de letras seleccionadas aleatoriamente.
 
-    Autores:
-        * Galvani, Juan Ignacio
-        * Neme, Agustin Nadim
+    Autores
+    -------
+    * Galvani, Juan Ignacio
+    * Neme, Agustin Nadim
     """
+    seleccion = random.sample(letras_permitidas, cantidad_de_letras)
+    return ordenar_en_español(seleccion)
 
-    return random.sample(LETRAS_SIN_TILDES, CANTIDAD_LETRAS)
 
-
-def recibir_lista_definiciones_filtrado(lista_definiciones_filtrada: list[list[str]], letras_participantes: list[str]):
+def generar_rosco(diccionario_de_palabras: List[List[str]], letras_participantes: List[str]):
     """
     Retorna una lista de palabras seleccionadas aleatoriamente, donde cada palabra comienza con una de las letras participantes.
 
-    Parámetros:
-        lista_definiciones_filtrada `list[str]`: 
-        letras_participantes `list[str]` : Una lista que contiene letras aleatorias permitidas para usar en el rosco.
+    Parámetros
+    ----------
+    diccionario_de_palabras : List[List[str]]
+        El diccionario de palabras participantes del juego.
+        Es una lista de listas de strings. Cada sublista tiene dos elementos; el primero es la palabra "aplanada" y el segundo, su definición.
+    letras_participantes : List[str]
+        El listado de letras participantes en la partida. Deben estar ordenadas alfabéticamente.
 
-    Retorna:
-        `list`. Una lista de definiciones validas para jugar ordenadas de forma alfabetica, unicamente con aquellas palabras dentro `letras_parcipantes'.
+    Retorna
+    -------
+    List[List[str]]
+        Un rosco conformado por palabras y definiciones obtenidos a partir del diccionario de palabras participantes.
+        Es una lista de listas de strings. Cada sublista tiene dos elementos; el primero es la palabra "aplanada" y el segundo, su definición.
 
-    Autores:
-        * Galvani, Juan Ignacio
-        * Neme, Agustin Nadim
+    Autores
+    -------
+    * Galvani, Juan Ignacio
+    * Neme, Agustin Nadim
     """
-
     lista_palabras_participantes = []
 
     for letra in letras_participantes:
         palabras_candidatas = []
-
-        for item in lista_definiciones_filtrada:
-
-            palabra = item[0]
-            palabra_sin_tildes = aplanar_texto(palabra)
-
-            if palabra_sin_tildes[0] == letra:
-                definicion = item[1]
+        for palabra, definicion in diccionario_de_palabras:
+            palabra_aplanada = aplanar(palabra)
+            if palabra_aplanada[0] == letra:
                 palabras_candidatas.append([palabra, definicion])
+        palabra_seleccionada = random.choice(palabras_candidatas)
+        lista_palabras_participantes.append(palabra_seleccionada)
 
-        palabra_para_esta_letra = random.choice(palabras_candidatas)
-        lista_palabras_participantes.append(palabra_para_esta_letra)
-
-    return sorted(lista_palabras_participantes, key=lambda i: LETRAS_CON_TILDES.index(i[0][0]))
+    return sorted(lista_palabras_participantes, key=lambda i: LETRAS_CON_TILDES.find(i[0][0]))
 
 
-def testear_cien_veces():
+def ordenar_en_español(iterable: str | List[str]):
     """
-    Esta función ejecuta 100 veces las funciones que utilizamos para obtener el rosco y la lista aleatoria de letras participantes del juego.
+    Ordena un iterable alfabéticamente, teniendo en cuenta los diacríticos del español.
+    Esto significa que el elemento "á" se ubicará luego del elemento "a", y no luego del elemento "z".
 
-    Parámetros:
-        No recibe
+    Parámetros
+    ----------
+    iterable : str | List[str]
 
-    Retorna:
-        `None`
+    Retorna
+    -------
+    str | List[str]
+        El iterable ordenado teniendo en cuenta el alfabeto en español.
 
-    Autores:
-        * Galvani, Juan Ignacio
-        * Neme, Agustin Nadim
+    Autores
+    -------
+    * Lewin, Iván
     """
-    for i in range(100):
-        letras_participantes = obtener_letras_participantes()
-        diccionario_de_palabras = obtener_lista_definiciones()
-        diccionario_de_palabras = ordenar_filtrar_lista_de_listas(diccionario_de_palabras)
-        print(recibir_lista_definiciones_filtrado(diccionario_de_palabras, letras_participantes))
+    return sorted(iterable, key=lambda i: LETRAS_CON_TILDES.find(i))
 
 
 if __name__ == "__main__":
     print(doctest.testmod())
-    # testear_cien_veces()
