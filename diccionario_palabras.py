@@ -3,7 +3,7 @@ import random
 from typing import List
 
 from datos import obtener_lista_definiciones
-from main import *
+from main import LETRAS_CON_TILDES
 
 
 def generar_diccionario(longitud_minima_palabras: int):

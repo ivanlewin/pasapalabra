@@ -1,3 +1,4 @@
+from typing import List
 from interfaz import *
 
 LONGITUD_PALABRA_MINIMA = 5
