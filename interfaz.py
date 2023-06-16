@@ -284,12 +284,15 @@ def mostrar_resumen_de_la_partida(letras: List[str], jugadas: List[Literal['a', 
 
     Parámetros
     ----------
-    * letras `List[str]`: Una lista de las letras que participan en este juego.
-    * jugadas : List[Literal['a', 'e']]
+    letras : List[str]
+        Una lista de las letras que participan en este juego.
+    jugadas : List[Literal['a', 'e']]
         El resultado de las jugadas realizadas.
         Debe ser una lista donde cada elemento es o bien 'a', para indicar un acierto, o bien 'e' para indicar un error.
-    * turnos `list[List[str]]`: La lista de las palabras del juego: Cada elemento es una lista de strings donde el primer elemento es la palabra a adivinar, y el segundo es la definición de esa palabra.
-    * lista_palabras_ingresadas `List[str]`: Una lista con los ingresos del usuario (aciertos y errores).
+    turnos : List[List[str]]
+        La lista de las palabras del juego: Cada elemento es una lista de strings donde el primer elemento es la palabra a adivinar, y el segundo es la definición de esa palabra.
+    lista_palabras_ingresadas : List[str]
+        Una lista con los ingresos del usuario (aciertos y errores).
 
     Autores
     -------

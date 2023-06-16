@@ -1,7 +1,6 @@
 from typing import List
 from interfaz import *
 from manejo_archivos import *
-from diccionario_palabras import *
 
 LONGITUD_PALABRA_MINIMA = 5
 CANTIDAD_LETRAS_ROSCO = 10
@@ -9,13 +8,13 @@ LETRAS_SIN_TILDES = 'abcdefghijklmnñopqrstuvwxyz'
 LETRAS_CON_TILDES = 'aáäbcdeéëfghiíïjklmnñoóöpqrstuúüvwxyz'
 
 
-def ejecutar_partida(diccionario_de_palabras: List[List[str]]):
+def ejecutar_partida(diccionario_como_lista: List[List[str]]):
     """
     Esta función es la principal orquestadora de cada partida.
 
     Parámetros
     ----------
-    diccionario_de_palabras : List[List[str]]
+    diccionario_como_lista : List[List[str]]
         El diccionario con las palabras disponibles para el juego.
         Es una lista de listas de strings. Cada sublista tiene dos elementos; el primero es la palabra "aplanada" y el segundo, su definición.
 
@@ -25,7 +24,7 @@ def ejecutar_partida(diccionario_de_palabras: List[List[str]]):
     * Brizuela, Natanael Daniel
     """
     letras_participantes = generar_letras_participantes(LETRAS_SIN_TILDES, CANTIDAD_LETRAS_ROSCO)
-    rosco = generar_rosco(diccionario_de_palabras, letras_participantes)
+    rosco = generar_rosco(diccionario_como_lista, letras_participantes)
 
     letras_mayuscula = [letra.upper() for letra in letras_participantes]
 
@@ -58,21 +57,16 @@ def ejecutar_juego():
     * Armari, Valentino
     * Brizuela, Natanael Daniel
     """
-    diccionario_de_palabras = generar_diccionario(LONGITUD_PALABRA_MINIMA)
-    mostrar_total_de_palabras(diccionario_de_palabras)
-
-    # creo el diccionario de palabras
-    # diccionario_de_palabras = devolver_diccionario()
-    # para poder usarlo sin modificar nuestra estructura lo convierto a una lista
-    # lista_del_diccionario = hacerlo_lista(diccionario_de_palabras)
-
-    # diccionario_de_palabras = ordenar_filtrar_lista_de_listas(lista_del_diccionario)
-    # mostrar_total_de_palabras(lista_del_diccionario)
+    diccionario_crudo = crear_diccionario()
+    diccionario_filtrado = filtrar_diccionario(diccionario_crudo, LONGITUD_PALABRA_MINIMA)
+    escribir_diccionario(diccionario_filtrado)
+    diccionario_como_lista = hacerlo_lista(diccionario_filtrado)
+    mostrar_total_de_palabras(diccionario_como_lista)
 
     puntaje_total = 0
     continuar_jugando = True
     while continuar_jugando:
-        puntaje_de_la_partida = ejecutar_partida(diccionario_de_palabras)
+        puntaje_de_la_partida = ejecutar_partida(diccionario_como_lista)
         puntaje_total += puntaje_de_la_partida
         print()
         continuar_jugando = preguntar_seguir_jugando()
