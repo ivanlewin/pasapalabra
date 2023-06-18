@@ -2,13 +2,13 @@ from typing import List
 from interfaz import *
 from manejo_archivos import *
 
-LONGITUD_PALABRA_MINIMA = 5
+LONGITUD_PALABRA_MINIMA = 13
 CANTIDAD_LETRAS_ROSCO = 10
 LETRAS_SIN_TILDES = 'abcdefghijklmnñopqrstuvwxyz'
 LETRAS_CON_TILDES = 'aáäbcdeéëfghiíïjklmnñoóöpqrstuúüvwxyz'
 
 
-def ejecutar_partida(diccionario_como_lista: List[List[str]]):
+def ejecutar_partida(diccionario_como_lista: List[List[str]], cantidad_de_palabras_por_letra: dict[str]):
     """
     Esta función es la principal orquestadora de cada partida.
 
@@ -23,11 +23,16 @@ def ejecutar_partida(diccionario_como_lista: List[List[str]]):
     * Armari, Valentino
     * Brizuela, Natanael Daniel
     """
+    cantidad_letras_inciales = [x[0][0] for x in diccionario_como_lista]    #
+
+    # inicializo una varialbe que me diga el minimo posible para las letras a mostrar
+    minimo_letras_posible = len(set(cantidad_letras_inciales))
     letras_participantes = generar_letras_participantes(
-        LETRAS_SIN_TILDES, CANTIDAD_LETRAS_ROSCO)
+        LETRAS_SIN_TILDES, CANTIDAD_LETRAS_ROSCO, minimo_letras_posible, cantidad_de_palabras_por_letra)
+
     rosco = generar_rosco(diccionario_como_lista, letras_participantes)
 
-    letras_mayuscula = [letra.upper() for letra in letras_participantes]
+    letras_mayuscula = [letra[0][0].upper() for letra in rosco]
 
     jugadas = []
     intentos = []
@@ -65,12 +70,16 @@ def ejecutar_juego():
         diccionario_crudo, LONGITUD_PALABRA_MINIMA)
     escribir_diccionario(diccionario_filtrado)
     diccionario_como_lista = hacerlo_lista(diccionario_filtrado)
-    mostrar_total_de_palabras(diccionario_como_lista)
+
+    cantidad_de_palabras_por_letra = mostrar_total_de_palabras(
+        diccionario_como_lista)
 
     puntaje_total = 0
     continuar_jugando = True
     while continuar_jugando:
-        puntaje_de_la_partida = ejecutar_partida(diccionario_como_lista)
+        puntaje_de_la_partida = ejecutar_partida(
+            diccionario_como_lista, cantidad_de_palabras_por_letra)  # ----> uso el diccionario aca
+
         puntaje_total += puntaje_de_la_partida
         print()
         continuar_jugando = preguntar_seguir_jugando()

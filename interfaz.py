@@ -364,7 +364,11 @@ def mostrar_total_de_palabras(diccionario_de_palabras: List[List[str]]):
     print()
     print(f"En total hay {cantidad_total_de_palabras} palabras.")
     print()
+
     input("Presione Enter (Inicio) para iniciar el juego ")
+
+    # devuelvo el diccionario para poder validar
+    return cantidad_de_palabras_por_letra
 
 
 def preguntar_seguir_jugando():

@@ -123,7 +123,8 @@ def calcular_cantidad_de_palabras_por_letra(diccionario_de_palabras: List[List[s
     return cantidad_de_palabras_por_letra
 
 
-def generar_letras_participantes(letras_permitidas: str, cantidad_de_letras: int):
+# el primer parametro no lo estoy usando, se podria eliminar?
+def generar_letras_participantes(letras_permitidas: str, cantidad_de_letras: int, minimo_letras_posible: int, cantidad_de_palabras_por_letra: dict[str]):
     """
     Genera una lista aleatoria a partir de las letras permitidas de forma aleatoria
 
@@ -144,7 +145,11 @@ def generar_letras_participantes(letras_permitidas: str, cantidad_de_letras: int
     * Galvani, Juan Ignacio
     * Neme, Agustin Nadim
     """
-    seleccion = random.sample(letras_permitidas, cantidad_de_letras)
+    if minimo_letras_posible < cantidad_de_letras:
+        seleccion = random.sample(list(
+            cantidad_de_palabras_por_letra.keys()), minimo_letras_posible)
+    else:
+        seleccion = random.sample(letras_permitidas, cantidad_de_letras)
     return ordenar_en_español(seleccion)
 
 
