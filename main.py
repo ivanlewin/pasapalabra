@@ -1,98 +1,76 @@
-
-from diccionario_palabras import *
+from typing import List
 from interfaz import *
 from manejo_archivos import *
 
+LONGITUD_PALABRA_MINIMA = 5
+CANTIDAD_LETRAS_ROSCO = 10
+LETRAS_SIN_TILDES = 'abcdefghijklmnñopqrstuvwxyz'
+LETRAS_CON_TILDES = 'aáäbcdeéëfghiíïjklmnñoóöpqrstuúüvwxyz'
 
-def generar_letras(lista_con_definiciones: list[list[str]]):
+
+def ejecutar_partida(diccionario_como_lista: List[List[str]]):
     """
-    Esta función genera una lista de letras participantes.
+    Esta función es la principal orquestadora de cada partida.
 
-    Parámetros:
-        * lista_con_definiciones: list[list[str]]
+    Parámetros
+    ----------
+    diccionario_como_lista : List[List[str]]
+        El diccionario con las palabras disponibles para el juego.
+        Es una lista de listas de strings. Cada sublista tiene dos elementos; el primero es la palabra "aplanada" y el segundo, su definición.
 
-    Retorna:
-        `list[str]`
-
-    Autores:
-        * Armari, Valentino
-        * Brizuela, Natanael Daniel
+    Autores
+    -------
+    * Armari, Valentino
+    * Brizuela, Natanael Daniel
     """
-    letras = [entrada_palabra[0][0].upper()
-              for entrada_palabra in lista_con_definiciones]
+    letras_participantes = generar_letras_participantes(
+        LETRAS_SIN_TILDES, CANTIDAD_LETRAS_ROSCO)
+    rosco = generar_rosco(diccionario_como_lista, letras_participantes)
 
-    return letras
-
-
-def ejecutar_partida(diccionario_de_palabras):
-    """
-    Esta función se encarga de integrar todas las funciones previas para que el juego opere correctamente.
-
-    Parámetros:
-        - No recibe
-
-    Retorna:
-        `None`
-
-    Autores:
-        * Armari, Valentino
-        * Brizuela, Natanael Daniel
-    """
-    letras_participantes = obtener_letras_participantes()
-    lista_con_definiciones = recibir_lista_definiciones_filtrado(
-        diccionario_de_palabras, letras_participantes)
-
-    letras = generar_letras(lista_con_definiciones)
+    letras_mayuscula = [letra.upper() for letra in letras_participantes]
 
     jugadas = []
     intentos = []
 
-    for i in range(len(lista_con_definiciones)):
-        turno_actual = lista_con_definiciones[i]
-        turno_previo = lista_con_definiciones[i-1] if i > 0 else None
+    for i in range(len(rosco)):
+        turno_actual = rosco[i]
+        turno_previo = rosco[i-1] if i > 0 else None
         palabra_actual: str = turno_actual[0]
 
-        mostrar_interfaz_del_juego(letras, jugadas, turno_actual, turno_previo)
+        mostrar_interfaz_del_juego(
+            letras_mayuscula, jugadas, turno_actual, turno_previo)
         ingreso_usuario = recibir_ingreso_usuario(
-            palabra_actual, lambda: mostrar_interfaz_del_juego(letras, jugadas, turno_actual))
+            palabra_actual, lambda: mostrar_interfaz_del_juego(letras_mayuscula, jugadas, turno_actual))
         intentos.append(ingreso_usuario)
 
         acierto = verificar_intento(ingreso_usuario, palabra_actual)
         jugadas.append(acierto)
 
-    mostrar_resumen_de_la_partida(
-        letras, jugadas, lista_con_definiciones, intentos)
+    mostrar_resumen_de_la_partida(letras_mayuscula, jugadas, rosco, intentos)
     return calcular_puntaje_de_la_partida(jugadas)
 
 
 def ejecutar_juego():
     """
-    Esta función es la principal orquestadora del juego. Se encarga de obtener el rosco, llevar el conteo del puntaje y permitir al usuario juegue tantas partidas como desee.
+    Esta función es la principal orquestadora del juego.
+    Se encarga de obtener el diccionario de palabras admitidas para el juego, llevar el conteo del puntaje y permitir al usuario jugar tantas partidas como desee.
 
-    Parámetros:
-        - No recibe
-
-    Retorna:
-        `None`
-
-    Autores:
-        * Armari, Valentino
-        * Brizuela, Natanael Daniel
+    Autores
+    -------
+    * Armari, Valentino
+    * Brizuela, Natanael Daniel
     """
-
-    # creo el diccionario de palabras
-    diccionario_de_palabras = devolver_diccionario()
-    # para poder usarlo sin modificar nuestra estructura lo convierto a una lista
-    lista_del_diccionario = hacerlo_lista(diccionario_de_palabras)
-
-    diccionario_de_palabras = ordenar_filtrar_lista_de_listas(
-        lista_del_diccionario)
-    mostrar_total_de_palabras(lista_del_diccionario)
+    diccionario_crudo = crear_diccionario()
+    diccionario_filtrado = filtrar_diccionario(
+        diccionario_crudo, LONGITUD_PALABRA_MINIMA)
+    escribir_diccionario(diccionario_filtrado)
+    diccionario_como_lista = hacerlo_lista(diccionario_filtrado)
+    mostrar_total_de_palabras(diccionario_como_lista)
 
     puntaje_total = 0
     continuar_jugando = True
     while continuar_jugando:
-        puntaje_de_la_partida = ejecutar_partida(diccionario_de_palabras)
+        puntaje_de_la_partida = ejecutar_partida(diccionario_como_lista)
         puntaje_total += puntaje_de_la_partida
         print()
         continuar_jugando = preguntar_seguir_jugando()
@@ -100,5 +78,20 @@ def ejecutar_juego():
     print(f"Puntaje del juego: {puntaje_total} puntos")
 
 
+# def testear_cien_veces():
+#     """
+#     Esta función ejecuta 100 veces las funciones que utilizamos para obtener el rosco y la lista aleatoria de letras participantes del juego.
+
+#     Autores
+#     * Galvani, Juan Ignacio
+#     * Neme, Agustin Nadim
+#     """
+#     for i in range(100):
+#         letras_participantes = generar_letras_participantes(LETRAS_SIN_TILDES, CANTIDAD_LETRAS_ROSCO)
+#         diccionario_de_palabras = generar_diccionario(LONGITUD_PALABRA_MINIMA)
+#         print(generar_rosco(diccionario_de_palabras, letras_participantes))
+
+
 if __name__ == '__main__':
     ejecutar_juego()
+    # testear_cien_veces()
