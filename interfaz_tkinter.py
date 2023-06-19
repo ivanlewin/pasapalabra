@@ -117,13 +117,22 @@ def verificar_datos(nombre, contrasenia):
                 datos_validos = True
     return datos_validos
 
-
 def agregar_jugador(nombre_jugador):
 
+    global jugadores
     if nombre_jugador not in jugadores:
         jugadores.append(nombre_jugador)
     random.shuffle(jugadores)
     return jugadores
+
+def listar_jugadores(jugadores_actuales):
+
+    if jugadores not in jugadores_actuales:
+        for jugador in jugadores_actuales:
+            print("- ", jugador)
+    else:
+        print("No hay jugadores registrados.")
+
 
 def iniciar_sesion(nombre_login_entry, contrasenia_login_entry, resultado_label):
     nombre = nombre_login_entry.get()
@@ -136,12 +145,14 @@ def iniciar_sesion(nombre_login_entry, contrasenia_login_entry, resultado_label)
     if verificar_datos(nombre, contrasenia):
         resultado_label.config(text="Inicio de sesión exitoso.")
         resultado_label.pack()
-
+        
         jugadores_actuales = agregar_jugador(nombre)
-        print("Jugadores_actuales:", jugadores_actuales)
+
     else:
         resultado_label.config(text="Datos incorrectos.")
         resultado_label.pack()
+        
+    listar_jugadores(jugadores_actuales)
 
     return
 
@@ -233,3 +244,5 @@ def ventana_main():
     ventana_principal.mainloop()
 
 ventana_main()
+
+print(jugadores)
