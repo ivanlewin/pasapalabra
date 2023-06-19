@@ -114,13 +114,15 @@ def verificar_datos(nombre, contrasenia):
 
 jugadores = []
 
-def listar_jugadores():
-
+def listar_jugadores(lista_jugadores):
     random.shuffle(jugadores)
-    lista_jugadores.delete(0, tk.END)
-    for i, jugador in enumerate(jugadores):
-        lista_jugadores.insert(tk.END, f"{i+1}. {jugador}")
+    #lista_jugadores.delete(0, tk.END)  # Limpiar la lista de jugadores existente
+    
+    for i, jugador in enumerate(jugadores, start=1):
+        lista_jugadores.insert(tk.END, f"{i}. {jugador}")
 
+def cerrar_ventana(ventana):
+    ventana.destroy()
 
 def iniciar_sesion(nombre_login_entry, contrasenia_login_entry, resultado_label):
     nombre = nombre_login_entry.get()
@@ -133,19 +135,19 @@ def iniciar_sesion(nombre_login_entry, contrasenia_login_entry, resultado_label)
     if verificar_datos(nombre, contrasenia):
         resultado_label.config(text="Inicio de sesión exitoso.")
         resultado_label.pack()
-
         jugadores.append(nombre)
-        listar_jugadores()
-        
+        listar_jugadores()  
     else:
         resultado_label.config(text="Datos incorrectos.")
         resultado_label.pack()
 
+    return jugadores
 
-def ventana_registro():
+
+def ventana_registro(ventana_principal):
     ventana_registro = tk.Toplevel(ventana_principal)
     ventana_registro.title("Registro de Jugadores")
-    ventana_registro.geometry("1280x720")
+    ventana_registro.geometry("600x300")
 
     nombre_label = tk.Label(ventana_registro, text=f"Nombre de usuario:")
     nombre_label.pack()
@@ -171,12 +173,15 @@ def ventana_registro():
     registrar = tk.Button(ventana_registro, text= "Registrarse", command=lambda: registrar_jugador(nombre_entry, contrasenia_entry, repetir_contrasenia_entry, resultado_label))
     registrar.pack()
 
+    boton_cerrar = tk.Button(ventana_registro, text="Volver a inicio", command=lambda: cerrar_ventana(ventana_registro))
+    boton_cerrar.pack()
+
     
-def ventana_login():
+def ventana_login(ventana_principal):
     
     ventana_login = tk.Toplevel(ventana_principal)
     ventana_login.title("Login de jugadores")
-    ventana_login.geometry("1280x720")
+    ventana_login.geometry("600x300")
 
     nombre_login_label = tk.Label(ventana_login, text="Nombre de usuario:")
     nombre_login_label.pack()
@@ -191,30 +196,36 @@ def ventana_login():
     resultado_label = tk.Label(ventana_login, text="")
     resultado_label.pack()
 
-    registrar_boton = tk.Button(ventana_login, text="Registrarse", command=ventana_registro)
+    registrar_boton = tk.Button(ventana_login, text="Registrarse", command=lambda: ventana_registro(ventana_principal))
     registrar_boton.pack()
     
     login_boton = tk.Button(ventana_login, text="Login", command=lambda: iniciar_sesion(nombre_login_entry, contrasenia_login_entry, resultado_label))
     login_boton.pack()
 
+    boton_cerrar = tk.Button(ventana_login, text="Volver a inicio", command=lambda: cerrar_ventana(ventana_login))
+    boton_cerrar.pack()
+
+
 
 #Creacion de ventana principal
-ventana_principal = tk.Tk()
-ventana_principal.title("Login Jugadores")
-ventana_principal.geometry("600x300")
-ventana_principal.configure(bg="#FE4A49")
+def ventana_main():
+    ventana_principal = tk.Tk()
+    ventana_principal.title("Login Jugadores")
+    ventana_principal.geometry("600x300")
+    ventana_principal.configure(bg="#FE4A49")
 
-jugadores_label = ttk.Label(ventana_principal, text="Jugadores: ")
-jugadores_label.pack()
-lista_jugadores = tk.Listbox(ventana_principal)
-lista_jugadores.pack()
+    jugadores_label = ttk.Label(ventana_principal, text="Jugadores: ")
+    jugadores_label.pack()
+    lista_jugadores = tk.Listbox(ventana_principal)
+    lista_jugadores.pack()
 
-registrar_boton = ttk.Button(ventana_principal, text= "Registrarse",  command= ventana_registro)
-registrar_boton.pack()
+    registrar_boton = ttk.Button(ventana_principal, text= "Registrarse",  command=lambda: ventana_registro(ventana_principal))
+    registrar_boton.pack()
 
-login_boton = ttk.Button(ventana_principal, text= "Login", command=ventana_login)
-login_boton.pack()
+    login_boton = ttk.Button(ventana_principal, text= "Login", command=lambda: ventana_login(ventana_principal))
+    login_boton.pack()
 
+    listar_jugadores(jugadores)
+    ventana_principal.mainloop()
 
-listar_jugadores()
-ventana_principal.mainloop()
+ventana_main()
