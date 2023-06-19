@@ -4,6 +4,8 @@ import csv
 import random
 MAX_JUGADORES = 4
 
+jugadores = []
+
 def validar_nombre(nombre_usuario):
     '''
     >>> validar_nombre("usuario_123")
@@ -112,15 +114,6 @@ def verificar_datos(nombre, contrasenia):
                 datos_validos = True
     return datos_validos
 
-jugadores = []
-
-def listar_jugadores(lista_jugadores):
-    random.shuffle(jugadores)
-    #lista_jugadores.delete(0, tk.END)  # Limpiar la lista de jugadores existente
-    
-    for i, jugador in enumerate(jugadores, start=1):
-        lista_jugadores.insert(tk.END, f"{i}. {jugador}")
-
 def cerrar_ventana(ventana):
     ventana.destroy()
 
@@ -136,7 +129,6 @@ def iniciar_sesion(nombre_login_entry, contrasenia_login_entry, resultado_label)
         resultado_label.config(text="Inicio de sesión exitoso.")
         resultado_label.pack()
         jugadores.append(nombre)
-        listar_jugadores()  
     else:
         resultado_label.config(text="Datos incorrectos.")
         resultado_label.pack()
@@ -148,6 +140,9 @@ def ventana_registro(ventana_principal):
     ventana_registro = tk.Toplevel(ventana_principal)
     ventana_registro.title("Registro de Jugadores")
     ventana_registro.geometry("600x300")
+
+    separador = tk.Frame(ventana_registro, height=1, bd=1, relief=tk.SUNKEN)
+    separador.pack(fill=tk.X, padx=10, pady=5)
 
     nombre_label = tk.Label(ventana_registro, text=f"Nombre de usuario:")
     nombre_label.pack()
@@ -164,9 +159,6 @@ def ventana_registro(ventana_principal):
     repetir_contrasenia_entry = tk.Entry(ventana_registro, show="*")
     repetir_contrasenia_entry.pack()
 
-    separador = tk.Frame(ventana_registro, height=1, bd=1, relief=tk.SUNKEN)
-    separador.pack(fill=tk.X, padx=10, pady=5)
-
     resultado_label = tk.Label(ventana_registro, text="")
     resultado_label.pack()
 
@@ -182,6 +174,9 @@ def ventana_login(ventana_principal):
     ventana_login = tk.Toplevel(ventana_principal)
     ventana_login.title("Login de jugadores")
     ventana_login.geometry("600x300")
+
+    separador = tk.Frame(ventana_login, height=1, bd=1, relief=tk.SUNKEN)
+    separador.pack(fill=tk.X, padx=10, pady=5)
 
     nombre_login_label = tk.Label(ventana_login, text="Nombre de usuario:")
     nombre_login_label.pack()
@@ -206,7 +201,6 @@ def ventana_login(ventana_principal):
     boton_cerrar.pack()
 
 
-
 #Creacion de ventana principal
 def ventana_main():
     ventana_principal = tk.Tk()
@@ -216,8 +210,6 @@ def ventana_main():
 
     jugadores_label = ttk.Label(ventana_principal, text="Jugadores: ")
     jugadores_label.pack()
-    lista_jugadores = tk.Listbox(ventana_principal)
-    lista_jugadores.pack()
 
     registrar_boton = ttk.Button(ventana_principal, text= "Registrarse",  command=lambda: ventana_registro(ventana_principal))
     registrar_boton.pack()
@@ -225,7 +217,9 @@ def ventana_main():
     login_boton = ttk.Button(ventana_principal, text= "Login", command=lambda: ventana_login(ventana_principal))
     login_boton.pack()
 
-    listar_jugadores(jugadores)
+    boton_cerrar = tk.Button(ventana_principal, text="Cerrar programa", command=lambda: cerrar_ventana(ventana_principal))
+    boton_cerrar.pack()
+
     ventana_principal.mainloop()
 
 ventana_main()
