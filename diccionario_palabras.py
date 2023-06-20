@@ -2,11 +2,10 @@ import doctest
 import random
 from typing import List
 
-from datos import obtener_lista_definiciones
 from main import LETRAS_CON_TILDES
 
 
-def generar_diccionario(longitud_minima_palabras: int):
+def filtrar_diccionario(diccionario_crudo: dict, longitud_minima_palabras: int):
     """
     Esta función genera el diccionario con todas las palabras disponibles para el juego, de acuerdo con el mínimo de caracteres
     requerido.
@@ -27,17 +26,13 @@ def generar_diccionario(longitud_minima_palabras: int):
     * Galvani, Juan Ignacio
     * Neme, Agustin Nadim
     """
-    lista_definiciones = obtener_lista_definiciones()
-
-    lista_aplanada = []
-    for palabra, definicion in lista_definiciones:
+    diccionario_filtrado = {}
+    for palabra, definicion in diccionario_crudo.items():
         if len(palabra) >= longitud_minima_palabras:
             palabra_aplanada = aplanar(palabra)
-            lista_aplanada.append([palabra_aplanada, definicion])
+            diccionario_filtrado[palabra_aplanada] = definicion
 
-    lista = sorted(lista_aplanada, key=lambda x: x[0])
-
-    return lista
+    return diccionario_filtrado
 
 
 def aplanar(texto: str):
@@ -128,7 +123,7 @@ def calcular_cantidad_de_palabras_por_letra(diccionario_de_palabras: List[List[s
     return cantidad_de_palabras_por_letra
 
 
-def generar_letras_participantes(letras_permitidas: str, cantidad_de_letras: int):
+def generar_letras_participantes(letras_permitidas: str, cantidad_de_letras: int, minimo_letras_posible: int, cantidad_de_palabras_por_letra: dict[str]):
     """
     Genera una lista aleatoria a partir de las letras permitidas de forma aleatoria
 
@@ -149,17 +144,21 @@ def generar_letras_participantes(letras_permitidas: str, cantidad_de_letras: int
     * Galvani, Juan Ignacio
     * Neme, Agustin Nadim
     """
-    seleccion = random.sample(letras_permitidas, cantidad_de_letras)
+    if minimo_letras_posible < cantidad_de_letras:
+        seleccion = random.sample(list(
+            cantidad_de_palabras_por_letra.keys()), minimo_letras_posible)
+    else:
+        seleccion = random.sample(letras_permitidas, cantidad_de_letras)
     return ordenar_en_español(seleccion)
 
 
-def generar_rosco(diccionario_de_palabras: List[List[str]], letras_participantes: List[str]):
+def generar_rosco(diccionario_como_lista: List[List[str]], letras_participantes: List[str]):
     """
     Retorna una lista de palabras seleccionadas aleatoriamente, donde cada palabra comienza con una de las letras participantes.
 
     Parámetros
     ----------
-    diccionario_de_palabras : List[List[str]]
+    diccionario_como_lista : List[List[str]]
         El diccionario de palabras participantes del juego.
         Es una lista de listas de strings. Cada sublista tiene dos elementos; el primero es la palabra "aplanada" y el segundo, su definición.
     letras_participantes : List[str]
@@ -180,12 +179,14 @@ def generar_rosco(diccionario_de_palabras: List[List[str]], letras_participantes
 
     for letra in letras_participantes:
         palabras_candidatas = []
-        for palabra, definicion in diccionario_de_palabras:
+        for palabra, definicion in diccionario_como_lista:
             palabra_aplanada = aplanar(palabra)
             if palabra_aplanada[0] == letra:
                 palabras_candidatas.append([palabra, definicion])
-        palabra_seleccionada = random.choice(palabras_candidatas)
-        lista_palabras_participantes.append(palabra_seleccionada)
+        palabra_para_esta_letra = random.choice(
+            palabras_candidatas) if len(palabras_candidatas) != 0 else None
+        if palabra_para_esta_letra is not None:
+            lista_palabras_participantes.append(palabra_para_esta_letra)
 
     return sorted(lista_palabras_participantes, key=lambda i: LETRAS_CON_TILDES.find(i[0][0]))
 

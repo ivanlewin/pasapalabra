@@ -128,7 +128,8 @@ def mostrar_turno_actual(jugadas: List[Literal['a', 'e']], turno_actual: List[st
 
     print(f"Aciertos: {agregar_color(str(aciertos), 'verde')}")
     print(f"Errores: {agregar_color(str(errores), 'rojo')}")
-    print(f"Turno letra {letra_actual.upper()} - Palabra de {len(palabra_actual)} letras")
+    print(
+        f"Turno letra {letra_actual.upper()} - Palabra de {len(palabra_actual)} letras")
     print(f"Definición: {definicion_actual}\n")
 
 
@@ -163,7 +164,8 @@ def mostrar_feedback(jugadas: List[Literal['a', 'e']], turno_previo: List[str]):
         if ultima_jugada == "a":
             print(agregar_color('¡Correcto!', 'verde'))
         else:
-            print(f"{agregar_color('¡Incorrecto!', 'rojo')} La palabra correcta era '{palabra_correcta}'")
+            print(
+                f"{agregar_color('¡Incorrecto!', 'rojo')} La palabra correcta era '{palabra_correcta}'")
 
 
 def mostrar_interfaz_del_juego(letras: List[str], jugadas: List[Literal['a', 'e']], turno_actual: List[str], turno_previo: List[str] = None):
@@ -229,11 +231,13 @@ def recibir_ingreso_usuario(palabra_actual: str, generar_interfaz: Callable):
             ingreso_del_usuario = aplanar(input("Ingrese una palabra: "))
         elif not ingreso_del_usuario.isalpha():
             generar_interfaz()
-            print(f"{agregar_color('¡Error!', 'rojo')} Su ingreso solo debe contener letras. ", end="")
+            print(
+                f"{agregar_color('¡Error!', 'rojo')} Su ingreso solo debe contener letras. ", end="")
             ingreso_del_usuario = aplanar(input("Ingrese una palabra: "))
         elif palabra_actual[0] != ingreso_del_usuario[0]:
             generar_interfaz()
-            print(f"{agregar_color('¡Error!', 'rojo')} Su ingreso debe comenzar con la letra '{palabra_actual[0].upper()}'. ", end="")
+            print(
+                f"{agregar_color('¡Error!', 'rojo')} Su ingreso debe comenzar con la letra '{palabra_actual[0].upper()}'. ", end="")
             ingreso_del_usuario = aplanar(input("Ingrese una palabra: "))
         else:
             palabra_valida = ingreso_del_usuario
@@ -284,12 +288,15 @@ def mostrar_resumen_de_la_partida(letras: List[str], jugadas: List[Literal['a', 
 
     Parámetros
     ----------
-    * letras `List[str]`: Una lista de las letras que participan en este juego.
-    * jugadas : List[Literal['a', 'e']]
+    letras : List[str]
+        Una lista de las letras que participan en este juego.
+    jugadas : List[Literal['a', 'e']]
         El resultado de las jugadas realizadas.
         Debe ser una lista donde cada elemento es o bien 'a', para indicar un acierto, o bien 'e' para indicar un error.
-    * turnos `list[List[str]]`: La lista de las palabras del juego: Cada elemento es una lista de strings donde el primer elemento es la palabra a adivinar, y el segundo es la definición de esa palabra.
-    * lista_palabras_ingresadas `List[str]`: Una lista con los ingresos del usuario (aciertos y errores).
+    turnos : List[List[str]]
+        La lista de las palabras del juego: Cada elemento es una lista de strings donde el primer elemento es la palabra a adivinar, y el segundo es la definición de esa palabra.
+    lista_palabras_ingresadas : List[str]
+        Una lista con los ingresos del usuario (aciertos y errores).
 
     Autores
     -------
@@ -323,12 +330,13 @@ def mostrar_resumen_de_la_partida(letras: List[str], jugadas: List[Literal['a', 
     print(f"Puntaje de la partida: {puntaje_partida} puntos")
 
 
-def mostrar_total_de_palabras(diccionario_de_palabras: List[List[str]]):
+def mostrar_total_de_palabras(cantidad_de_palabras_por_letra, cantidad_de_letras_deseada):
     """
     Esta función muestra el total de palabras del diccionario, primero letra por letra, y luego el total de todo el diccionario.
 
     Parámetros
     ----------
+    <-- cambiar --> 
     diccionario_de_palabras : List[List[str]]
         El diccionario de palabras participantes del juego.
         Es una lista de listas de strings. Cada sublista tiene dos elementos; el primero es la palabra "aplanada" y el segundo, su definición.
@@ -338,21 +346,32 @@ def mostrar_total_de_palabras(diccionario_de_palabras: List[List[str]]):
     * Brizuela, Natanael Daniel
     * Lewin, Iván
     """
-    cantidad_de_palabras_por_letra = calcular_cantidad_de_palabras_por_letra(diccionario_de_palabras)
-    cantidad_total_de_palabras = sum(cantidad_de_palabras_por_letra.values())
     letras = cantidad_de_palabras_por_letra.keys()
     letras = ordenar_en_español(list(letras))
+    cantidad_total_de_palabras = sum(cantidad_de_palabras_por_letra.values())
 
     for letra in letras:
-        cantidad = cantidad_de_palabras_por_letra[letra]
-        if cantidad != 1:
-            print(f"Hay {cantidad} palabras que comienzan con la letra '{letra}'.")
-        else:
+        cantidad = cantidad_de_palabras_por_letra[letra] if letra in cantidad_de_palabras_por_letra.keys() else None
+        if cantidad is None or cantidad == 0:
+            print(f"No hay palabras que comienzan con la letra '{letra}'.")
+        elif cantidad == 1:
             print(f"Hay {cantidad} palabra que comienza con la letra '{letra}'.")
+        else:
+            print(
+                f"Hay {cantidad} palabras que comienzan con la letra '{letra}'.")
     print()
-    print(f"En total hay {cantidad_total_de_palabras} palabras.")
+    print(f"En total hay {cantidad_total_de_palabras} palabras disponibles para el rosco.")
     print()
+
+    cantidad_de_letras = len(letras)
+    if (cantidad_de_letras < cantidad_de_letras_deseada):
+        print(f"Se deseaba jugar con {cantidad_de_letras_deseada} letras. \
+Sin embargo, debido a las preferencias del juego sólo se pudieron obtener {cantidad_de_letras} letras.")
+        print()
+
     input("Presione Enter (Inicio) para iniciar el juego ")
+
+    return cantidad_de_palabras_por_letra
 
 
 def preguntar_seguir_jugando():
