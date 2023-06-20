@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import ttk
-from tkinter import *
 import csv
 import random
 
@@ -324,8 +323,6 @@ def iniciar_sesion(nombre_login_entry, contrasenia_login_entry, resultado_label,
     resultado_label.config(text= mensaje)
     resultado_label.pack()
 
-    
-
     return
 
 
@@ -351,7 +348,7 @@ def formatear_ventanas(ventana, titulo):
     ventana.resizable(0,0)
     ventana.title(titulo)
     ventana.iconbitmap("herencia.ico")
-    ventana.geometry("1280x720")
+    ventana.geometry("600x300")
 
     
 def ventana_registro(ventana_principal):
@@ -476,4 +473,5 @@ def ventana_main():
 
     return jugadores
 
-ventana_main()
+if __name__ == "__main__":
+    ventana_main()
