@@ -1,6 +1,7 @@
 from typing import List
 from interfaz import *
 from manejo_archivos import *
+from interfaz_tkinter import ventana_main
 
 LONGITUD_PALABRA_MINIMA = 10
 CANTIDAD_LETRAS_ROSCO = 10
@@ -26,7 +27,8 @@ def ejecutar_partida(diccionario_como_lista: List[List[str]], cantidad_de_palabr
     cantidad_letras_inciales = [x[0][0] for x in diccionario_como_lista]
 
     minimo_letras_posible = len(set(cantidad_letras_inciales))
-    letras_participantes = generar_letras_participantes(LETRAS_SIN_TILDES, CANTIDAD_LETRAS_ROSCO, minimo_letras_posible, cantidad_de_palabras_por_letra)
+    letras_participantes = generar_letras_participantes(
+        LETRAS_SIN_TILDES, CANTIDAD_LETRAS_ROSCO, minimo_letras_posible, cantidad_de_palabras_por_letra)
 
     rosco = generar_rosco(diccionario_como_lista, letras_participantes)
 
@@ -40,8 +42,10 @@ def ejecutar_partida(diccionario_como_lista: List[List[str]], cantidad_de_palabr
         turno_previo = rosco[i-1] if i > 0 else None
         palabra_actual: str = turno_actual[0]
 
-        mostrar_interfaz_del_juego(letras_mayuscula, jugadas, turno_actual, turno_previo)
-        ingreso_usuario = recibir_ingreso_usuario(palabra_actual, lambda: mostrar_interfaz_del_juego(letras_mayuscula, jugadas, turno_actual))
+        mostrar_interfaz_del_juego(
+            letras_mayuscula, jugadas, turno_actual, turno_previo)
+        ingreso_usuario = recibir_ingreso_usuario(
+            palabra_actual, lambda: mostrar_interfaz_del_juego(letras_mayuscula, jugadas, turno_actual))
         intentos.append(ingreso_usuario)
 
         acierto = verificar_intento(ingreso_usuario, palabra_actual)
@@ -57,17 +61,21 @@ def ejecutar_juego():
     Se encarga de obtener el diccionario de palabras admitidas para el juego, llevar el conteo del puntaje y permitir al usuario jugar tantas partidas como desee.
 
     Autores
-    -------
+    ------- 
     * Armari, Valentino
     * Brizuela, Natanael Daniel
     """
+    usuarios = ventana_main()
     diccionario_crudo = crear_diccionario()
-    diccionario_filtrado = filtrar_diccionario(diccionario_crudo, LONGITUD_PALABRA_MINIMA)
+    diccionario_filtrado = filtrar_diccionario(
+        diccionario_crudo, LONGITUD_PALABRA_MINIMA)
     crear_csv(diccionario_filtrado)
     diccionario_como_lista = hacerlo_lista(diccionario_filtrado)
 
-    cantidad_de_palabras_por_letra = calcular_cantidad_de_palabras_por_letra(diccionario_como_lista)
-    mostrar_total_de_palabras(cantidad_de_palabras_por_letra, CANTIDAD_LETRAS_ROSCO)
+    cantidad_de_palabras_por_letra = calcular_cantidad_de_palabras_por_letra(
+        diccionario_como_lista)
+    mostrar_total_de_palabras(
+        cantidad_de_palabras_por_letra, CANTIDAD_LETRAS_ROSCO)
 
     puntaje_total = 0
     continuar_jugando = True
