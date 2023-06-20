@@ -367,7 +367,6 @@ def mostrar_total_de_palabras(diccionario_de_palabras: List[List[str]]):
 
     input("Presione Enter (Inicio) para iniciar el juego ")
 
-    # devuelvo el diccionario para poder validar
     return cantidad_de_palabras_por_letra
 
 

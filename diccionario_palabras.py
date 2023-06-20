@@ -123,7 +123,6 @@ def calcular_cantidad_de_palabras_por_letra(diccionario_de_palabras: List[List[s
     return cantidad_de_palabras_por_letra
 
 
-# el primer parametro no lo estoy usando, se podria eliminar?
 def generar_letras_participantes(letras_permitidas: str, cantidad_de_letras: int, minimo_letras_posible: int, cantidad_de_palabras_por_letra: dict[str]):
     """
     Genera una lista aleatoria a partir de las letras permitidas de forma aleatoria
@@ -215,6 +214,3 @@ def ordenar_en_español(iterable: str | List[str]):
 
 if __name__ == "__main__":
     print(doctest.testmod())
-
-
-# arreglar el probelma de coso
