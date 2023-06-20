@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from tkinter import *
 import csv
 import random
 
@@ -326,6 +327,8 @@ def iniciar_sesion(nombre_login_entry, contrasenia_login_entry, resultado_label,
 
     return
 
+
+
 def formatear_ventanas(ventana, titulo):
     '''
     Esta funcion formatea las ventanas del programa .
@@ -342,15 +345,14 @@ def formatear_ventanas(ventana, titulo):
     -------
     * Neme, Agustin Nadim
     '''
-
-
     separador = tk.Frame(ventana, height=1, bd=1, relief=tk.SUNKEN)
     separador.pack(fill=tk.X, padx=10, pady=5)
     ventana.resizable(0,0)
     ventana.title(titulo)
-    ventana.iconbitmap("icono_computadora.ico")
-    ventana.geometry("600x300")
+    ventana.iconbitmap("herencia.ico")
+    ventana.geometry("1280x720")
 
+    
 def ventana_registro(ventana_principal):
     '''
     Interfaz grafica que muestra una ventana para que el usuario pueda registrarse e iniciar sesion dentro de la plataforma.
@@ -472,3 +474,5 @@ def ventana_main():
     ventana_principal.mainloop()
 
     return jugadores
+
+ventana_main()
