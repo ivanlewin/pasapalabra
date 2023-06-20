@@ -55,7 +55,7 @@ def validar_nombre(nombre_usuario):
     if not nombre_usuario.replace("-", "").isalnum():
         validador = False
 
-    with open("usuarios.csv", "r") as archivo_csv:
+    with open("usuarios.csv", "a+") as archivo_csv:
     
         lector_csv = csv.reader(archivo_csv)
 
