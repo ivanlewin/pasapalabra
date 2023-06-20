@@ -3,7 +3,10 @@ from tkinter import ttk
 import csv
 import random
 UBICACION_USUARIOS = "./archivos/usuarios.csv"
+UBICACION_ICONO = "./archivos/herencia.ico"
+
 MAX_JUGADORES = 4
+
 jugadores = []
 
 
@@ -347,7 +350,7 @@ def formatear_ventanas(ventana, titulo):
     separador.pack(fill=tk.X, padx=10, pady=5)
     ventana.resizable(0, 0)
     ventana.title(titulo)
-    ventana.iconbitmap("herencia.ico")
+    ventana.iconbitmap(UBICACION_ICONO)
     ventana.geometry("600x300")
 
 
