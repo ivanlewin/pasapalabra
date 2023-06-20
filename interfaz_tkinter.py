@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 import csv
+import random
 
 MAX_JUGADORES = 4
 jugadores = []
@@ -251,6 +252,7 @@ def agregar_jugador(nombre_jugador):
     global jugadores
     if nombre_jugador not in jugadores:
         jugadores.append(nombre_jugador)
+    random.shuffle(jugadores)
     return jugadores
 
 def listar_jugadores(jugadores_actuales, listbox):
@@ -464,9 +466,9 @@ def ventana_main():
     login_boton = ttk.Button(ventana_principal, text= "Login", command=lambda: ventana_login(ventana_principal, jugadores_listbox))
     login_boton.pack()
 
-    boton_cerrar = tk.Button(ventana_principal, text="Cerrar programa", command=lambda: cerrar_ventana(ventana_principal))
-    boton_cerrar.pack()
+    comenzar_juego_boton = tk.Button(ventana_principal, text="Comenzar juego", command=lambda: cerrar_ventana(ventana_principal))
+    comenzar_juego_boton.pack()
 
     ventana_principal.mainloop()
 
-ventana_main()
+    return jugadores
