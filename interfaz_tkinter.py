@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 import csv
 import random
-
+UBICACION_USUARIOS = "./archivos/usuarios.csv"
 MAX_JUGADORES = 4
 jugadores = []
 
@@ -55,7 +55,7 @@ def validar_nombre(nombre_usuario):
     if not nombre_usuario.replace("-", "").isalnum():
         validador = False
 
-    with open("usuarios.csv", "a+") as archivo_csv:
+    with open(UBICACION_USUARIOS, "a+") as archivo_csv:
 
         lector_csv = csv.reader(archivo_csv)
 
@@ -111,7 +111,8 @@ def validar_contrasenia(contrasenia, requisitos_label):
         validador = False
 
     if not any(char in "#!" for char in contrasenia):
-        requisitos.append("- Debe contener al menos uno de los caracteres especiales # o !.")
+        requisitos.append(
+            "- Debe contener al menos uno de los caracteres especiales # o !.")
         validador = False
 
     requisitos_label.config(text="\n".join(requisitos))
@@ -138,7 +139,7 @@ def verificar_usuario_existente(nombre):
     * Neme, Agustin Nadim
     '''
     nombre_existente = False
-    with open("usuarios.csv", "r", newline="") as usuario_csv:
+    with open(UBICACION_USUARIOS, "r", newline="") as usuario_csv:
         lector_csv = csv.reader(usuario_csv)
         for fila in lector_csv:
             if fila[0] == nombre:
@@ -160,7 +161,7 @@ def escribir_usuario_en_csv(nombre, contrasenia):
     -------
     * Neme, Agustin Nadim
     '''
-    with open("usuarios.csv", "a", newline="") as usuario_csv:
+    with open(UBICACION_USUARIOS, "a", newline="") as usuario_csv:
         escritor_csv = csv.writer(usuario_csv)
         escritor_csv.writerow([nombre, contrasenia])
     return
@@ -225,7 +226,7 @@ def verificar_datos(nombre, contrasenia):
     * Neme, Agustin Nadim
     '''
     datos_validos = False
-    with open("usuarios.csv", "r") as usuario_csv:
+    with open(UBICACION_USUARIOS, "r") as usuario_csv:
         lector_csv = csv.reader(usuario_csv)
         for fila in lector_csv:
             if fila[0] == nombre and fila[1] == contrasenia:
@@ -377,9 +378,11 @@ def ventana_registro(ventana_principal):
     contrasenia_label.pack()
     contrasenia_entry = tk.Entry(ventana_registro, show="*")
     contrasenia_entry.pack()
-    contrasenia_entry.bind("<Button-1>", lambda event: validar_contrasenia(contrasenia_entry.get(), resultado_label))
+    contrasenia_entry.bind(
+        "<Button-1>", lambda event: validar_contrasenia(contrasenia_entry.get(), resultado_label))
 
-    repetir_contrasenia_label = tk.Label(ventana_registro, text="Repetir contraseña:")
+    repetir_contrasenia_label = tk.Label(
+        ventana_registro, text="Repetir contraseña:")
     repetir_contrasenia_label.pack()
     repetir_contrasenia_entry = tk.Entry(ventana_registro, show="*")
     repetir_contrasenia_entry.pack()
@@ -387,10 +390,12 @@ def ventana_registro(ventana_principal):
     resultado_label = tk.Label(ventana_registro, text="")
     resultado_label.pack()
 
-    registrar = tk.Button(ventana_registro, text="Registrarse", command=lambda: registrar_jugador(nombre_entry, contrasenia_entry, repetir_contrasenia_entry, resultado_label))
+    registrar = tk.Button(ventana_registro, text="Registrarse", command=lambda: registrar_jugador(
+        nombre_entry, contrasenia_entry, repetir_contrasenia_entry, resultado_label))
     registrar.pack()
 
-    boton_cerrar = tk.Button(ventana_registro, text="Volver a inicio", command=lambda: cerrar_ventana(ventana_registro))
+    boton_cerrar = tk.Button(ventana_registro, text="Volver a inicio",
+                             command=lambda: cerrar_ventana(ventana_registro))
     boton_cerrar.pack()
 
 
@@ -427,13 +432,16 @@ def ventana_login(ventana_principal, jugadores_listbox):
     resultado_label = tk.Label(ventana_login, text="")
     resultado_label.pack()
 
-    registrar_boton = tk.Button(ventana_login, text="Registrarse", command=lambda: ventana_registro(ventana_principal))
+    registrar_boton = tk.Button(
+        ventana_login, text="Registrarse", command=lambda: ventana_registro(ventana_principal))
     registrar_boton.pack()
 
-    login_boton = tk.Button(ventana_login, text="Login", command=lambda: iniciar_sesion(nombre_login_entry, contrasenia_login_entry, resultado_label, jugadores_listbox))
+    login_boton = tk.Button(ventana_login, text="Login", command=lambda: iniciar_sesion(
+        nombre_login_entry, contrasenia_login_entry, resultado_label, jugadores_listbox))
     login_boton.pack()
 
-    boton_cerrar = tk.Button(ventana_login, text="Volver a inicio", command=lambda: cerrar_ventana(ventana_login))
+    boton_cerrar = tk.Button(ventana_login, text="Volver a inicio",
+                             command=lambda: cerrar_ventana(ventana_login))
     boton_cerrar.pack()
 
 
@@ -446,7 +454,8 @@ def ventana_main():
     * Neme, Agustin Nadim
     '''
     ventana_principal = tk.Tk()
-    formatear_ventanas(ventana_principal, "Bienvenido al juego pasapalabra - Heredero")
+    formatear_ventanas(ventana_principal,
+                       "Bienvenido al juego pasapalabra - Heredero")
 
     jugadores_label = ttk.Label(ventana_principal, text="Jugadores: ")
     jugadores_label.pack()
@@ -454,13 +463,16 @@ def ventana_main():
     jugadores_listbox = tk.Listbox(ventana_principal)
     jugadores_listbox.pack()
 
-    registrar_boton = ttk.Button(ventana_principal, text="Registrarse",  command=lambda: ventana_registro(ventana_principal))
+    registrar_boton = ttk.Button(ventana_principal, text="Registrarse",
+                                 command=lambda: ventana_registro(ventana_principal))
     registrar_boton.pack()
 
-    login_boton = ttk.Button(ventana_principal, text="Login", command=lambda: ventana_login(ventana_principal, jugadores_listbox))
+    login_boton = ttk.Button(ventana_principal, text="Login", command=lambda: ventana_login(
+        ventana_principal, jugadores_listbox))
     login_boton.pack()
 
-    comenzar_juego_boton = tk.Button(ventana_principal, text="Comenzar juego", command=lambda: cerrar_ventana(ventana_principal))
+    comenzar_juego_boton = tk.Button(
+        ventana_principal, text="Comenzar juego", command=lambda: cerrar_ventana(ventana_principal))
     comenzar_juego_boton.pack()
 
     ventana_principal.mainloop()

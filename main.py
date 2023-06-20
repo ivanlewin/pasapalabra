@@ -3,7 +3,7 @@ from interfaz import *
 from manejo_archivos import *
 from interfaz_tkinter import ventana_main
 
-LONGITUD_PALABRA_MINIMA = 10
+LONGITUD_PALABRA_MINIMA = 5
 CANTIDAD_LETRAS_ROSCO = 10
 LETRAS_SIN_TILDES = 'abcdefghijklmnñopqrstuvwxyz'
 LETRAS_CON_TILDES = 'aáäbcdeéëfghiíïjklmnñoóöpqrstuúüvwxyz'
