@@ -64,7 +64,7 @@ def validar_nombre(nombre_usuario):
                 validador = False
     return validador
 
-def validar_contrasenia(contrasenia):
+def validar_contrasenia(contrasenia, requisitos_label):
     '''
     Esta funcion valida contraseña ingresada por el usuario para el registro de jugadores.
     Parámetros
@@ -91,28 +91,30 @@ def validar_contrasenia(contrasenia):
     False
     '''
     validador = True
-    tiene_longitud_correcta = True
-    tiene_mayuscula = False
-    tiene_minuscula = False
-    tiene_numero = False
-    tiene_caracter_especial = False
-
+    requisitos = []
+    
     if len(contrasenia) < 6 or len(contrasenia) > 12:
+        requisitos.append("- Debe tener entre 6 y 12 caracteres.")
         validador = False
     
-    caracteres_permitidos = set("#!")
-    for caracter in contrasenia:
-        if caracter.isupper():
-            tiene_mayuscula = True
-        elif caracter.islower():
-            tiene_minuscula = True
-        elif caracter.isdigit():
-            tiene_numero = True
-        elif caracter in caracteres_permitidos:
-            tiene_caracter_especial = True
-
-    validador = tiene_caracter_especial and tiene_mayuscula and tiene_minuscula and tiene_longitud_correcta and tiene_numero
-
+    if not any(char.isupper() for char in contrasenia):
+        requisitos.append("- Debe contener al menos una letra mayúscula.")
+        validador = False
+    
+    if not any(char.islower() for char in contrasenia):
+        requisitos.append("- Debe contener al menos una letra minúscula.")
+        validador = False
+    
+    if not any(char.isdigit() for char in contrasenia):
+        requisitos.append("- Debe contener al menos un número.")
+        validador = False
+    
+    if not any(char in "#!" for char in contrasenia):
+        requisitos.append("- Debe contener al menos uno de los caracteres especiales # o !.")
+        validador = False
+    
+    requisitos_label.config(text="\n".join(requisitos))
+    
     return validador
 
 def verificar_usuario_existente(nombre):
@@ -194,7 +196,7 @@ def registrar_jugador(nombre_entry, contrasenia_entry, repetir_contrasenia_entry
         mensaje = "Nombre de usuario ya existe."  
     elif contrasenia != repetir_contrasenia:
         mensaje = "Las claves no coinciden."       
-    elif not validar_contrasenia(contrasenia):
+    elif not validar_contrasenia(contrasenia, resultado_label):
         mensaje = "Clave invalida."
     else:
         escribir_usuario_en_csv(nombre, contrasenia)
@@ -378,6 +380,8 @@ def ventana_registro(ventana_principal):
     contrasenia_label.pack()
     contrasenia_entry = tk.Entry(ventana_registro, show="*")
     contrasenia_entry.pack()
+    contrasenia_entry.bind("<Button-1>", lambda event: validar_contrasenia(contrasenia_entry.get(), resultado_label))
+
 
     repetir_contrasenia_label = tk.Label(ventana_registro, text="Repetir contraseña:")
     repetir_contrasenia_label.pack()
