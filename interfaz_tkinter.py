@@ -128,19 +128,19 @@ def agregar_jugador(nombre_jugador):
     random.shuffle(jugadores)
     return jugadores
 
-def listar_jugadores(jugadores_actuales):
+def listar_jugadores(jugadores_actuales, listbox):
+    listbox.delete(0, tk.END)
 
     if jugadores_actuales:
         for i, jugador in enumerate(jugadores_actuales,1):
-            print(f"{i}. {jugador}")
-
+            listbox.insert(tk.END, f"{i}. {jugador}")
     else:
-        print("No hay jugadores registrados.")
+       listbox.insert(tk.END, "No hay jugadores registrados.")
 
     return jugadores_actuales
 
 
-def iniciar_sesion(nombre_login_entry, contrasenia_login_entry, resultado_label):
+def iniciar_sesion(nombre_login_entry, contrasenia_login_entry, resultado_label, jugadores_listbox):
     nombre = nombre_login_entry.get()
     contrasenia = contrasenia_login_entry.get()
     mensaje = ""
@@ -152,7 +152,6 @@ def iniciar_sesion(nombre_login_entry, contrasenia_login_entry, resultado_label)
     elif verificar_datos(nombre, contrasenia):
         mensaje = "Inicio de sesión exitoso."
         jugadores_actuales = agregar_jugador(nombre)
-        listar_jugadores(jugadores_actuales)
 
     else:
         mensaje = "Datos incorrectos."
@@ -160,6 +159,8 @@ def iniciar_sesion(nombre_login_entry, contrasenia_login_entry, resultado_label)
     
     resultado_label.config(text= mensaje)
     resultado_label.pack()
+
+    listar_jugadores(jugadores_actuales, jugadores_listbox)
 
     return
 
@@ -197,7 +198,7 @@ def ventana_registro(ventana_principal):
     boton_cerrar.pack()
 
     
-def ventana_login(ventana_principal):
+def ventana_login(ventana_principal, jugadores_listbox):
     
     ventana_login = tk.Toplevel(ventana_principal)
     ventana_login.title("Login de jugadores")
@@ -219,10 +220,11 @@ def ventana_login(ventana_principal):
     resultado_label = tk.Label(ventana_login, text="")
     resultado_label.pack()
 
+
     registrar_boton = tk.Button(ventana_login, text="Registrarse", command=lambda: ventana_registro(ventana_principal))
     registrar_boton.pack()
     
-    login_boton = tk.Button(ventana_login, text="Login", command=lambda: iniciar_sesion(nombre_login_entry, contrasenia_login_entry, resultado_label))
+    login_boton = tk.Button(ventana_login, text="Login", command=lambda: iniciar_sesion(nombre_login_entry, contrasenia_login_entry, resultado_label, jugadores_listbox))
     login_boton.pack()
 
     boton_cerrar = tk.Button(ventana_login, text="Volver a inicio", command=lambda: cerrar_ventana(ventana_login))
@@ -239,10 +241,13 @@ def ventana_main():
     jugadores_label = ttk.Label(ventana_principal, text="Jugadores: ")
     jugadores_label.pack()
 
+    jugadores_listbox = tk.Listbox(ventana_principal)
+    jugadores_listbox.pack()
+
     registrar_boton = ttk.Button(ventana_principal, text= "Registrarse",  command=lambda: ventana_registro(ventana_principal))
     registrar_boton.pack()
 
-    login_boton = ttk.Button(ventana_principal, text= "Login", command=lambda: ventana_login(ventana_principal))
+    login_boton = ttk.Button(ventana_principal, text= "Login", command=lambda: ventana_login(ventana_principal, jugadores_listbox))
     login_boton.pack()
 
     boton_cerrar = tk.Button(ventana_principal, text="Cerrar programa", command=lambda: cerrar_ventana(ventana_principal))
@@ -251,5 +256,3 @@ def ventana_main():
     ventana_principal.mainloop()
 
 ventana_main()
-
-print(jugadores)
