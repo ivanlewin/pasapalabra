@@ -315,6 +315,7 @@ def iniciar_sesion(nombre_login_entry, contrasenia_login_entry, resultado_label,
     elif verificar_datos(nombre, contrasenia):
         mensaje = "Inicio de sesión exitoso."
         jugadores_actuales = agregar_jugador(nombre)
+        listar_jugadores(jugadores_actuales, jugadores_listbox)
 
     else:
         mensaje = "Datos incorrectos."
@@ -323,7 +324,7 @@ def iniciar_sesion(nombre_login_entry, contrasenia_login_entry, resultado_label,
     resultado_label.config(text= mensaje)
     resultado_label.pack()
 
-    listar_jugadores(jugadores_actuales, jugadores_listbox)
+    
 
     return
 
@@ -442,7 +443,7 @@ def ventana_login(ventana_principal, jugadores_listbox):
     boton_cerrar.pack()
 
 
-#Creacion de ventana principal
+
 def ventana_main():
     '''
 
