@@ -2,12 +2,14 @@ import tkinter as tk
 from tkinter import ttk
 import csv
 import random
+import os
 
 MAX_JUGADORES = 4
 jugadores = []
 
 def cerrar_ventana(ventana):
     ventana.destroy()
+    return
 
 def validar_nombre(nombre_usuario):
     '''
@@ -45,6 +47,7 @@ def validar_contrasenia(contrasenia):
     >>> validar_contrasenia("abc123")
     False
     '''
+    validador = True
     tiene_longitud_correcta = True
     tiene_mayuscula = False
     tiene_minuscula = False
@@ -88,25 +91,25 @@ def registrar_jugador(nombre_entry, contrasenia_entry, repetir_contrasenia_entry
     nombre = nombre_entry.get()
     contrasenia = contrasenia_entry.get()
     repetir_contrasenia = repetir_contrasenia_entry.get()
+    mensaje = ""
 
     if not validar_nombre(nombre):
-        resultado_label.config(text= "Nombre de usuario invalido.")
-        return
-    
-    if verificar_usuario_existente(nombre):
-        resultado_label.config(text= "Nombre de usuario ya existe.")
-        return
+        mensaje = "Nombre de usuario invalido."
+    elif verificar_usuario_existente(nombre):
+        mensaje = "Nombre de usuario ya existe."  
+    elif contrasenia != repetir_contrasenia:
+        mensaje = "Las claves no coinciden."       
+    elif not validar_contrasenia(contrasenia):
+        mensaje = "Clave invalida."
+    else:
+        escribir_usuario_en_csv(nombre, contrasenia)
+        mensaje = "Jugador resgistrado con exito"
 
-    if contrasenia != repetir_contrasenia:
-        resultado_label.config(text= "Las claves no coinciden.")
-        return
-
-    if not validar_contrasenia(contrasenia):
-        resultado_label.config(text= "Clave invalida.")
-        return
+    resultado_label.config(text=mensaje)
     
-    escribir_usuario_en_csv(nombre, contrasenia)
-    resultado_label.config(text="Jugador resgistrado con exito")
+    return
+
+
 
 def verificar_datos(nombre, contrasenia):
     datos_validos = False
@@ -127,32 +130,36 @@ def agregar_jugador(nombre_jugador):
 
 def listar_jugadores(jugadores_actuales):
 
-    if jugadores not in jugadores_actuales:
-        for jugador in jugadores_actuales:
-            print("- ", jugador)
+    if jugadores_actuales:
+        for i, jugador in enumerate(jugadores_actuales,1):
+            print(f"{i}. {jugador}")
+
     else:
         print("No hay jugadores registrados.")
+
+    return jugadores_actuales
 
 
 def iniciar_sesion(nombre_login_entry, contrasenia_login_entry, resultado_label):
     nombre = nombre_login_entry.get()
     contrasenia = contrasenia_login_entry.get()
+    mensaje = ""
 
-    if not verificar_usuario_existente(nombre):
-        resultado_label.config(text="Nombre de usuario no existe.")
-        return
-
-    if verificar_datos(nombre, contrasenia):
-        resultado_label.config(text="Inicio de sesión exitoso.")
-        resultado_label.pack()
-        
+    if len(jugadores) >= MAX_JUGADORES:
+        mensaje = "Se alcanzo el limite de jugadores por partida"
+    elif not verificar_usuario_existente(nombre):
+        mensaje = "Nombre de usuario no existe."
+    elif verificar_datos(nombre, contrasenia):
+        mensaje = "Inicio de sesión exitoso."
         jugadores_actuales = agregar_jugador(nombre)
+        listar_jugadores(jugadores_actuales)
 
     else:
-        resultado_label.config(text="Datos incorrectos.")
+        mensaje = "Datos incorrectos."
         resultado_label.pack()
-        
-    listar_jugadores(jugadores_actuales)
+    
+    resultado_label.config(text= mensaje)
+    resultado_label.pack()
 
     return
 
