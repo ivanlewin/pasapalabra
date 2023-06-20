@@ -1,5 +1,6 @@
 from typing import List
 from interfaz import *
+from interfaz_tkinter import ventana_main
 
 LONGITUD_PALABRA_MINIMA = 5
 CANTIDAD_LETRAS_ROSCO = 10
@@ -56,6 +57,7 @@ def ejecutar_juego():
     * Armari, Valentino
     * Brizuela, Natanael Daniel
     """
+    usuarios = ventana_main()
     diccionario_de_palabras = generar_diccionario(LONGITUD_PALABRA_MINIMA)
     mostrar_total_de_palabras(diccionario_de_palabras)
 
