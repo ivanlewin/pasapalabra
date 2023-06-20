@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import ttk
 import csv
 import random
-import os
 
 MAX_JUGADORES = 4
 jugadores = []
@@ -125,7 +124,6 @@ def agregar_jugador(nombre_jugador):
     global jugadores
     if nombre_jugador not in jugadores:
         jugadores.append(nombre_jugador)
-    random.shuffle(jugadores)
     return jugadores
 
 def listar_jugadores(jugadores_actuales, listbox):
