@@ -1,4 +1,3 @@
-from diccionario_palabras import *
 CORTE = ""
 
 
@@ -9,7 +8,7 @@ def abrir_linea(archivo, es_csv=False):
     Parámetros
     ----------
     archivo : TextIOWrapper
-        El arhcivo que se quiere leer
+        El archivo que se quiere leer
 
     Retorna
     -------
@@ -20,8 +19,7 @@ def abrir_linea(archivo, es_csv=False):
     -------
     * Brizuela, Natanael Daniel
     """
-    linea = archivo.readline().rstrip(
-    ) if not es_csv else archivo.readline().rstrip().split(",")
+    linea = archivo.readline().rstrip() if not es_csv else archivo.readline().rstrip().split(",")
 
     if not linea:
         linea = CORTE
@@ -83,8 +81,7 @@ def crear_csv(diccionario):
     * Brizuela, Natanael Daniel
     """
     archivo_csv = open("./archivos/diccionario.csv", "w", encoding="utf-8")
-    diccionario_ordenado = dict(
-        sorted(diccionario.items(), key=lambda x: x[0]))
+    diccionario_ordenado = dict(sorted(diccionario.items(), key=lambda x: x[0]))
 
     for palabra, definicion in diccionario_ordenado.items():
         linea_escribir = f"{palabra},{definicion}\n"

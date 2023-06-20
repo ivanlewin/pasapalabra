@@ -330,12 +330,13 @@ def mostrar_resumen_de_la_partida(letras: List[str], jugadas: List[Literal['a', 
     print(f"Puntaje de la partida: {puntaje_partida} puntos")
 
 
-def mostrar_total_de_palabras(diccionario_de_palabras: List[List[str]]):
+def mostrar_total_de_palabras(cantidad_de_palabras_por_letra):
     """
     Esta función muestra el total de palabras del diccionario, primero letra por letra, y luego el total de todo el diccionario.
 
     Parámetros
     ----------
+    <-- cambiar --> 
     diccionario_de_palabras : List[List[str]]
         El diccionario de palabras participantes del juego.
         Es una lista de listas de strings. Cada sublista tiene dos elementos; el primero es la palabra "aplanada" y el segundo, su definición.
@@ -345,9 +346,6 @@ def mostrar_total_de_palabras(diccionario_de_palabras: List[List[str]]):
     * Brizuela, Natanael Daniel
     * Lewin, Iván
     """
-    cantidad_de_palabras_por_letra = calcular_cantidad_de_palabras_por_letra(
-        diccionario_de_palabras)
-    cantidad_total_de_palabras = sum(cantidad_de_palabras_por_letra.values())
     letras = cantidad_de_palabras_por_letra.keys()
     letras = ordenar_en_español(list(letras))
 
