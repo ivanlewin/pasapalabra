@@ -1,17 +1,45 @@
 import tkinter as tk
 from tkinter import ttk
 import csv
-import random
 
 MAX_JUGADORES = 4
 jugadores = []
 
 def cerrar_ventana(ventana):
+    '''
+    Cierra la ventana actual.
+
+    Parámetros
+    ----------
+
+    ventana : tk.TK
+        Ventana que se quiera cerrar.
+
+    Autores
+    -------
+    * Neme, Agustin Nadim
+    '''
+
     ventana.destroy()
     return
 
 def validar_nombre(nombre_usuario):
     '''
+    Esta funcion valida el nombre de usuario ingresado por el usuario para el registro de jugadores.
+    Parámetros
+    ----------
+    nombre_usuario : str
+        Nombre de usuario ingresado por la persona.
+
+    Retorna
+    -------
+    bool
+        'True' en caso de cumplir los requisitos, 'False' en caso contrario.
+
+    Autores
+    -------
+    * Neme, Agustin Nadim
+    
     >>> validar_nombre("usuario_123")
     False
     >>> validar_nombre("nombre-de-usuario")
@@ -37,6 +65,21 @@ def validar_nombre(nombre_usuario):
 
 def validar_contrasenia(contrasenia):
     '''
+    Esta funcion valida contraseña ingresada por el usuario para el registro de jugadores.
+    Parámetros
+    ----------
+    contrasenia : str
+        Nombre de usuario ingresado por la persona.
+
+    Retorna
+    -------
+    bool
+        'True' en caso de cumplir los requisitos, 'False' en caso contrario.
+
+    Autores
+    -------
+    * Neme, Agustin Nadim
+
     >>> validar_contrasenia("Abc123!")
     True
     >>> validar_contrasenia("contrasenia")
@@ -72,6 +115,23 @@ def validar_contrasenia(contrasenia):
     return validador
 
 def verificar_usuario_existente(nombre):
+    '''
+    Esta funcion verifica si el usuario ya fue creado anteriormente en el archivo csv.
+
+    Parámetros
+    ----------
+    nombre : str
+        Nombre de usuario ingresado por la persona.
+
+    Retorna
+    -------
+    bool
+        'True' en caso de estar registrado, 'False' en caso contrario.
+
+    Autores
+    -------
+    * Neme, Agustin Nadim
+    '''
     nombre_existente = False
     with open("usuarios.csv", "r", newline="") as usuario_csv:
         lector_csv = csv.reader(usuario_csv)
@@ -81,12 +141,47 @@ def verificar_usuario_existente(nombre):
     return nombre_existente
 
 def escribir_usuario_en_csv(nombre, contrasenia):
+    '''
+    Esta funcion escribe el nombre y contrasenia del jugador dentro del archivo csv
+    Parámetros
+    ----------
+    nombre : str
+        Nombre de usuario ingresado por la persona.
+    contrasenia : str
+        Contraseña del usuario ingresado por la persona
+
+    Autores
+    -------
+    * Neme, Agustin Nadim
+    '''
     with open("usuarios.csv", "a", newline="") as usuario_csv:
         escritor_csv = csv.writer(usuario_csv)
         escritor_csv.writerow([nombre, contrasenia])
     return
 
 def registrar_jugador(nombre_entry, contrasenia_entry, repetir_contrasenia_entry, resultado_label):
+    '''
+    Esta funcion registra al jugador dentro del archivo csv en caso de cumplir todos los requisitos solicitados por el programa.
+
+    Parámetros
+    ----------
+    nombre_entry : str
+        Nombre que dio el usuario al momento de iniciar sesion.
+
+    contrasenia_entry : str
+        Contrasenia que dio el usuario al momento de iniciar sesion.
+    
+    repetir_contrasenia_entry : str
+        Misma contrasenia que dio el usuario al momento de iniciar sesion, debe coincidir con contrasenia_entry.
+
+    resultado_label: label
+        Etiqueta que da informacion al usuario.
+    
+    
+    Autores
+    -------
+    * Neme, Agustin Nadim
+    '''
     nombre = nombre_entry.get()
     contrasenia = contrasenia_entry.get()
     repetir_contrasenia = repetir_contrasenia_entry.get()
@@ -108,9 +203,25 @@ def registrar_jugador(nombre_entry, contrasenia_entry, repetir_contrasenia_entry
     
     return
 
-
-
 def verificar_datos(nombre, contrasenia):
+    '''
+    Esta funcion verifica si hay coincidencia de nombre y contrasenia dentro del archivo csv.
+    Parámetros
+    ----------
+    nombre : str
+        Nombre de usuario ingresado por la persona.
+    contrsenia : str
+        Contrasenia de usuario ingresado por la persona.
+
+    Retorna
+    -------
+    bool
+        'True' en caso de estar registrado, 'False' en caso contrario.
+
+    Autores
+    -------
+    * Neme, Agustin Nadim
+    '''
     datos_validos = False
     with open("usuarios.csv", "r") as usuario_csv:
         lector_csv = csv.reader(usuario_csv)
@@ -120,6 +231,22 @@ def verificar_datos(nombre, contrasenia):
     return datos_validos
 
 def agregar_jugador(nombre_jugador):
+    '''
+    Esta funcion agrega los jugadores, si no estan, a una lista luego de iniciar sesion 
+    Parámetros
+    ----------
+    nombre_jugador : str
+        Nombre de usuario ingresado por la persona.
+
+    Retorna
+    -------
+    jugadores: [list]
+        Lista con todos los jugadores que hayan iniciado sesion.
+
+    Autores
+    -------
+    * Neme, Agustin Nadim
+    '''
 
     global jugadores
     if nombre_jugador not in jugadores:
@@ -127,6 +254,19 @@ def agregar_jugador(nombre_jugador):
     return jugadores
 
 def listar_jugadores(jugadores_actuales, listbox):
+    '''
+    Esta funcion verifica lista los jugadores dentro de una listbox para mostrar dentro de la interfaz.
+    Parámetros
+    ----------
+    jugadores_actuales : [list]
+        Lista con todos los jugadores que hayan iniciado sesion.
+    listbox : listbox
+        Lista con todos los jugadores que inicien sesion para mostrarlos en la interfaz.
+    
+    Autores
+    -------
+    * Neme, Agustin Nadim
+    '''
     listbox.delete(0, tk.END)
 
     if jugadores_actuales:
@@ -135,10 +275,32 @@ def listar_jugadores(jugadores_actuales, listbox):
     else:
        listbox.insert(tk.END, "No hay jugadores registrados.")
 
-    return jugadores_actuales
+    return
 
 
 def iniciar_sesion(nombre_login_entry, contrasenia_login_entry, resultado_label, jugadores_listbox):
+    '''
+    Esta funcion inicia sesion con los datos brindados, si coinciden inicia sesion en el programa.
+
+    Parámetros
+    ----------
+    nombre_login_entry : str
+        Nombre que dio el usuario al momento de iniciar sesion.
+
+    contrasenia_login_entry : str
+        Contrasenia que dio el usuario al momento de iniciar sesion.
+
+    resultado_label: label
+        Etiqueta que da informacion al usuario.
+    
+    jugadores_listbox : listbox
+        Lista con todos los jugadores que inicien sesion para mostrarlos en la interfaz.
+    
+    Autores
+    -------
+    * Neme, Agustin Nadim
+    '''
+    
     nombre = nombre_login_entry.get()
     contrasenia = contrasenia_login_entry.get()
     mensaje = ""
@@ -164,6 +326,19 @@ def iniciar_sesion(nombre_login_entry, contrasenia_login_entry, resultado_label,
 
 
 def ventana_registro(ventana_principal):
+    '''
+    Interfaz grafica que muestra una ventana para que el usuario pueda registrarse e iniciar sesion dentro de la plataforma.
+
+    Parámetros
+    ----------
+    ventana_principal :
+        Interfaz principal del programa.
+
+    Autores
+    -------
+    * Neme, Agustin Nadim
+    '''
+
     ventana_registro = tk.Toplevel(ventana_principal)
     ventana_registro.title("Registro de Jugadores")
     ventana_registro.geometry("600x300")
@@ -197,6 +372,23 @@ def ventana_registro(ventana_principal):
 
     
 def ventana_login(ventana_principal, jugadores_listbox):
+
+    '''
+    Interfaz grafica que muestra una ventana para que el usuario pueda iniciar sesion dentro de la plataforma.
+
+    Parámetros
+    ----------
+    ventana_principal :
+        Interfaz principal del programa.
+    
+    jugadores_listbox : listbox
+        Lista con todos los jugadores que inicien sesion para mostrarlos en la interfaz.
+
+    Autores
+    -------
+    * Neme, Agustin Nadim
+    '''
+    
     
     ventana_login = tk.Toplevel(ventana_principal)
     ventana_login.title("Login de jugadores")
@@ -231,6 +423,16 @@ def ventana_login(ventana_principal, jugadores_listbox):
 
 #Creacion de ventana principal
 def ventana_main():
+    '''
+
+    Ventana main que muestra toda la informacion al jugador. Puede registrarse, iniciar sesion o cerrar el programa en caso necesario.
+
+    Autores
+    -------
+    * Neme, Agustin Nadim
+    '''
+    
+    
     ventana_principal = tk.Tk()
     ventana_principal.title("Login Jugadores")
     ventana_principal.geometry("600x300")
