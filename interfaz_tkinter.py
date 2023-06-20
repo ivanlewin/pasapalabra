@@ -324,7 +324,23 @@ def iniciar_sesion(nombre_login_entry, contrasenia_login_entry, resultado_label,
 
     return
 
-def efectos_visuales(ventana, titulo):
+def formatear_ventanas(ventana, titulo):
+    '''
+    Esta funcion formatea las ventanas del programa .
+    
+    Parámetros
+    ----------
+    
+    ventana: 
+        Aquella ventana a la que se le quiera aplicar un formato
+    titulo:
+        Titulo que se le quiera aplicar a la ventana
+
+    Autores
+    -------
+    * Neme, Agustin Nadim
+    '''
+
 
     separador = tk.Frame(ventana, height=1, bd=1, relief=tk.SUNKEN)
     separador.pack(fill=tk.X, padx=10, pady=5)
@@ -349,8 +365,8 @@ def ventana_registro(ventana_principal):
 
     ventana_registro = tk.Toplevel(ventana_principal)
    
-    efectos_visuales(ventana_registro, "Registro de jugadores")
-    
+    formatear_ventanas(ventana_registro, "Registro de jugadores")
+
     nombre_label = tk.Label(ventana_registro, text=f"Nombre de usuario:")
     nombre_label.pack()
     nombre_entry = tk.Entry(ventana_registro)
@@ -394,13 +410,9 @@ def ventana_login(ventana_principal, jugadores_listbox):
     * Neme, Agustin Nadim
     '''
     
-    
     ventana_login = tk.Toplevel(ventana_principal)
-    ventana_login.title("Login de jugadores")
-    ventana_login.geometry("600x300")
-
-    separador = tk.Frame(ventana_login, height=1, bd=1, relief=tk.SUNKEN)
-    separador.pack(fill=tk.X, padx=10, pady=5)
+    
+    formatear_ventanas(ventana_login, "Iniciar sesion")
 
     nombre_login_label = tk.Label(ventana_login, text="Nombre de usuario:")
     nombre_login_label.pack()
@@ -437,11 +449,8 @@ def ventana_main():
     * Neme, Agustin Nadim
     '''
     
-    
     ventana_principal = tk.Tk()
-    ventana_principal.title("Login Jugadores")
-    ventana_principal.geometry("600x300")
-    ventana_principal.configure(bg="#FE4A49")
+    formatear_ventanas(ventana_principal, "Bienvenido al juego pasapalabra - Heredero")
 
     jugadores_label = ttk.Label(ventana_principal, text="Jugadores: ")
     jugadores_label.pack()
