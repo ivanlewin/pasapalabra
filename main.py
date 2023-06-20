@@ -15,7 +15,7 @@ PUNTAJE_ACIERTO = 10
 PUNTAJE_DESACIERTO = 3
 
 
-def ejecutar_partida(diccionario_como_lista: tipos.rosco, jugadores: List[tipos.jugador]) -> List[tipos.puntaje]:
+def ejecutar_partida(diccionario_como_lista: tipos.rosco, jugadores: List[tipos.jugador], cantidad_de_palabras_por_letra: dict[str, int]) -> List[tipos.puntaje]:
     '''
     Esta función es la principal orquestadora de cada partida.
 
@@ -24,6 +24,8 @@ def ejecutar_partida(diccionario_como_lista: tipos.rosco, jugadores: List[tipos.
     diccionario_como_lista : tipos.rosco
         El diccionario con las palabras disponibles para el juego.
         Lista de tuplas donde cada tupla tiene dos elementos; el primero es la palabra 'aplanada' y el segundo, su definición.
+    usuarios : List[str]
+        El listado de los usuarios que juegan al juego.
     usuarios : List[str]
         El listado de los usuarios que juegan al juego.
 
@@ -39,8 +41,6 @@ def ejecutar_partida(diccionario_como_lista: tipos.rosco, jugadores: List[tipos.
     * Lewin, Iván
     '''
     cantidad_letras_inciales = [x[0][0] for x in diccionario_como_lista]
-    letras_participantes = generar_letras_participantes(LETRAS_SIN_TILDES, CANTIDAD_LETRAS_ROSCO)
-
     minimo_letras_posible = len(set(cantidad_letras_inciales))
     letras_participantes = generar_letras_participantes(LETRAS_SIN_TILDES, CANTIDAD_LETRAS_ROSCO, minimo_letras_posible, cantidad_de_palabras_por_letra)
 
@@ -104,7 +104,7 @@ def ejecutar_juego() -> None:
     continuar_jugando = True
     jugadas_restantes_disponibles = MAXIMO_PARTIDAS
     while continuar_jugando and jugadas_restantes_disponibles > 0:
-        puntaje_de_la_partida = ejecutar_partida(diccionario_como_lista, jugadores)
+        puntaje_de_la_partida = ejecutar_partida(diccionario_como_lista, jugadores, cantidad_de_palabras_por_letra)
         sumar_puntajes(puntaje_de_la_partida, puntajes_del_juego)
         mostrar_puntajes_parciales(puntaje_de_la_partida, puntajes_del_juego, jugadas_restantes_disponibles)
         jugadas_restantes_disponibles -= 1

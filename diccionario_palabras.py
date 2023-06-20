@@ -39,7 +39,7 @@ def filtrar_diccionario(diccionario_crudo: dict[str, str], longitud_minima_palab
     return diccionario_filtrado
 
 
-def generar_letras_participantes(letras_permitidas: str, cantidad_de_letras: int, minimo_letras_posible: int, cantidad_de_palabras_por_letra: dict[str]):
+def generar_letras_participantes(letras_permitidas: str, cantidad_de_letras: int, minimo_letras_posible: int, cantidad_de_palabras_por_letra: dict[str, int]):
     '''
     Genera una lista aleatoria a partir de las letras permitidas de forma aleatoria
 
