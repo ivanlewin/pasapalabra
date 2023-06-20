@@ -6,6 +6,7 @@ import random
 MAX_JUGADORES = 4
 jugadores = []
 
+
 def cerrar_ventana(ventana):
     '''
     Cierra la ventana actual.
@@ -20,9 +21,8 @@ def cerrar_ventana(ventana):
     -------
     * Neme, Agustin Nadim
     '''
-
     ventana.destroy()
-    return
+
 
 def validar_nombre(nombre_usuario):
     '''
@@ -40,7 +40,7 @@ def validar_nombre(nombre_usuario):
     Autores
     -------
     * Neme, Agustin Nadim
-    
+
     >>> validar_nombre("usuario_123")
     False
     >>> validar_nombre("nombre-de-usuario")
@@ -49,20 +49,21 @@ def validar_nombre(nombre_usuario):
     False
     '''
     validador = True
-    if len(nombre_usuario) < 4 or len(nombre_usuario) >20:
+    if len(nombre_usuario) < 4 or len(nombre_usuario) > 20:
         validador = False
 
     if not nombre_usuario.replace("-", "").isalnum():
         validador = False
 
     with open("usuarios.csv", "a+") as archivo_csv:
-    
+
         lector_csv = csv.reader(archivo_csv)
 
         for fila in lector_csv:
             if fila[0] == nombre_usuario:
                 validador = False
     return validador
+
 
 def validar_contrasenia(contrasenia, requisitos_label):
     '''
@@ -92,30 +93,31 @@ def validar_contrasenia(contrasenia, requisitos_label):
     '''
     validador = True
     requisitos = []
-    
+
     if len(contrasenia) < 6 or len(contrasenia) > 12:
         requisitos.append("- Debe tener entre 6 y 12 caracteres.")
         validador = False
-    
+
     if not any(char.isupper() for char in contrasenia):
         requisitos.append("- Debe contener al menos una letra mayúscula.")
         validador = False
-    
+
     if not any(char.islower() for char in contrasenia):
         requisitos.append("- Debe contener al menos una letra minúscula.")
         validador = False
-    
+
     if not any(char.isdigit() for char in contrasenia):
         requisitos.append("- Debe contener al menos un número.")
         validador = False
-    
+
     if not any(char in "#!" for char in contrasenia):
         requisitos.append("- Debe contener al menos uno de los caracteres especiales # o !.")
         validador = False
-    
+
     requisitos_label.config(text="\n".join(requisitos))
-    
+
     return validador
+
 
 def verificar_usuario_existente(nombre):
     '''
@@ -143,6 +145,7 @@ def verificar_usuario_existente(nombre):
                 nombre_existente = True
     return nombre_existente
 
+
 def escribir_usuario_en_csv(nombre, contrasenia):
     '''
     Esta funcion escribe el nombre y contrasenia del jugador dentro del archivo csv
@@ -162,6 +165,7 @@ def escribir_usuario_en_csv(nombre, contrasenia):
         escritor_csv.writerow([nombre, contrasenia])
     return
 
+
 def registrar_jugador(nombre_entry, contrasenia_entry, repetir_contrasenia_entry, resultado_label):
     '''
     Esta funcion registra al jugador dentro del archivo csv en caso de cumplir todos los requisitos solicitados por el programa.
@@ -170,17 +174,13 @@ def registrar_jugador(nombre_entry, contrasenia_entry, repetir_contrasenia_entry
     ----------
     nombre_entry : str
         Nombre que dio el usuario al momento de iniciar sesion.
-
     contrasenia_entry : str
         Contrasenia que dio el usuario al momento de iniciar sesion.
-    
     repetir_contrasenia_entry : str
         Misma contrasenia que dio el usuario al momento de iniciar sesion, debe coincidir con contrasenia_entry.
-
     resultado_label: label
         Etiqueta que da informacion al usuario.
-    
-    
+
     Autores
     -------
     * Neme, Agustin Nadim
@@ -191,20 +191,19 @@ def registrar_jugador(nombre_entry, contrasenia_entry, repetir_contrasenia_entry
     mensaje = ""
 
     if not validar_nombre(nombre):
-        mensaje = "Nombre de usuario invalido."
+        mensaje = "Nombre de usuario inválido."
     elif verificar_usuario_existente(nombre):
-        mensaje = "Nombre de usuario ya existe."  
+        mensaje = "Nombre de usuario ya existe."
     elif contrasenia != repetir_contrasenia:
-        mensaje = "Las claves no coinciden."       
+        mensaje = "Las claves no coinciden."
     elif not validar_contrasenia(contrasenia, resultado_label):
-        mensaje = "Clave invalida."
+        mensaje = "Clave inválida."
     else:
         escribir_usuario_en_csv(nombre, contrasenia)
         mensaje = "Jugador resgistrado con exito"
 
     resultado_label.config(text=mensaje)
-    
-    return
+
 
 def verificar_datos(nombre, contrasenia):
     '''
@@ -233,6 +232,7 @@ def verificar_datos(nombre, contrasenia):
                 datos_validos = True
     return datos_validos
 
+
 def agregar_jugador(nombre_jugador):
     '''
     Esta funcion agrega los jugadores, si no estan, a una lista luego de iniciar sesion 
@@ -250,12 +250,12 @@ def agregar_jugador(nombre_jugador):
     -------
     * Neme, Agustin Nadim
     '''
-
     global jugadores
     if nombre_jugador not in jugadores:
         jugadores.append(nombre_jugador)
     random.shuffle(jugadores)
     return jugadores
+
 
 def listar_jugadores(jugadores_actuales, listbox):
     '''
@@ -266,7 +266,7 @@ def listar_jugadores(jugadores_actuales, listbox):
         Lista con todos los jugadores que hayan iniciado sesion.
     listbox : listbox
         Lista con todos los jugadores que inicien sesion para mostrarlos en la interfaz.
-    
+
     Autores
     -------
     * Neme, Agustin Nadim
@@ -274,11 +274,10 @@ def listar_jugadores(jugadores_actuales, listbox):
     listbox.delete(0, tk.END)
 
     if jugadores_actuales:
-        for i, jugador in enumerate(jugadores_actuales,1):
+        for i, jugador in enumerate(jugadores_actuales, 1):
             listbox.insert(tk.END, f"{i}. {jugador}")
     else:
-       listbox.insert(tk.END, "No hay jugadores registrados.")
-
+        listbox.insert(tk.END, "No hay jugadores registrados.")
     return
 
 
@@ -296,15 +295,15 @@ def iniciar_sesion(nombre_login_entry, contrasenia_login_entry, resultado_label,
 
     resultado_label: label
         Etiqueta que da informacion al usuario.
-    
+
     jugadores_listbox : listbox
         Lista con todos los jugadores que inicien sesion para mostrarlos en la interfaz.
-    
+
     Autores
     -------
     * Neme, Agustin Nadim
     '''
-    
+
     nombre = nombre_login_entry.get()
     contrasenia = contrasenia_login_entry.get()
     mensaje = ""
@@ -321,21 +320,19 @@ def iniciar_sesion(nombre_login_entry, contrasenia_login_entry, resultado_label,
     else:
         mensaje = "Datos incorrectos."
         resultado_label.pack()
-    
-    resultado_label.config(text= mensaje)
+
+    resultado_label.config(text=mensaje)
     resultado_label.pack()
 
     return
 
 
-
 def formatear_ventanas(ventana, titulo):
     '''
     Esta funcion formatea las ventanas del programa .
-    
+
     Parámetros
     ----------
-    
     ventana: 
         Aquella ventana a la que se le quiera aplicar un formato
     titulo:
@@ -347,12 +344,12 @@ def formatear_ventanas(ventana, titulo):
     '''
     separador = tk.Frame(ventana, height=1, bd=1, relief=tk.SUNKEN)
     separador.pack(fill=tk.X, padx=10, pady=5)
-    ventana.resizable(0,0)
+    ventana.resizable(0, 0)
     ventana.title(titulo)
     ventana.iconbitmap("herencia.ico")
     ventana.geometry("600x300")
 
-    
+
 def ventana_registro(ventana_principal):
     '''
     Interfaz grafica que muestra una ventana para que el usuario pueda registrarse e iniciar sesion dentro de la plataforma.
@@ -368,7 +365,7 @@ def ventana_registro(ventana_principal):
     '''
 
     ventana_registro = tk.Toplevel(ventana_principal)
-   
+
     formatear_ventanas(ventana_registro, "Registro de jugadores")
 
     nombre_label = tk.Label(ventana_registro, text=f"Nombre de usuario:")
@@ -382,7 +379,6 @@ def ventana_registro(ventana_principal):
     contrasenia_entry.pack()
     contrasenia_entry.bind("<Button-1>", lambda event: validar_contrasenia(contrasenia_entry.get(), resultado_label))
 
-
     repetir_contrasenia_label = tk.Label(ventana_registro, text="Repetir contraseña:")
     repetir_contrasenia_label.pack()
     repetir_contrasenia_entry = tk.Entry(ventana_registro, show="*")
@@ -391,15 +387,14 @@ def ventana_registro(ventana_principal):
     resultado_label = tk.Label(ventana_registro, text="")
     resultado_label.pack()
 
-    registrar = tk.Button(ventana_registro, text= "Registrarse", command=lambda: registrar_jugador(nombre_entry, contrasenia_entry, repetir_contrasenia_entry, resultado_label))
+    registrar = tk.Button(ventana_registro, text="Registrarse", command=lambda: registrar_jugador(nombre_entry, contrasenia_entry, repetir_contrasenia_entry, resultado_label))
     registrar.pack()
 
     boton_cerrar = tk.Button(ventana_registro, text="Volver a inicio", command=lambda: cerrar_ventana(ventana_registro))
     boton_cerrar.pack()
 
-    
-def ventana_login(ventana_principal, jugadores_listbox):
 
+def ventana_login(ventana_principal, jugadores_listbox):
     '''
     Interfaz grafica que muestra una ventana para que el usuario pueda iniciar sesion dentro de la plataforma.
 
@@ -407,7 +402,7 @@ def ventana_login(ventana_principal, jugadores_listbox):
     ----------
     ventana_principal :
         Interfaz principal del programa.
-    
+
     jugadores_listbox : listbox
         Lista con todos los jugadores que inicien sesion para mostrarlos en la interfaz.
 
@@ -415,9 +410,8 @@ def ventana_login(ventana_principal, jugadores_listbox):
     -------
     * Neme, Agustin Nadim
     '''
-    
     ventana_login = tk.Toplevel(ventana_principal)
-    
+
     formatear_ventanas(ventana_login, "Iniciar sesion")
 
     nombre_login_label = tk.Label(ventana_login, text="Nombre de usuario:")
@@ -433,10 +427,9 @@ def ventana_login(ventana_principal, jugadores_listbox):
     resultado_label = tk.Label(ventana_login, text="")
     resultado_label.pack()
 
-
     registrar_boton = tk.Button(ventana_login, text="Registrarse", command=lambda: ventana_registro(ventana_principal))
     registrar_boton.pack()
-    
+
     login_boton = tk.Button(ventana_login, text="Login", command=lambda: iniciar_sesion(nombre_login_entry, contrasenia_login_entry, resultado_label, jugadores_listbox))
     login_boton.pack()
 
@@ -444,17 +437,14 @@ def ventana_login(ventana_principal, jugadores_listbox):
     boton_cerrar.pack()
 
 
-
 def ventana_main():
     '''
-
     Ventana main que muestra toda la informacion al jugador. Puede registrarse, iniciar sesion o cerrar el programa en caso necesario.
 
     Autores
     -------
     * Neme, Agustin Nadim
     '''
-    
     ventana_principal = tk.Tk()
     formatear_ventanas(ventana_principal, "Bienvenido al juego pasapalabra - Heredero")
 
@@ -464,10 +454,10 @@ def ventana_main():
     jugadores_listbox = tk.Listbox(ventana_principal)
     jugadores_listbox.pack()
 
-    registrar_boton = ttk.Button(ventana_principal, text= "Registrarse",  command=lambda: ventana_registro(ventana_principal))
+    registrar_boton = ttk.Button(ventana_principal, text="Registrarse",  command=lambda: ventana_registro(ventana_principal))
     registrar_boton.pack()
 
-    login_boton = ttk.Button(ventana_principal, text= "Login", command=lambda: ventana_login(ventana_principal, jugadores_listbox))
+    login_boton = ttk.Button(ventana_principal, text="Login", command=lambda: ventana_login(ventana_principal, jugadores_listbox))
     login_boton.pack()
 
     comenzar_juego_boton = tk.Button(ventana_principal, text="Comenzar juego", command=lambda: cerrar_ventana(ventana_principal))
@@ -476,6 +466,7 @@ def ventana_main():
     ventana_principal.mainloop()
 
     return jugadores
+
 
 if __name__ == "__main__":
     ventana_main()
