@@ -330,7 +330,7 @@ def mostrar_resumen_de_la_partida(letras: List[str], jugadas: List[Literal['a', 
     print(f"Puntaje de la partida: {puntaje_partida} puntos")
 
 
-def mostrar_total_de_palabras(cantidad_de_palabras_por_letra):
+def mostrar_total_de_palabras(cantidad_de_palabras_por_letra, cantidad_de_letras_deseada):
     """
     Esta función muestra el total de palabras del diccionario, primero letra por letra, y luego el total de todo el diccionario.
 
@@ -351,8 +351,7 @@ def mostrar_total_de_palabras(cantidad_de_palabras_por_letra):
     cantidad_total_de_palabras = sum(cantidad_de_palabras_por_letra.values())
 
     for letra in letras:
-        cantidad = cantidad_de_palabras_por_letra[letra] if letra in cantidad_de_palabras_por_letra.keys(
-        ) else None
+        cantidad = cantidad_de_palabras_por_letra[letra] if letra in cantidad_de_palabras_por_letra.keys() else None
         if cantidad is None or cantidad == 0:
             print(f"No hay palabras que comienzan con la letra '{letra}'.")
         elif cantidad == 1:
@@ -361,8 +360,14 @@ def mostrar_total_de_palabras(cantidad_de_palabras_por_letra):
             print(
                 f"Hay {cantidad} palabras que comienzan con la letra '{letra}'.")
     print()
-    print(f"En total hay {cantidad_total_de_palabras} palabras.")
+    print(f"En total hay {cantidad_total_de_palabras} palabras disponibles para el rosco.")
     print()
+
+    cantidad_de_letras = len(letras)
+    if (cantidad_de_letras < cantidad_de_letras_deseada):
+        print(f"Se deseaba jugar con {cantidad_de_letras_deseada} letras. \
+Sin embargo, debido a las preferencias del juego sólo se pudieron obtener {cantidad_de_letras} letras.")
+        print()
 
     input("Presione Enter (Inicio) para iniciar el juego ")
 
