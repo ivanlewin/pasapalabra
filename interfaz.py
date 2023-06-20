@@ -348,6 +348,7 @@ def mostrar_total_de_palabras(cantidad_de_palabras_por_letra):
     """
     letras = cantidad_de_palabras_por_letra.keys()
     letras = ordenar_en_español(list(letras))
+    cantidad_total_de_palabras = sum(cantidad_de_palabras_por_letra.values())
 
     for letra in letras:
         cantidad = cantidad_de_palabras_por_letra[letra] if letra in cantidad_de_palabras_por_letra.keys(
