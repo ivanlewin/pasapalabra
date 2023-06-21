@@ -1,7 +1,8 @@
+import doctest
 CORTE = ""
 
 
-def abrir_linea(archivo, es_csv=False):
+def abrir_linea(archivo):
     """
     Esta funcion lee linea por linea el archivo especificado
 
@@ -26,7 +27,7 @@ def abrir_linea(archivo, es_csv=False):
     return linea
 
 
-def crear_diccionario():
+def crear_diccionario() -> dict:
     """
     Funcion encargada de crear el diccionario en base a los archivos "definiciones.txt" y "palabras.txt".
 
@@ -62,7 +63,7 @@ def crear_diccionario():
     return diccionario
 
 
-def crear_csv(diccionario):
+def crear_csv(dicc_palabras_y_def: dict) -> None:
     """
     Funcion que se encarga de crear un archivo ordenado .scv en base al diccionario de palabras armado previamente.
 
@@ -82,7 +83,7 @@ def crear_csv(diccionario):
     """
     archivo_csv = open("./archivos/diccionario.csv", "w", encoding="utf-8")
     diccionario_ordenado = dict(
-        sorted(diccionario.items(), key=lambda x: x[0]))
+        sorted(dicc_palabras_y_def.items(), key=lambda x: x[0]))
 
     for palabra, definicion in diccionario_ordenado.items():
         linea_escribir = f"{palabra},{definicion}\n"
@@ -91,7 +92,7 @@ def crear_csv(diccionario):
     archivo_csv.close()
 
 
-def hacerlo_lista(diccionario):
+def hacerlo_lista(diccionario: dict) -> list:
     """
     Funcion que crea una lista de listas a partir de un diccionario de palabras y definciones
 
@@ -108,14 +109,44 @@ def hacerlo_lista(diccionario):
     Autores
     -------
     * Brizuela, Natanael Daniel
+
+    Ejemplos
+    --------
+    >>> hacerlo_lista({'circuito': 'm. Terreno comprendido dentro de un perímetro cualquiera'})
+    [['circuito', 'm. Terreno comprendido dentro de un perímetro cualquiera']]
+    >>> hacerlo_lista({'iluminar': 'tr. Alumbrar dar luz o bañar de resplandor'})
+    [['iluminar', 'tr. Alumbrar dar luz o bañar de resplandor']]
     """
     lista = [[k, v] for k, v in diccionario.items()]
     lista = sorted(lista, key=lambda x: x[0])
-
     return lista
 
 
-def validar_linea(diccionario, linea):
+def validar_linea(diccionario: dict, linea: str):
+    """
+    Funcion que verifica que no haya error en la linea donde esta la configuracion y lo carga en el diccionario, si hay error no modifica el diccionario. 
+
+    Parámetros
+    ----------
+    dicionario : dict.
+        Diccionario de configuraciones.
+
+    Retorna
+    -------
+    diccionario : dict.
+        El diccionario con la configuracion del archivo dependiendo si es por defecto o por eleccion.
+
+    Autores
+    -------
+    * Brizuela, Natanael Daniel
+
+    Ejemplos
+    --------
+    >>> validar_linea({"LONGITUD_PALABRA_MINIMA": {"valor": 10, "origen": "Defecto"}},"LONGITUD_PALABRA_MINIMA,4")
+    {'LONGITUD_PALABRA_MINIMA': {'valor': 4, 'origen': 'Eleccion'}}
+    >>> validar_linea({"LONGITUD_PALABRA_MINIMA": {"valor": 10, "origen": "Defecto"}},"LONGITUD_PALABRA_MINIMA,d")
+    {'LONGITUD_PALABRA_MINIMA': {'valor': 10, 'origen': 'Defecto'}}
+    """
     nombre, valor = linea.split(",")
 
     try:
@@ -129,9 +160,28 @@ def validar_linea(diccionario, linea):
     return diccionario
 
 
-def crear_diccionario_configuracion(arch_config):
+def crear_diccionario_configuracion() -> dict:
+    """
+    Funcion que crea el diccionario con la configuracion que se utilizara durante el juego. 
+
+    Parámetros
+    ----------
+    arch_config : TextIOWrapper.
+        Archivo de configuracion.
+
+    Retorna
+    -------
+    diccionario : dict.
+        El diccionario con la configuracion del archivo dependiendo si es por defecto o por eleccion.
+
+    Autores
+    -------
+    * Brizuela, Natanael Daniel
+    """
+    arch_config = open("./archivos/configuracion.csv")
+
     linea = abrir_linea(arch_config)
-    diccionario = {
+    dicc_configuracion = {
         "LONGITUD_PALABRA_MINIMA": {"valor": 10, "origen": "Defecto"},
         "CANTIDAD_LETRAS_ROSCO": {"valor": 10, "origen": "Defecto"},
         "MAXIMO_PARTIDAS": {"valor": 5, "origen": "Defecto"},
@@ -141,17 +191,13 @@ def crear_diccionario_configuracion(arch_config):
 
     while linea != CORTE:
 
-        diccionario = validar_linea(diccionario, linea)
+        dicc_configuracion = validar_linea(dicc_configuracion, linea)
 
         linea = abrir_linea(arch_config)
 
-    return diccionario
-
-
-def obtener_configuracion():
-    arch_config = open("./archivos/configuracion.csv")
-
-    diccionario_configuracion = crear_diccionario_configuracion(arch_config)
     arch_config.close()
+    return dicc_configuracion
 
-    return diccionario_configuracion
+
+if __name__ == '__main__':
+    print(doctest.testmod())

@@ -434,10 +434,25 @@ def verificar_intento(ingreso_usuario: str, palabra_a_adivinar: str):
     return acierto
 
 
-def mostrar_configuracion(diccionario):
+def mostrar_configuracion(diccionario_configuracion: dict) -> None:
+    """
+    Esta funcion se encarga de mostrar la configuracion inicial del juego.
 
+    Parámetros
+    ----------
+    diccionario_configuracion : dict
+
+    Retorna
+    -------
+    None 
+
+    Autores
+    -------
+    * Brizuela, Natanael Daniel
+    --------
+    """
     print("\n|---------> CONFIGURACION INICIAL <---------| ")
-    for k, v in diccionario.items():
+    for k, v in diccionario_configuracion.items():
         print(
             f"{(k)} : {agregar_color(str(v['valor']),'verde')} -- {agregar_color(str(v['origen']),'verde')}")
 
