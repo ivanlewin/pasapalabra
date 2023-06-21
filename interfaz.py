@@ -147,7 +147,8 @@ def mostrar_turno_actual(turno_actual: List[str], jugadas: List[tipos.jugada], j
 
     print(f'Es el turno de {jugador_actual["usuario"]}')
     print()
-    print(f'Turno letra {letra_actual.upper()} - Palabra de {len(palabra_actual)} letras')
+    print(
+        f'Turno letra {letra_actual.upper()} - Palabra de {len(palabra_actual)} letras')
     print(f'Definición: {definicion_actual}\n')
 
 
@@ -183,7 +184,6 @@ def mostrar_feedback(jugadas: List[tipos.jugada], turno_previo: List[str]) -> No
         else:
             print(
                 f"{agregar_color('¡Incorrecto!', 'rojo')} La palabra correcta era '{palabra_correcta}'")
-
 
 
 def mostrar_interfaz_del_juego(letras: List[str], jugadas: List[tipos.jugada], jugadores: List[tipos.jugador], jugador_actual: tipos.jugador, turno_actual: List[str], turno_previo: List[str] = None) -> None:
@@ -252,11 +252,13 @@ def recibir_ingreso_usuario(palabra_actual: str, generar_interfaz: Callable) -> 
             ingreso_del_usuario = aplanar(input('Ingrese una palabra: '))
         elif not ingreso_del_usuario.isalpha():
             generar_interfaz()
-            print(f'{agregar_color("¡Error!", "rojo")} Su ingreso solo debe contener letras. ', end='')
+            print(
+                f'{agregar_color("¡Error!", "rojo")} Su ingreso solo debe contener letras. ', end='')
             ingreso_del_usuario = aplanar(input('Ingrese una palabra: '))
         elif palabra_actual[0] != ingreso_del_usuario[0]:
             generar_interfaz()
-            print(f'{agregar_color("¡Error!", "rojo")} Su ingreso debe comenzar con la letra "{palabra_actual[0].upper()}". ', end='')
+            print(
+                f'{agregar_color("¡Error!", "rojo")} Su ingreso debe comenzar con la letra "{palabra_actual[0].upper()}". ', end='')
             ingreso_del_usuario = aplanar(input('Ingrese una palabra: '))
         else:
             palabra_valida = ingreso_del_usuario
@@ -326,16 +328,21 @@ def mostrar_total_de_palabras(cantidad_de_palabras_por_letra: dict[str, int], ca
         if cantidad is None or cantidad == 0:
             print(f'No hay palabras que comienzan con la letra "{letra}"')
         elif cantidad == 1:
-            print(f'Hay {cantidad:<2} palabra  que comienza  con la letra "{letra}"')
+            print(
+                f'Hay {cantidad:<2} palabra  que comienza  con la letra "{letra}"')
         else:
-            print(f'Hay {cantidad:<2} palabras que comienzan con la letra "{letra}"')
+            print(
+                f'Hay {cantidad:<2} palabras que comienzan con la letra "{letra}"')
     print()
-    print(f'En total hay {cantidad_total_de_palabras} palabras disponibles para el rosco')
+    print(
+        f'En total hay {cantidad_total_de_palabras} palabras disponibles para el rosco')
     print()
 
     cantidad_de_letras = len(letras)
     if (cantidad_de_letras < cantidad_de_letras_deseada):
-        print(f'Se deseaba jugar con {cantidad_de_letras_deseada} letras. Sin embargo, debido a las preferencias del juego sólo se pudieron obtener {cantidad_de_letras} letras.')        print()
+        print(
+            f'Se deseaba jugar con {cantidad_de_letras_deseada} letras. Sin embargo, debido a las preferencias del juego sólo se pudieron obtener {cantidad_de_letras} letras.')
+        print()
 
     input('Presione Enter (Inicio) para iniciar el juego ')
 
@@ -419,7 +426,8 @@ def preguntar_seguir_jugando(jugadas_restantes_disponibles: int) -> bool:
     if jugadas_restantes_disponibles == 1:
         print(f'Si lo desea, puede jugar una última partida más.', end=' ')
     else:
-        print(f'Si lo desea, puede continuar jugando hasta {jugadas_restantes_disponibles} partidas más.', end=' ')
+        print(
+            f'Si lo desea, puede continuar jugando hasta {jugadas_restantes_disponibles} partidas más.', end=' ')
     ingreso_del_usuario = aplanar(input('¿Desea seguir jugando?: '))
     while ingreso_del_usuario not in ('si', 'no'):
         print(f'Por favor, ingrese "si" o "no". ', end='')
@@ -427,13 +435,27 @@ def preguntar_seguir_jugando(jugadas_restantes_disponibles: int) -> bool:
     return ingreso_del_usuario == 'si'
 
 
-def mostrar_configuracion(diccionario):
+def mostrar_configuracion(diccionario_configuracion: dict) -> None:
+    """
+    Esta funcion se encarga de mostrar la configuracion inicial del juego.
 
+    Parámetros
+    ----------
+    diccionario_configuracion : dict
+
+    Retorna
+    -------
+    None 
+
+    Autores
+    -------
+    * Brizuela, Natanael Daniel
+    --------
+    """
     print("\n|---------> CONFIGURACION INICIAL <---------| ")
-    for k, v in diccionario.items():
+    for k, v in diccionario_configuracion.items():
         print(
             f"{(k)} : {agregar_color(str(v['valor']),'verde')} -- {agregar_color(str(v['origen']),'verde')}")
-
 
 
 if __name__ == '__main__':
