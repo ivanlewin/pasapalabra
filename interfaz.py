@@ -321,14 +321,13 @@ def mostrar_total_de_palabras(cantidad_de_palabras_por_letra: dict[str, int], ca
     for letra in letras:
         cantidad = cantidad_de_palabras_por_letra[letra] if letra in cantidad_de_palabras_por_letra.keys() else None
         if cantidad is None or cantidad == 0:
-            print(f'No hay palabras que comienzan con la letra "{letra}".')
+            print(f'No hay palabras que comienzan con la letra "{letra}"')
         elif cantidad == 1:
-            print(f'Hay {cantidad} palabra que comienza con la letra "{letra}".')
+            print(f'Hay {cantidad:<2} palabra  que comienza  con la letra "{letra}"')
         else:
-            print(
-                f'Hay {cantidad} palabras que comienzan con la letra "{letra}".')
+            print(f'Hay {cantidad:<2} palabras que comienzan con la letra "{letra}"')
     print()
-    print(f'En total hay {cantidad_total_de_palabras} palabras disponibles para el rosco.')
+    print(f'En total hay {cantidad_total_de_palabras} palabras disponibles para el rosco')
     print()
 
     cantidad_de_letras = len(letras)

@@ -110,7 +110,7 @@ def ejecutar_juego() -> None:
     continuar_jugando = True
     jugadas_restantes_disponibles = configuracion['maximo_partidas']
     while continuar_jugando and jugadas_restantes_disponibles > 0:
-        puntaje_de_la_partida = ejecutar_partida(diccionario_como_lista, jugadores, cantidad_de_palabras_por_letra)
+        puntaje_de_la_partida = ejecutar_partida(diccionario_como_lista, jugadores, cantidad_de_palabras_por_letra, configuracion)
         sumar_puntajes(puntaje_de_la_partida, puntajes_del_juego)
         mostrar_puntajes_parciales(puntaje_de_la_partida, puntajes_del_juego, jugadas_restantes_disponibles)
         jugadas_restantes_disponibles -= 1
