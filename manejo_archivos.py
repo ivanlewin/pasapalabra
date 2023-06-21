@@ -19,7 +19,7 @@ def abrir_linea(archivo, es_csv=False):
     -------
     * Brizuela, Natanael Daniel
     """
-    linea = archivo.readline().rstrip() if not es_csv else archivo.readline().rstrip().split(",")
+    linea = archivo.readline().rstrip()
 
     if not linea:
         linea = CORTE
@@ -81,7 +81,8 @@ def crear_csv(diccionario):
     * Brizuela, Natanael Daniel
     """
     archivo_csv = open("./archivos/diccionario.csv", "w", encoding="utf-8")
-    diccionario_ordenado = dict(sorted(diccionario.items(), key=lambda x: x[0]))
+    diccionario_ordenado = dict(
+        sorted(diccionario.items(), key=lambda x: x[0]))
 
     for palabra, definicion in diccionario_ordenado.items():
         linea_escribir = f"{palabra},{definicion}\n"
@@ -112,3 +113,47 @@ def hacerlo_lista(diccionario):
     lista = sorted(lista, key=lambda x: x[0])
 
     return lista
+
+
+def validar_linea(diccionario, linea):
+    nombre, valor = linea.split(",")
+
+    try:
+        if nombre in diccionario.keys():
+            diccionario[nombre] = {"valor": int(
+                valor), "origen": "Eleccion"}
+
+    except ValueError:
+        pass
+
+    return diccionario
+
+
+def crear_diccionario_configuracion(arch_config):
+    linea = abrir_linea(arch_config)
+    diccionario = {
+        "LONGITUD_PALABRA_MINIMA": {"valor": 10, "origen": "Defecto"},
+        "CANTIDAD_LETRAS_ROSCO": {"valor": 10, "origen": "Defecto"},
+        "MAXIMO_PARTIDAS": {"valor": 5, "origen": "Defecto"},
+        "PUNTAJE_ACIERTO": {"valor": 10, "origen": "Defecto"},
+        "PUNTAJE_DESACIERTO": {"valor": 3, "origen": "Defecto"}
+    }
+
+    while linea != CORTE:
+
+        diccionario = validar_linea(diccionario, linea)
+
+        linea = abrir_linea(arch_config)
+
+    return diccionario
+
+
+def obtener_configuracion():
+    arch_config = open("./archivos/configuracion.csv")
+
+    diccionario_configuracion = crear_diccionario_configuracion(arch_config)
+
+    return diccionario_configuracion
+
+
+print(obtener_configuracion())
