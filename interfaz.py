@@ -181,7 +181,9 @@ def mostrar_feedback(jugadas: List[tipos.jugada], turno_previo: List[str]) -> No
         if ultima_jugada['resultado'] == 'a':
             print(agregar_color('¡Correcto!', 'verde'))
         else:
-            print(f'{agregar_color("¡Incorrecto!", "rojo")} La palabra correcta era "{palabra_correcta}"')
+            print(
+                f"{agregar_color('¡Incorrecto!', 'rojo')} La palabra correcta era '{palabra_correcta}'")
+
 
 
 def mostrar_interfaz_del_juego(letras: List[str], jugadas: List[tipos.jugada], jugadores: List[tipos.jugador], jugador_actual: tipos.jugador, turno_actual: List[str], turno_previo: List[str] = None) -> None:
@@ -319,7 +321,8 @@ def mostrar_total_de_palabras(cantidad_de_palabras_por_letra: dict[str, int], ca
     cantidad_total_de_palabras = sum(cantidad_de_palabras_por_letra.values())
 
     for letra in letras:
-        cantidad = cantidad_de_palabras_por_letra[letra] if letra in cantidad_de_palabras_por_letra.keys() else None
+        cantidad = cantidad_de_palabras_por_letra[letra] if letra in cantidad_de_palabras_por_letra.keys(
+        ) else None
         if cantidad is None or cantidad == 0:
             print(f'No hay palabras que comienzan con la letra "{letra}"')
         elif cantidad == 1:
@@ -332,8 +335,7 @@ def mostrar_total_de_palabras(cantidad_de_palabras_por_letra: dict[str, int], ca
 
     cantidad_de_letras = len(letras)
     if (cantidad_de_letras < cantidad_de_letras_deseada):
-        print(f'Se deseaba jugar con {cantidad_de_letras_deseada} letras. Sin embargo, debido a las preferencias del juego sólo se pudieron obtener {cantidad_de_letras} letras.')
-        print()
+        print(f'Se deseaba jugar con {cantidad_de_letras_deseada} letras. Sin embargo, debido a las preferencias del juego sólo se pudieron obtener {cantidad_de_letras} letras.')        print()
 
     input('Presione Enter (Inicio) para iniciar el juego ')
 
@@ -423,6 +425,15 @@ def preguntar_seguir_jugando(jugadas_restantes_disponibles: int) -> bool:
         print(f'Por favor, ingrese "si" o "no". ', end='')
         ingreso_del_usuario = aplanar(input('¿Desea seguir jugando?: '))
     return ingreso_del_usuario == 'si'
+
+
+def mostrar_configuracion(diccionario):
+
+    print("\n|---------> CONFIGURACION INICIAL <---------| ")
+    for k, v in diccionario.items():
+        print(
+            f"{(k)} : {agregar_color(str(v['valor']),'verde')} -- {agregar_color(str(v['origen']),'verde')}")
+
 
 
 if __name__ == '__main__':

@@ -152,8 +152,6 @@ def obtener_configuracion():
     arch_config = open("./archivos/configuracion.csv")
 
     diccionario_configuracion = crear_diccionario_configuracion(arch_config)
+    arch_config.close()
 
     return diccionario_configuracion
-
-
-print(obtener_configuracion())
