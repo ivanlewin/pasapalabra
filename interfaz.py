@@ -351,16 +351,20 @@ def mostrar_total_de_palabras(cantidad_de_palabras_por_letra, cantidad_de_letras
     cantidad_total_de_palabras = sum(cantidad_de_palabras_por_letra.values())
 
     for letra in letras:
-        cantidad = cantidad_de_palabras_por_letra[letra] if letra in cantidad_de_palabras_por_letra.keys() else None
+        cantidad = cantidad_de_palabras_por_letra[letra] if letra in cantidad_de_palabras_por_letra.keys(
+        ) else None
         if cantidad is None or cantidad == 0:
-            print(f"No hay palabras que comienzan con la letra '{letra}'.")
+            print(
+                f"No hay palabras que comienzan con la letra {agregar_color(letra.upper(),'rojo')}.")
         elif cantidad == 1:
-            print(f"Hay {cantidad} palabra que comienza con la letra '{letra}'.")
+            print(
+                f"Hay {cantidad} palabra que comienza con la letra {agregar_color(letra.upper(),'verde')}.")
         else:
             print(
-                f"Hay {cantidad} palabras que comienzan con la letra '{letra}'.")
+                f"Hay {cantidad} palabras que comienzan con la letra {agregar_color(letra.upper(),'verde')}.")
     print()
-    print(f"En total hay {cantidad_total_de_palabras} palabras disponibles para el rosco.")
+    print(
+        f"En total hay {cantidad_total_de_palabras} palabras disponibles para el rosco.")
     print()
 
     cantidad_de_letras = len(letras)
@@ -428,6 +432,14 @@ def verificar_intento(ingreso_usuario: str, palabra_a_adivinar: str):
     else:
         acierto = "e"
     return acierto
+
+
+def mostrar_configuracion(diccionario):
+
+    print("\n|---------> CONFIGURACION INICIAL <---------| ")
+    for k, v in diccionario.items():
+        print(
+            f"{(k)} : {agregar_color(str(v['valor']),'verde')} -- {agregar_color(str(v['origen']),'verde')}")
 
 
 if __name__ == '__main__':
