@@ -63,13 +63,13 @@ def ordenar_en_español(iterable: List[str]) -> List[str]:
     return sorted(iterable, key=lambda i: LETRAS_CON_TILDES.find(i))
 
 
-def calcular_cantidad_de_palabras_por_letra(diccionario_de_palabras: tipos.rosco) -> dict[str, int]:
+def calcular_cantidad_de_palabras_por_letra(diccionario_como_lista: tipos.diccionario_como_lista) -> dict[str, int]:
     '''
     Muestra diccionario con cantidad de palabras por letra que hay en el diccionario filtrado.
 
     Parámetros
     ----------
-    diccionario_de_palabras : tipos.rosco
+    diccionario_como_lista : tipos.diccionario_como_lista
         El diccionario de palabras participantes del juego.
         Lista de tuplas donde cada tupla tiene dos elementos; el primero es la palabra 'aplanada' y el segundo, su definición.
 
@@ -77,7 +77,7 @@ def calcular_cantidad_de_palabras_por_letra(diccionario_de_palabras: tipos.rosco
     -------
     dict[str, int]
         Un diccionario con la cantidad de palabras que comienzan por cada letra.
-        Las claves del diccionario son cada una de las letras iniciales de las palabras presentes en `diccionario_de_palabras`
+        Las claves del diccionario son cada una de las letras iniciales de las palabras presentes en `diccionario_como_lista`
         y los valores son la cantidad de palabras que comienzan por cada una de esas letras.
 
     Autores
@@ -94,7 +94,7 @@ def calcular_cantidad_de_palabras_por_letra(diccionario_de_palabras: tipos.rosco
     '''
     cantidad_de_palabras_por_letra = {}
 
-    for palabra, definicion in diccionario_de_palabras:
+    for palabra, definicion in diccionario_como_lista:
         letra_inicial = palabra[0]
         if letra_inicial in cantidad_de_palabras_por_letra:
             cantidad_de_palabras_por_letra[letra_inicial] = cantidad_de_palabras_por_letra[letra_inicial] + 1

@@ -65,7 +65,7 @@ def generar_letras_participantes(letras_permitidas: str, cantidad_de_letras: int
     return seleccion_ordenada
 
 
-def generar_rosco(diccionario_como_lista: tipos.rosco, letras_participantes: List[str]) -> tipos.rosco:
+def generar_rosco(diccionario_como_lista: tipos.diccionario_como_lista, letras_participantes: List[str]) -> tipos.diccionario_como_lista:
     '''
     Retorna una lista de palabras seleccionadas aleatoriamente, donde cada palabra comienza con una de las letras participantes.
 

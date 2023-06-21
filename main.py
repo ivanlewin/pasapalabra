@@ -5,28 +5,33 @@ from interfaz import *
 from interfaz_tkinter import ventana_main
 from manejo_archivos import *
 
-LONGITUD_PALABRA_MINIMA = 5
-CANTIDAD_LETRAS_ROSCO = 4
 LETRAS_SIN_TILDES = 'abcdefghijklmnñopqrstuvwxyz'
 LETRAS_CON_TILDES = 'aáäbcdeéëfghiíïjklmnñoóöpqrstuúüvwxyz'
-MAXIMO_PARTIDAS = 5
-PUNTAJE_ACIERTO = 10
-PUNTAJE_DESACIERTO = 3
 
 
-def ejecutar_partida(diccionario_como_lista: tipos.rosco, jugadores: List[tipos.jugador], cantidad_de_palabras_por_letra: dict[str, int]) -> List[tipos.puntaje]:
+def obtener_configuracion() -> tipos.configuracion:
+    return {
+        "longitud_palabra_minima": 5,
+        "cantidad_letras_rosco": 10,
+        "maximo_partidas": 5,
+        "puntaje_acierto": 10,
+        "puntaje_desacierto": 3,
+    }
+
+
+def ejecutar_partida(diccionario_como_lista: tipos.diccionario_como_lista, jugadores: List[tipos.jugador], cantidad_de_palabras_por_letra: dict[str, int], configuracion: tipos.configuracion) -> List[tipos.puntaje]:
     '''
     Esta función es la principal orquestadora de cada partida.
 
     Parámetros
     ----------
-    diccionario_como_lista : tipos.rosco
+    diccionario_como_lista : tipos.diccionario_como_lista
         El diccionario con las palabras disponibles para el juego.
         Lista de tuplas donde cada tupla tiene dos elementos; el primero es la palabra 'aplanada' y el segundo, su definición.
-    usuarios : List[str]
-        El listado de los usuarios que juegan al juego.
-    usuarios : List[str]
-        El listado de los usuarios que juegan al juego.
+    jugadores : List[tipos.jugador]
+        Los jugadores que participaron de la partida.
+    cantidad_de_palabras_por_letra : dict[str, int]
+    configuracion : tipos.configuracion
 
     Retorna
     -------
@@ -41,7 +46,7 @@ def ejecutar_partida(diccionario_como_lista: tipos.rosco, jugadores: List[tipos.
     '''
     cantidad_letras_inciales = [x[0][0] for x in diccionario_como_lista]
     minimo_letras_posible = len(set(cantidad_letras_inciales))
-    letras_participantes = generar_letras_participantes(LETRAS_SIN_TILDES, CANTIDAD_LETRAS_ROSCO, minimo_letras_posible, cantidad_de_palabras_por_letra)
+    letras_participantes = generar_letras_participantes(LETRAS_SIN_TILDES, configuracion['cantidad_letras_rosco'], minimo_letras_posible, cantidad_de_palabras_por_letra)
 
     rosco = generar_rosco(diccionario_como_lista, letras_participantes)
 
@@ -72,7 +77,7 @@ def ejecutar_partida(diccionario_como_lista: tipos.rosco, jugadores: List[tipos.
         if resultado == 'e':
             turno_del_jugador_actual = (turno_del_jugador_actual + 1) % len(jugadores)
 
-    puntajes_de_la_partida = calcular_puntaje_de_la_partida(jugadas, jugadores, PUNTAJE_ACIERTO, PUNTAJE_DESACIERTO)
+    puntajes_de_la_partida = calcular_puntaje_de_la_partida(jugadas, jugadores, configuracion['puntaje_acierto'], configuracion['puntaje_desacierto'])
     mostrar_resumen_de_la_partida(letras_mayuscula, jugadas)
     return puntajes_de_la_partida
 
@@ -88,20 +93,22 @@ def ejecutar_juego() -> None:
     * Brizuela, Natanael Daniel
     * Lewin, Iván
     '''
+    configuracion = obtener_configuracion()
+
     usuarios = ventana_main()
     jugadores = asignar_turnos(usuarios)
     puntajes_del_juego: List[tipos.puntaje] = [{'usuario': jugador['usuario'], 'puntaje': 0} for jugador in jugadores]
 
     diccionario_crudo = crear_diccionario()
-    diccionario_filtrado = filtrar_diccionario(diccionario_crudo, LONGITUD_PALABRA_MINIMA)
+    diccionario_filtrado = filtrar_diccionario(diccionario_crudo, configuracion['longitud_palabra_minima'])
     crear_csv(diccionario_filtrado)
     diccionario_como_lista = hacerlo_lista(diccionario_filtrado)
 
     cantidad_de_palabras_por_letra = calcular_cantidad_de_palabras_por_letra(diccionario_como_lista)
-    mostrar_total_de_palabras(cantidad_de_palabras_por_letra, CANTIDAD_LETRAS_ROSCO)
+    mostrar_total_de_palabras(cantidad_de_palabras_por_letra, configuracion['cantidad_letras_rosco'])
 
     continuar_jugando = True
-    jugadas_restantes_disponibles = MAXIMO_PARTIDAS
+    jugadas_restantes_disponibles = configuracion['maximo_partidas']
     while continuar_jugando and jugadas_restantes_disponibles > 0:
         puntaje_de_la_partida = ejecutar_partida(diccionario_como_lista, jugadores, cantidad_de_palabras_por_letra)
         sumar_puntajes(puntaje_de_la_partida, puntajes_del_juego)
@@ -113,7 +120,7 @@ def ejecutar_juego() -> None:
             if (continuar_jugando is False):
                 print()
 
-    mostrar_resumen_juego(MAXIMO_PARTIDAS - jugadas_restantes_disponibles, puntajes_del_juego)
+    mostrar_resumen_juego(configuracion['maximo_partidas'] - jugadas_restantes_disponibles, puntajes_del_juego)
 
 
 # def testear_cien_veces():
