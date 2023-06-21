@@ -3,8 +3,8 @@ import os
 from typing import Callable, List
 
 import tipos
-from diccionario_palabras import *
 from calculos import *
+from diccionario_palabras import *
 
 
 def agregar_color(texto: str, color: tipos.color) -> str:

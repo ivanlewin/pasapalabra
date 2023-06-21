@@ -1,15 +1,14 @@
 from typing import List
 
 import tipos
-from calculos import *
-from diccionario_palabras import *
 from interfaz import *
-from manejo_archivos import *
 from interfaz_tkinter import ventana_main
+from manejo_archivos import *
 
 LONGITUD_PALABRA_MINIMA = 5
 CANTIDAD_LETRAS_ROSCO = 4
 LETRAS_SIN_TILDES = 'abcdefghijklmnñopqrstuvwxyz'
+LETRAS_CON_TILDES = 'aáäbcdeéëfghiíïjklmnñoóöpqrstuúüvwxyz'
 MAXIMO_PARTIDAS = 5
 PUNTAJE_ACIERTO = 10
 PUNTAJE_DESACIERTO = 3

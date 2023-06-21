@@ -1,11 +1,8 @@
 import doctest
-import random
 from typing import List
 
 import tipos
 from calculos import *
-
-from main import LETRAS_CON_TILDES
 
 
 def filtrar_diccionario(diccionario_crudo: dict[str, str], longitud_minima_palabras: int):

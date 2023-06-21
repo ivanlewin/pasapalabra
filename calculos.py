@@ -3,8 +3,7 @@ import random
 from typing import List
 
 import tipos
-
-LETRAS_CON_TILDES = 'aáäbcdeéëfghiíïjklmnñoóöpqrstuúüvwxyz'
+from main import LETRAS_CON_TILDES
 
 
 def asignar_turnos(usuarios: List[str]) -> List[tipos.jugador]:
