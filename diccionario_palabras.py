@@ -1,138 +1,51 @@
 import doctest
-import random
 from typing import List
 
-from main import LETRAS_CON_TILDES
+import tipos
+from calculos import *
 
 
-def filtrar_diccionario(diccionario_crudo: dict, longitud_minima_palabras: int):
-    """
+def filtrar_diccionario(diccionario_crudo: dict[str, str], longitud_minima_palabras: int):
+    '''
     Esta función genera el diccionario con todas las palabras disponibles para el juego, de acuerdo con el mínimo de caracteres
     requerido.
 
     Parámetros
     ----------
+    diccionario_crudo : dict[str, str]
+        Un diccionario cuyas claves son palabras y sus valores son las definiciones de esas palabras.
     longitud_minima_palabras : int
-        La mínima longitud que deben tener las palabras para que puedan ser incluidas en el diccionario.
+        La longitud mínima que se desea que tengan las palabras que participan en el juego.
 
     Retorna
     -------
-    List[List[str]]
+    rosco
         El diccionario con las palabras disponibles para el juego.
-        Es una lista de listas de strings. Cada sublista tiene dos elementos; el primero es la palabra "aplanada" y el segundo, su definición.
+        Lista de tuplas donde cada tupla tiene dos elementos; el primero es la palabra 'aplanada' y el segundo, su definición.
 
     Autores
     -------
     * Galvani, Juan Ignacio
     * Neme, Agustin Nadim
-    """
+    '''
     diccionario_filtrado = {}
     for palabra, definicion in diccionario_crudo.items():
         if len(palabra) >= longitud_minima_palabras:
             palabra_aplanada = aplanar(palabra)
             diccionario_filtrado[palabra_aplanada] = definicion
-
     return diccionario_filtrado
 
 
-def aplanar(texto: str):
-    """
-    Convierte el texto provisto a minúscula y elimina diéresis y tildes de las vocales.
-
-    Parámetros
-    ----------
-    texto : str
-        El texto que se desea aplanar.
-
-    Retorna
-    -------  
-    str
-        El texto aplanado.
-
-    Autores
-    -------
-    * Galvani, Juan Ignacio
-    * Neme, Agustin Nadim
-
-    Ejemplos
-    --------
-    >>> aplanar("néctar")
-    'nectar'
-    >>> aplanar("vaivén")
-    'vaiven'
-    >>> aplanar("yesería")
-    'yeseria'
-    >>> aplanar("vacilación")
-    'vacilacion'
-    >>> aplanar("búho")
-    'buho'
-    >>> aplanar("PERRO")
-    'perro'
-    >>> aplanar("PiNgüInO")
-    'pinguino'
-    """
-
-    return (
-        texto
-        .lower()
-        .replace("á", "a")
-        .replace("é", "e")
-        .replace("í", "i")
-        .replace("ó", "o")
-        .replace("ú", "u")
-        .replace("ä", "a")
-        .replace("ë", "e")
-        .replace("ï", "i")
-        .replace("ö", "o")
-        .replace("ü", "u")
-    )
-
-
-def calcular_cantidad_de_palabras_por_letra(diccionario_de_palabras: List[List[str]]):
-    """
-    Muestra diccionario con cantidad de palabras por letra que hay en el diccionario filtrado.
-
-    Parámetros
-    ----------
-    diccionario_de_palabras : List[List[str]]
-        El diccionario de palabras participantes del juego.
-        Es una lista de listas de strings. Cada sublista tiene dos elementos; el primero es la palabra "aplanada" y el segundo, su definición.
-
-    Retorna
-    -------
-    dict
-        Un diccionario con la cantidad de palabras que comienzan por cada letra.
-        Las claves del diccionario son cada una de las letras iniciales de las palabras presentes en `diccionario_de_palabras`
-        y los valores son la cantidad de palabras que comienzan por cada una de esas letras.
-
-    Autores
-    -------
-    * Galvani, Juan Ignacio
-    * Neme, Agustin Nadim
-    """
-
-    cantidad_de_palabras_por_letra = {}
-
-    for palabra, definicion in diccionario_de_palabras:
-        letra_inicial = palabra[0]
-        if letra_inicial in cantidad_de_palabras_por_letra:
-            cantidad_de_palabras_por_letra[letra_inicial] = cantidad_de_palabras_por_letra[letra_inicial] + 1
-        else:
-            cantidad_de_palabras_por_letra[letra_inicial] = 1
-
-    return cantidad_de_palabras_por_letra
-
-
-def generar_letras_participantes(letras_permitidas: str, cantidad_de_letras: int, minimo_letras_posible: int, cantidad_de_palabras_por_letra: dict[str]):
-    """
+def generar_letras_participantes(letras_permitidas: str, cantidad_de_letras: int, minimo_letras_posible: int, cantidad_de_palabras_por_letra: dict[str, int]):
+    '''
     Genera una lista aleatoria a partir de las letras permitidas de forma aleatoria
 
     Parámetros
     ----------
     letras_permitidas : str
-        El listado de letras permitidas
     cantidad_de_letras : int
-        El número de letras a obtener
+    minimo_letras_posible : int
+    cantidad_de_palabras_por_letra : int
 
     Retorna
     -------
@@ -143,38 +56,38 @@ def generar_letras_participantes(letras_permitidas: str, cantidad_de_letras: int
     -------
     * Galvani, Juan Ignacio
     * Neme, Agustin Nadim
-    """
+    '''
     if minimo_letras_posible < cantidad_de_letras:
-        seleccion = random.sample(list(
-            cantidad_de_palabras_por_letra.keys()), minimo_letras_posible)
+        seleccion = random.sample(list(cantidad_de_palabras_por_letra.keys()), minimo_letras_posible)
     else:
         seleccion = random.sample(letras_permitidas, cantidad_de_letras)
-    return ordenar_en_español(seleccion)
+    seleccion_ordenada = ordenar_en_español(seleccion)
+    return seleccion_ordenada
 
 
-def generar_rosco(diccionario_como_lista: List[List[str]], letras_participantes: List[str]):
-    """
+def generar_rosco(diccionario_como_lista: tipos.diccionario_como_lista, letras_participantes: List[str]) -> tipos.diccionario_como_lista:
+    '''
     Retorna una lista de palabras seleccionadas aleatoriamente, donde cada palabra comienza con una de las letras participantes.
 
     Parámetros
     ----------
-    diccionario_como_lista : List[List[str]]
+    diccionario_como_lista : rosco
         El diccionario de palabras participantes del juego.
-        Es una lista de listas de strings. Cada sublista tiene dos elementos; el primero es la palabra "aplanada" y el segundo, su definición.
+        Lista de tuplas donde cada tupla tiene dos elementos; el primero es la palabra 'aplanada' y el segundo, su definición.
     letras_participantes : List[str]
         El listado de letras participantes en la partida. Deben estar ordenadas alfabéticamente.
 
     Retorna
     -------
-    List[List[str]]
+    rosroscoco
         Un rosco conformado por palabras y definiciones obtenidos a partir del diccionario de palabras participantes.
-        Es una lista de listas de strings. Cada sublista tiene dos elementos; el primero es la palabra "aplanada" y el segundo, su definición.
+        Lista de tuplas donde cada tupla tiene dos elementos; el primero es la palabra 'aplanada' y el segundo, su definición.
 
     Autores
     -------
     * Galvani, Juan Ignacio
     * Neme, Agustin Nadim
-    """
+    '''
     lista_palabras_participantes = []
 
     for letra in letras_participantes:
@@ -191,26 +104,5 @@ def generar_rosco(diccionario_como_lista: List[List[str]], letras_participantes:
     return sorted(lista_palabras_participantes, key=lambda i: LETRAS_CON_TILDES.find(i[0][0]))
 
 
-def ordenar_en_español(iterable: str | List[str]):
-    """
-    Ordena un iterable alfabéticamente, teniendo en cuenta los diacríticos del español.
-    Esto significa que el elemento "á" se ubicará luego del elemento "a", y no luego del elemento "z".
-
-    Parámetros
-    ----------
-    iterable : str | List[str]
-
-    Retorna
-    -------
-    str | List[str]
-        El iterable ordenado teniendo en cuenta el alfabeto en español.
-
-    Autores
-    -------
-    * Lewin, Iván
-    """
-    return sorted(iterable, key=lambda i: LETRAS_CON_TILDES.find(i))
-
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     print(doctest.testmod())

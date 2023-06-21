@@ -2,7 +2,7 @@ CORTE = ""
 
 
 def abrir_linea(archivo, es_csv=False):
-    """
+    '''
     Esta funcion lee linea por linea el archivo especificado
 
     Parámetros
@@ -18,7 +18,7 @@ def abrir_linea(archivo, es_csv=False):
     Autores
     -------
     * Brizuela, Natanael Daniel
-    """
+    '''
     linea = archivo.readline().rstrip() if not es_csv else archivo.readline().rstrip().split(",")
 
     if not linea:
@@ -27,7 +27,7 @@ def abrir_linea(archivo, es_csv=False):
 
 
 def crear_diccionario():
-    """
+    '''
     Funcion encargada de crear el diccionario en base a los archivos "definiciones.txt" y "palabras.txt".
 
     Parámetros
@@ -42,7 +42,7 @@ def crear_diccionario():
     Autores
     -------
     * Brizuela, Natanael Daniel
-    """
+    '''
     definiciones = open("./archivos/definiciones.txt", "r", encoding='utf-8')
     palabras = open("./archivos/palabras.txt", "r", encoding='utf-8')
 
@@ -63,7 +63,7 @@ def crear_diccionario():
 
 
 def crear_csv(diccionario):
-    """
+    '''
     Funcion que se encarga de crear un archivo ordenado .scv en base al diccionario de palabras armado previamente.
 
     Parámetros
@@ -79,7 +79,7 @@ def crear_csv(diccionario):
     Autores
     -------
     * Brizuela, Natanael Daniel
-    """
+    '''
     archivo_csv = open("./archivos/diccionario.csv", "w", encoding="utf-8")
     diccionario_ordenado = dict(sorted(diccionario.items(), key=lambda x: x[0]))
 
@@ -91,7 +91,7 @@ def crear_csv(diccionario):
 
 
 def hacerlo_lista(diccionario):
-    """
+    '''
     Funcion que crea una lista de listas a partir de un diccionario de palabras y definciones
 
     Parámetros
@@ -107,7 +107,7 @@ def hacerlo_lista(diccionario):
     Autores
     -------
     * Brizuela, Natanael Daniel
-    """
+    '''
     lista = [[k, v] for k, v in diccionario.items()]
     lista = sorted(lista, key=lambda x: x[0])
 

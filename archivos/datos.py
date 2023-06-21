@@ -2,9 +2,9 @@ import random
 
 
 def obtener_lista_definiciones():
-    """Función que retorna un array de arrays, cada array interno está 
+    '''Función que retorna un array de arrays, cada array interno está 
     compuesto de 2 elementos [palabra, definición]. 
-    El array principal no se encuentra ordenado."""
+    El array principal no se encuentra ordenado.'''
     list = [
         ["entorpecer", "1.  tr. Poner torpe U. t. c. prnl."],
         ["vía", "1.  f. camino tierra por donde se transita"],
