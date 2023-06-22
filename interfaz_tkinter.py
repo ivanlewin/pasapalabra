@@ -379,9 +379,11 @@ def ventana_registro(ventana_principal):
     contrasenia_label.pack()
     contrasenia_entry = tk.Entry(ventana_registro, show="*")
     contrasenia_entry.pack()
-    contrasenia_entry.bind("<Button-1>", lambda event: validar_contrasenia(contrasenia_entry.get(), resultado_label))
+    contrasenia_entry.bind(
+        "<Button-1>", lambda event: validar_contrasenia(contrasenia_entry.get(), resultado_label))
 
-    repetir_contrasenia_label = tk.Label(ventana_registro, text="Repetir contraseña:")
+    repetir_contrasenia_label = tk.Label(
+        ventana_registro, text="Repetir contraseña:")
     repetir_contrasenia_label.pack()
     repetir_contrasenia_entry = tk.Entry(ventana_registro, show="*")
     repetir_contrasenia_entry.pack()
@@ -389,10 +391,12 @@ def ventana_registro(ventana_principal):
     resultado_label = tk.Label(ventana_registro, text="")
     resultado_label.pack()
 
-    registrar = tk.Button(ventana_registro, text="Registrarse", command=lambda: registrar_jugador(nombre_entry, contrasenia_entry, repetir_contrasenia_entry, resultado_label))
+    registrar = tk.Button(ventana_registro, text="Registrarse", command=lambda: registrar_jugador(
+        nombre_entry, contrasenia_entry, repetir_contrasenia_entry, resultado_label))
     registrar.pack()
 
-    boton_cerrar = tk.Button(ventana_registro, text="Volver a inicio", command=lambda: cerrar_ventana(ventana_registro))
+    boton_cerrar = tk.Button(ventana_registro, text="Volver a inicio",
+                             command=lambda: cerrar_ventana(ventana_registro))
     boton_cerrar.pack()
 
 
@@ -433,10 +437,12 @@ def ventana_login(ventana_principal, jugadores_listbox):
         ventana_login, text="Registrarse", command=lambda: ventana_registro(ventana_principal))
     registrar_boton.pack()
 
-    login_boton = tk.Button(ventana_login, text="Login", command=lambda: iniciar_sesion(nombre_login_entry, contrasenia_login_entry, resultado_label, jugadores_listbox))
+    login_boton = tk.Button(ventana_login, text="Login", command=lambda: iniciar_sesion(
+        nombre_login_entry, contrasenia_login_entry, resultado_label, jugadores_listbox))
     login_boton.pack()
 
-    boton_cerrar = tk.Button(ventana_login, text="Volver a inicio", command=lambda: cerrar_ventana(ventana_login))
+    boton_cerrar = tk.Button(ventana_login, text="Volver a inicio",
+                             command=lambda: cerrar_ventana(ventana_login))
     boton_cerrar.pack()
 
 
@@ -449,7 +455,8 @@ def ventana_main():
     * Neme, Agustin Nadim
     '''
     ventana_principal = tk.Tk()
-    formatear_ventanas(ventana_principal, "Bienvenido al juego pasapalabra - Heredero")
+    formatear_ventanas(ventana_principal,
+                       "Bienvenido al juego pasapalabra - Heredero")
 
     jugadores_label = tk.Label(ventana_principal, text="Jugadores: ")
     jugadores_label.pack()
@@ -457,13 +464,16 @@ def ventana_main():
     jugadores_listbox = tk.Listbox(ventana_principal)
     jugadores_listbox.pack()
 
-    registrar_boton = tk.Button(ventana_principal, text="Registrarse", command=lambda: ventana_registro(ventana_principal))
+    registrar_boton = tk.Button(ventana_principal, text="Registrarse",
+                                command=lambda: ventana_registro(ventana_principal))
     registrar_boton.pack()
 
-    login_boton = tk.Button(ventana_principal, text="Login", command=lambda: ventana_login(ventana_principal, jugadores_listbox))
+    login_boton = tk.Button(ventana_principal, text="Login", command=lambda: ventana_login(
+        ventana_principal, jugadores_listbox))
     login_boton.pack()
 
-    comenzar_juego_boton = tk.Button(ventana_principal, text="Comenzar juego", command=lambda: cerrar_ventana(ventana_principal))
+    comenzar_juego_boton = tk.Button(
+        ventana_principal, text="Comenzar juego", command=lambda: cerrar_ventana(ventana_principal))
     comenzar_juego_boton.pack()
 
     ventana_principal.mainloop()

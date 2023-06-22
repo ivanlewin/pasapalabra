@@ -436,41 +436,6 @@ def preguntar_seguir_jugando(jugadas_restantes_disponibles: int) -> bool:
     return ingreso_del_usuario == 'si'
 
 
-def verificar_intento(ingreso_usuario: str, palabra_a_adivinar: str):
-    """
-    Esta función verifica que el ingreso del usuario sea válido dada la palabra a adivinar.
-
-    Parámetros
-    ----------
-    ingreso_usuario : str
-    palabra_a_adivinar : str
-
-    Retorna
-    -------
-    str
-        Retorna la letra 'a' si es un acierto o la letra 'e' en caso contrario.
-
-    Autores
-    -------
-    * Brizuela, Natanael Daniel
-    * Lewin, Iván
-    * Neme, Agustin Nadim
-
-    Ejemplos
-    --------
-    >>> verificar_intento("AlmuÉrzo", "almuerzo")
-    'a'
-    >>> verificar_intento("almurso", "almuerzo")
-    'e'
-    """
-    acierto = ""
-    if aplanar(ingreso_usuario) == palabra_a_adivinar:
-        acierto = "a"
-    else:
-        acierto = "e"
-    return acierto
-
-
 def mostrar_configuracion(diccionario_configuracion: dict) -> None:
     """
     Esta funcion se encarga de mostrar la configuracion inicial del juego.
@@ -491,31 +456,8 @@ def mostrar_configuracion(diccionario_configuracion: dict) -> None:
     print("\n|---------> CONFIGURACION INICIAL <---------| ")
     for k, v in diccionario_configuracion.items():
         print(
-            f"{(k)} : {agregar_color(str(v['valor']),'verde')} -- {agregar_color(str(v['origen']),'verde')}")
-
-
-def mostrar_configuracion(diccionario_configuracion: dict) -> None:
-    """
-    Esta funcion se encarga de mostrar la configuracion inicial del juego.
-
-    Parámetros
-    ----------
-    diccionario_configuracion : dict
-
-    Retorna
-    -------
-    None 
-
-    Autores
-    -------
-    * Brizuela, Natanael Daniel
-    --------
-    """
-    print("\n|---------> CONFIGURACION INICIAL <---------| ")
-    for k, v in diccionario_configuracion.items():
-        print(
-            f"{(k)} : {agregar_color(str(v['valor']),'verde')} -- {agregar_color(str(v['origen']),'verde')}")
-    algo = input(" ")
+            f"{(k)} : {v['valor']} -- {v['origen']}")
+    algo = input("\nPresione Enter (Inicio) para continuar. \n\n")
 
 
 if __name__ == '__main__':
