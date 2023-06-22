@@ -1,22 +1,10 @@
 from typing import List
 
 import tipos
+from calculos import *
 from interfaz import *
 from interfaz_tkinter import ventana_main
 from manejo_archivos import *
-
-LETRAS_SIN_TILDES = 'abcdefghijklmnñopqrstuvwxyz'
-LETRAS_CON_TILDES = 'aáäbcdeéëfghiíïjklmnñoóöpqrstuúüvwxyz'
-
-
-def obtener_configuracion() -> tipos.configuracion:
-    return {
-        "longitud_palabra_minima": 5,
-        "cantidad_letras_rosco": 10,
-        "maximo_partidas": 5,
-        "puntaje_acierto": 10,
-        "puntaje_desacierto": 3,
-    }
 
 
 def ejecutar_partida(diccionario_como_lista: tipos.diccionario_como_lista, jugadores: List[tipos.jugador], cantidad_de_palabras_por_letra: dict[str, int], configuracion: tipos.configuracion) -> List[tipos.puntaje]:
@@ -46,7 +34,7 @@ def ejecutar_partida(diccionario_como_lista: tipos.diccionario_como_lista, jugad
     '''
     cantidad_letras_inciales = [x[0][0] for x in diccionario_como_lista]
     minimo_letras_posible = len(set(cantidad_letras_inciales))
-    letras_participantes = generar_letras_participantes(LETRAS_SIN_TILDES, configuracion['cantidad_letras_rosco'], minimo_letras_posible, cantidad_de_palabras_por_letra)
+    letras_participantes = generar_letras_participantes(configuracion['CANTIDAD_LETRAS_ROSCO']["valor"], minimo_letras_posible, cantidad_de_palabras_por_letra)
 
     rosco = generar_rosco(diccionario_como_lista, letras_participantes)
 
@@ -77,7 +65,7 @@ def ejecutar_partida(diccionario_como_lista: tipos.diccionario_como_lista, jugad
         if resultado == 'e':
             turno_del_jugador_actual = (turno_del_jugador_actual + 1) % len(jugadores)
 
-    puntajes_de_la_partida = calcular_puntaje_de_la_partida(jugadas, jugadores, configuracion['puntaje_acierto'], configuracion['puntaje_desacierto'])
+    puntajes_de_la_partida = calcular_puntaje_de_la_partida(jugadas, jugadores, configuracion['PUNTAJE_ACIERTO']["valor"], configuracion['PUNTAJE_DESACIERTO']["valor"])
     mostrar_resumen_de_la_partida(letras_mayuscula, jugadas)
     return puntajes_de_la_partida
 
@@ -93,22 +81,25 @@ def ejecutar_juego() -> None:
     * Brizuela, Natanael Daniel
     * Lewin, Iván
     '''
-    configuracion = obtener_configuracion()
+    configuracion = crear_diccionario_configuracion()
 
     usuarios = ventana_main()
-    jugadores = asignar_turnos(usuarios)
+    jugadores = [{'usuario': usuario, 'turno_de_juego': i} for i, usuario in enumerate(usuarios)]
     puntajes_del_juego: List[tipos.puntaje] = [{'usuario': jugador['usuario'], 'puntaje': 0} for jugador in jugadores]
 
+    mostrar_configuracion(configuracion)
+    mostrar_jugadores(jugadores)
+
     diccionario_crudo = crear_diccionario()
-    diccionario_filtrado = filtrar_diccionario(diccionario_crudo, configuracion['longitud_palabra_minima'])
+    diccionario_filtrado = filtrar_diccionario(diccionario_crudo, configuracion['LONGITUD_PALABRA_MINIMA']["valor"])
     crear_csv(diccionario_filtrado)
     diccionario_como_lista = hacerlo_lista(diccionario_filtrado)
 
     cantidad_de_palabras_por_letra = calcular_cantidad_de_palabras_por_letra(diccionario_como_lista)
-    mostrar_total_de_palabras(cantidad_de_palabras_por_letra, configuracion['cantidad_letras_rosco'])
+    mostrar_total_de_palabras(cantidad_de_palabras_por_letra, configuracion['CANTIDAD_LETRAS_ROSCO']["valor"])
 
     continuar_jugando = True
-    jugadas_restantes_disponibles = configuracion['maximo_partidas']
+    jugadas_restantes_disponibles = configuracion['MAXIMO_PARTIDAS']["valor"]
     while continuar_jugando and jugadas_restantes_disponibles > 0:
         puntaje_de_la_partida = ejecutar_partida(diccionario_como_lista, jugadores, cantidad_de_palabras_por_letra, configuracion)
         sumar_puntajes(puntaje_de_la_partida, puntajes_del_juego)
@@ -120,7 +111,7 @@ def ejecutar_juego() -> None:
             if (continuar_jugando is False):
                 print()
 
-    mostrar_resumen_juego(configuracion['maximo_partidas'] - jugadas_restantes_disponibles, puntajes_del_juego)
+    mostrar_resumen_juego(configuracion['MAXIMO_PARTIDAS']["valor"] - jugadas_restantes_disponibles, puntajes_del_juego)
 
 
 # def testear_cien_veces():
