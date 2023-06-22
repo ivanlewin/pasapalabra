@@ -457,7 +457,8 @@ def mostrar_configuracion(diccionario_configuracion: dict) -> None:
     for k, v in diccionario_configuracion.items():
         print(
             f"{(k)} : {v['valor']} -- {v['origen']}")
-    algo = input("\nPresione Enter (Inicio) para continuar. \n\n")
+    print("|---------> CONFIGURACION INICIAL <---------| ")
+    stop_momentaneo = input("\nPresione Enter (Inicio) para continuar. \n\n")
 
 
 if __name__ == '__main__':

@@ -1,3 +1,4 @@
+import doctest
 import csv
 import random
 import tkinter as tk
@@ -482,4 +483,5 @@ def ventana_main():
 
 
 if __name__ == "__main__":
-    ventana_main()
+
+    print(doctest.testmod())
