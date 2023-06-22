@@ -94,11 +94,12 @@ def ejecutar_juego() -> None:
     * Lewin, Iván
     '''
     configuracion = obtener_configuracion()
-
     usuarios = ventana_main()
     jugadores = asignar_turnos(usuarios)
     puntajes_del_juego: List[tipos.puntaje] = [
         {'usuario': jugador['usuario'], 'puntaje': 0} for jugador in jugadores]
+
+    mostrar_configuracion(configuracion)
 
     diccionario_crudo = crear_diccionario()
     diccionario_filtrado = filtrar_diccionario(

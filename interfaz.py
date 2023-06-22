@@ -515,6 +515,7 @@ def mostrar_configuracion(diccionario_configuracion: dict) -> None:
     for k, v in diccionario_configuracion.items():
         print(
             f"{(k)} : {agregar_color(str(v['valor']),'verde')} -- {agregar_color(str(v['origen']),'verde')}")
+    algo = input(" ")
 
 
 if __name__ == '__main__':
