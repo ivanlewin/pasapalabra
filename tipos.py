@@ -8,4 +8,11 @@ puntaje = TypedDict('puntaje', {'usuario': str, 'puntaje': int})
 turno = TypedDict('turno', {'palabra': str, 'intento': str, 'jugador': jugador})
 color = Literal['a', 'e']
 estadisticas = TypedDict('estadisticas', {'jugador': jugador, 'aciertos': int, 'errores': int})
-configuracion = TypedDict('configuracion', {'longitud_palabra_minima': int, 'cantidad_letras_rosco': int, 'maximo_partidas': int, 'puntaje_acierto': int, 'puntaje_desacierto': int})
+clave_configuracion = TypedDict('clave_configuracion', {'valor': int, 'origen': Literal['Defecto', 'Elección']})
+configuracion = TypedDict('configuracion', {
+    'LONGITUD_PALABRA_MINIMA': clave_configuracion,
+    'CANTIDAD_LETRAS_ROSCO': clave_configuracion,
+    'MAXIMO_PARTIDAS': clave_configuracion,
+    'PUNTAJE_ACIERTO': clave_configuracion,
+    'PUNTAJE_DESACIERTO': clave_configuracion,
+})
