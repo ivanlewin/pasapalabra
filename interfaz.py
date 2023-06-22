@@ -326,16 +326,17 @@ def mostrar_total_de_palabras(cantidad_de_palabras_por_letra: dict[str, int], ca
         cantidad = cantidad_de_palabras_por_letra[letra] if letra in cantidad_de_palabras_por_letra.keys(
         ) else None
         if cantidad is None or cantidad == 0:
-            print(f'No hay palabras que comienzan con la letra "{letra}"')
+            print(
+                f"No hay palabras que comienzan con la letra {agregar_color(letra.upper(),'rojo')}.")
         elif cantidad == 1:
             print(
-                f'Hay {cantidad:<2} palabra  que comienza  con la letra "{letra}"')
+                f"Hay {cantidad:<2} palabra que comienza con la letra {agregar_color(letra.upper(),'verde')}.")
         else:
             print(
-                f'Hay {cantidad:<2} palabras que comienzan con la letra "{letra}"')
+                f"Hay {cantidad:<2} palabras que comienzan con la letra {agregar_color(letra.upper(),'verde')}.")
     print()
     print(
-        f'En total hay {cantidad_total_de_palabras} palabras disponibles para el rosco')
+        f"En total hay {cantidad_total_de_palabras} palabras disponibles para el rosco.")
     print()
 
     cantidad_de_letras = len(letras)
@@ -433,6 +434,64 @@ def preguntar_seguir_jugando(jugadas_restantes_disponibles: int) -> bool:
         print(f'Por favor, ingrese "si" o "no". ', end='')
         ingreso_del_usuario = aplanar(input('¿Desea seguir jugando?: '))
     return ingreso_del_usuario == 'si'
+
+
+def verificar_intento(ingreso_usuario: str, palabra_a_adivinar: str):
+    """
+    Esta función verifica que el ingreso del usuario sea válido dada la palabra a adivinar.
+
+    Parámetros
+    ----------
+    ingreso_usuario : str
+    palabra_a_adivinar : str
+
+    Retorna
+    -------
+    str
+        Retorna la letra 'a' si es un acierto o la letra 'e' en caso contrario.
+
+    Autores
+    -------
+    * Brizuela, Natanael Daniel
+    * Lewin, Iván
+    * Neme, Agustin Nadim
+
+    Ejemplos
+    --------
+    >>> verificar_intento("AlmuÉrzo", "almuerzo")
+    'a'
+    >>> verificar_intento("almurso", "almuerzo")
+    'e'
+    """
+    acierto = ""
+    if aplanar(ingreso_usuario) == palabra_a_adivinar:
+        acierto = "a"
+    else:
+        acierto = "e"
+    return acierto
+
+
+def mostrar_configuracion(diccionario_configuracion: dict) -> None:
+    """
+    Esta funcion se encarga de mostrar la configuracion inicial del juego.
+
+    Parámetros
+    ----------
+    diccionario_configuracion : dict
+
+    Retorna
+    -------
+    None 
+
+    Autores
+    -------
+    * Brizuela, Natanael Daniel
+    --------
+    """
+    print("\n|---------> CONFIGURACION INICIAL <---------| ")
+    for k, v in diccionario_configuracion.items():
+        print(
+            f"{(k)} : {agregar_color(str(v['valor']),'verde')} -- {agregar_color(str(v['origen']),'verde')}")
 
 
 def mostrar_configuracion(diccionario_configuracion: dict) -> None:
