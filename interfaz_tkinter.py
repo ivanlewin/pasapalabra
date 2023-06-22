@@ -378,7 +378,9 @@ def ventana_registro(ventana_principal):
     contrasenia_label.pack()
     contrasenia_entry = tk.Entry(ventana_registro, show='*')
     contrasenia_entry.pack()
-    contrasenia_entry.bind('<Button-1>', lambda: validar_contrasenia(contrasenia_entry.get(), resultado_label))
+
+    contrasenia_entry.bind('<Button-1>',lambda event: validar_contrasenia(contrasenia_entry.get(), resultado_label))
+    contrasenia_entry.bind('<KeyRelease>',lambda event: validar_contrasenia(contrasenia_entry.get(), resultado_label))
 
     repetir_contrasenia_label = tk.Label(ventana_registro, text='Repetir contraseña:')
     repetir_contrasenia_label.pack()
