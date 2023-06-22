@@ -1,4 +1,5 @@
 .vscode
 __pycache__
-usuarios.csv
-configuracion.csv
+archivos/configuracion.csv
+archivos/usuarios.csv
+archivos/diccionario.csv
