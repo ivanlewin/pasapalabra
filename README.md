@@ -15,4 +15,4 @@ Link al repositorio: https://github.com/ivanlewin/pasapalabra
 
 <br>
 
-TP Grupal – 1er. Cuat. 2023 – Parte 1 - V 1.0 Algoritmos y Programación I – Cátedra Guarna - FIUBA
+TP Grupal – 1er. Cuat. 2023 – V 1.0 - Algoritmos y Programación I – Cátedra Guarna - FIUBA
