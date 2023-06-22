@@ -85,7 +85,8 @@ def crear_csv(dicc_palabras_y_def: dict) -> None:
     * Brizuela, Natanael Daniel
     '''
     archivo_csv = open('./archivos/diccionario.csv', 'w', encoding='utf-8')
-    diccionario_ordenado = dict(sorted(dicc_palabras_y_def.items(), key=lambda x: x[0]))
+    diccionario_ordenado = dict(
+        sorted(dicc_palabras_y_def.items(), key=lambda x: x[0]))
 
     for palabra, definicion in diccionario_ordenado.items():
         linea_escribir = f'{palabra},{definicion}\n'
@@ -178,9 +179,7 @@ def crear_diccionario_configuracion() -> tipos.configuracion:
     -------
     * Brizuela, Natanael Daniel
     '''
-    arch_config = open('./archivos/configuracion.csv')
 
-    linea = abrir_linea(arch_config)
     dicc_configuracion = {
         'LONGITUD_PALABRA_MINIMA': {'valor': 10, 'origen': 'Defecto'},
         'CANTIDAD_LETRAS_ROSCO': {'valor': 10, 'origen': 'Defecto'},
@@ -188,11 +187,18 @@ def crear_diccionario_configuracion() -> tipos.configuracion:
         'PUNTAJE_ACIERTO': {'valor': 10, 'origen': 'Defecto'},
         'PUNTAJE_DESACIERTO': {'valor': 3, 'origen': 'Defecto'}
     }
+    try:
+        arch_config = open('./archivos/configuracion.csv')
 
-    while linea != CORTE:
-        dicc_configuracion = validar_linea(dicc_configuracion, linea)
         linea = abrir_linea(arch_config)
-    arch_config.close()
+
+        while linea != CORTE:
+            dicc_configuracion = validar_linea(dicc_configuracion, linea)
+            linea = abrir_linea(arch_config)
+        arch_config.close()
+    except:
+        pass
+
     return dicc_configuracion
 
 
