@@ -1,33 +1,10 @@
 import doctest
-import random
 from typing import List
 
 import tipos
-from main import LETRAS_CON_TILDES
 
-
-def asignar_turnos(usuarios: List[str]) -> List[tipos.jugador]:
-    '''
-    Esta función recibe los nombres de los usuarios participantes y les asigna un turno de juego aleatoriamente.
-
-    Parámetros
-    ----------
-    usuarios : List[str]
-
-    Retorna
-    -------
-    List[tipos.jugador]
-        Un listado de jugadores, ordenados de manera aleatoria.
-        Cada jugador está representado como un diccionario con las claves 'usuario' (str) y 'turno_de_juego' (int).
-
-    Autores
-    -------
-    * Lewin, Iván
-    '''
-    usuarios = [*usuarios]
-    random.shuffle(usuarios)
-    jugadores = [{'usuario': usuarios[i], 'turno_de_juego': i} for i in range(len(usuarios))]
-    return jugadores
+LETRAS_SIN_TILDES = 'abcdefghijklmnñopqrstuvwxyz'
+LETRAS_CON_TILDES = 'aáäbcdeéëfghiíïjklmnñoóöpqrstuúüvwxyz'
 
 
 def ordenar_en_español(iterable: List[str]) -> List[str]:
