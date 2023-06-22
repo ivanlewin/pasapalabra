@@ -86,14 +86,6 @@ def validar_contrasenia(contrasenia, requisitos_label):
     -------
     * Neme, Agustin Nadim
 
-    >>> validar_contrasenia("Abc123!")
-    True
-    >>> validar_contrasenia("contrasenia")
-    False
-    >>> validar_contrasenia("MiContrasenia1")
-    False
-    >>> validar_contrasenia("abc123")
-    False
     '''
     validador = True
     requisitos = []
@@ -141,6 +133,19 @@ def verificar_usuario_existente(nombre):
     Autores
     -------
     * Neme, Agustin Nadim
+
+    >>> escribir_usuario_en_csv("nombre_usuario", "contrasenia123!")
+    >>> verificar_usuario_existente("nombre_usuario")
+    True
+    >>> escribir_usuario_en_csv("nombre_usuario", "contrasenia123!")
+    >>> verificar_usuario_existente("nombre_distinto_usuario")
+    False
+    >>> escribir_usuario_en_csv("nombre_usuario_123", "contrasenia123!")
+    >>> verificar_usuario_existente("nombre_usuario_1234")
+    False
+    >>> escribir_usuario_en_csv("nombre_valido", "contrasenia123!")
+    >>> verificar_usuario_existente("nombre_valido")
+    True
     '''
     nombre_existente = False
     with open(UBICACION_USUARIOS, "r", newline="") as usuario_csv:
@@ -228,6 +233,14 @@ def verificar_datos(nombre, contrasenia):
     Autores
     -------
     * Neme, Agustin Nadim
+
+    >>> verificar_datos("usuario_123", "contrasenia123")
+    True
+    >>> verificar_datos("nombre_de_usuario", "contrasenia123")
+    False
+    >>> verificar_datos("usuario_no_existe", "contrasenia123")
+    False
+
     '''
     datos_validos = False
     with open(UBICACION_USUARIOS, "r") as usuario_csv:
