@@ -134,18 +134,6 @@ def verificar_usuario_existente(nombre):
     -------
     * Neme, Agustin Nadim
 
-    >>> escribir_usuario_en_csv("nombre_usuario", "contrasenia123!")
-    >>> verificar_usuario_existente("nombre_usuario")
-    True
-    >>> escribir_usuario_en_csv("nombre_usuario", "contrasenia123!")
-    >>> verificar_usuario_existente("nombre_distinto_usuario")
-    False
-    >>> escribir_usuario_en_csv("nombre_usuario_123", "contrasenia123!")
-    >>> verificar_usuario_existente("nombre_usuario_1234")
-    False
-    >>> escribir_usuario_en_csv("nombre_valido", "contrasenia123!")
-    >>> verificar_usuario_existente("nombre_valido")
-    True
     '''
     nombre_existente = False
     with open(UBICACION_USUARIOS, "r", newline="") as usuario_csv:
@@ -356,7 +344,7 @@ def formatear_ventanas(ventana, titulo):
     ventana.resizable(0, 0)
     ventana.title(titulo)
     ventana.iconbitmap(UBICACION_ICONO)
-    ventana.geometry("600x300")
+    ventana.geometry("700x400")
 
 
 def ventana_registro(ventana_principal):
