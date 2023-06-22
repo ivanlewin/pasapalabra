@@ -1,6 +1,7 @@
 import doctest
-from typing import List
 import random
+from typing import List
+
 import tipos
 from calculos import *
 
