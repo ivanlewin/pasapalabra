@@ -85,8 +85,7 @@ def crear_csv(dicc_palabras_y_def: dict) -> None:
     * Brizuela, Natanael Daniel
     '''
     archivo_csv = open('./archivos/diccionario.csv', 'w', encoding='utf-8')
-    diccionario_ordenado = dict(
-        sorted(dicc_palabras_y_def.items(), key=lambda x: x[0]))
+    diccionario_ordenado = dict(sorted(dicc_palabras_y_def.items(), key=lambda x: x[0]))
 
     for palabra, definicion in diccionario_ordenado.items():
         linea_escribir = f'{palabra},{definicion}\n'

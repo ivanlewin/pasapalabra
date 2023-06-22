@@ -34,8 +34,7 @@ def ejecutar_partida(diccionario_como_lista: tipos.diccionario_como_lista, jugad
     '''
     cantidad_letras_inciales = [x[0][0] for x in diccionario_como_lista]
     minimo_letras_posible = len(set(cantidad_letras_inciales))
-    letras_participantes = generar_letras_participantes(
-        LETRAS_SIN_TILDES, configuracion['CANTIDAD_LETRAS_ROSCO']["valor"], minimo_letras_posible, cantidad_de_palabras_por_letra)
+    letras_participantes = generar_letras_participantes(configuracion['CANTIDAD_LETRAS_ROSCO']["valor"], minimo_letras_posible, cantidad_de_palabras_por_letra)
 
     rosco = generar_rosco(diccionario_como_lista, letras_participantes)
 
@@ -51,10 +50,8 @@ def ejecutar_partida(diccionario_como_lista: tipos.diccionario_como_lista, jugad
         palabra_actual: str = turno_actual[0]
         jugador_actual = jugadores[turno_del_jugador_actual]
 
-        mostrar_interfaz_del_juego(
-            letras_mayuscula, jugadas, jugadores, jugador_actual, turno_actual, turno_previo)
-        ingreso_usuario = recibir_ingreso_usuario(palabra_actual, lambda: mostrar_interfaz_del_juego(
-            letras_mayuscula, jugadas, jugadores, jugador_actual, turno_actual))
+        mostrar_interfaz_del_juego(letras_mayuscula, jugadas, jugadores, jugador_actual, turno_actual, turno_previo)
+        ingreso_usuario = recibir_ingreso_usuario(palabra_actual, lambda: mostrar_interfaz_del_juego(letras_mayuscula, jugadas, jugadores, jugador_actual, turno_actual))
         intentos.append(ingreso_usuario)
 
         resultado = verificar_intento(ingreso_usuario, palabra_actual)

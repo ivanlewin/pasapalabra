@@ -37,15 +37,14 @@ def filtrar_diccionario(diccionario_crudo: dict[str, str], longitud_minima_palab
     return diccionario_filtrado
 
 
-def generar_letras_participantes(letras_permitidas: str, cantidad_de_letras: int, minimo_letras_posible: int, cantidad_de_palabras_por_letra: dict[str, int]):
+def generar_letras_participantes(cantidad_de_letras_deseada: int, cantidad_de_letras_disponibles: int, cantidad_de_palabras_por_letra: dict[str, int]):
     '''
     Genera una lista aleatoria a partir de las letras permitidas de forma aleatoria
 
     Parámetros
     ----------
-    letras_permitidas : str
-    cantidad_de_letras : int
-    minimo_letras_posible : int
+    cantidad_de_letras_deseada : int
+    cantidad_de_letras_disponibles : int
     cantidad_de_palabras_por_letra : int
 
     Retorna
@@ -58,12 +57,10 @@ def generar_letras_participantes(letras_permitidas: str, cantidad_de_letras: int
     * Galvani, Juan Ignacio
     * Neme, Agustin Nadim
     '''
-    if minimo_letras_posible < cantidad_de_letras:
-        seleccion = random.sample(list(cantidad_de_palabras_por_letra.keys()), minimo_letras_posible)
-    else:
-        seleccion = random.sample(letras_permitidas, cantidad_de_letras)
-    seleccion_ordenada = ordenar_en_español(seleccion)
-    return seleccion_ordenada
+    letras = list(cantidad_de_palabras_por_letra.keys())
+    cantidad = min(cantidad_de_letras_deseada, cantidad_de_letras_disponibles)
+    seleccion = random.sample(letras, cantidad)
+    return ordenar_en_español(seleccion)
 
 
 def generar_rosco(diccionario_como_lista: tipos.diccionario_como_lista, letras_participantes: List[str]) -> tipos.diccionario_como_lista:
@@ -80,7 +77,7 @@ def generar_rosco(diccionario_como_lista: tipos.diccionario_como_lista, letras_p
 
     Retorna
     -------
-    rosroscoco
+    rosco
         Un rosco conformado por palabras y definiciones obtenidos a partir del diccionario de palabras participantes.
         Lista de tuplas donde cada tupla tiene dos elementos; el primero es la palabra 'aplanada' y el segundo, su definición.
 
@@ -97,8 +94,7 @@ def generar_rosco(diccionario_como_lista: tipos.diccionario_como_lista, letras_p
             palabra_aplanada = aplanar(palabra)
             if palabra_aplanada[0] == letra:
                 palabras_candidatas.append([palabra, definicion])
-        palabra_para_esta_letra = random.choice(
-            palabras_candidatas) if len(palabras_candidatas) != 0 else None
+        palabra_para_esta_letra = random.choice(palabras_candidatas) if len(palabras_candidatas) != 0 else None
         if palabra_para_esta_letra is not None:
             lista_palabras_participantes.append(palabra_para_esta_letra)
 
