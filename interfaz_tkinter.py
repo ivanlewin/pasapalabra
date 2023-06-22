@@ -322,6 +322,11 @@ def iniciar_sesion(nombre_login_entry, contrasenia_login_entry, resultado_label,
     resultado_label.config(text=mensaje)
     resultado_label.pack()
 
+def comenzar_juego(ventana):
+    if len(jugadores) < 1:
+        messagebox.showerror("Error de jugadores", "Para comenzar el juego debe haber al menos un jugador.")
+    else:
+        ventana.destroy()
 
 def formatear_ventanas(ventana, titulo):
     '''
@@ -433,6 +438,7 @@ def ventana_login(ventana_principal, jugadores_listbox):
     boton_cerrar.pack()
 
 
+from tkinter import messagebox
 def ventana_main():
     '''
     Ventana main que muestra toda la informacion al jugador. Puede registrarse, iniciar sesion o cerrar el programa en caso necesario.
@@ -456,7 +462,7 @@ def ventana_main():
     login_boton = tk.Button(ventana_principal, text='Login', command=lambda: ventana_login(ventana_principal, jugadores_listbox))
     login_boton.pack()
 
-    comenzar_juego_boton = tk.Button(ventana_principal, text='Comenzar juego', command=lambda: cerrar_ventana(ventana_principal))
+    comenzar_juego_boton = tk.Button(ventana_principal, text='Comenzar juego', command=lambda: comenzar_juego(ventana_principal))
     comenzar_juego_boton.pack()
 
     ventana_principal.mainloop()
