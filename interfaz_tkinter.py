@@ -450,6 +450,10 @@ def ventana_main():
     ventana_principal = tk.Tk()
     formatear_ventanas(ventana_principal, 'Bienvenido al juego pasapalabra - Heredero')
 
+    imagen = tk.PhotoImage(file="archivos/rosco_pasapalabra.png").subsample(2)
+    mostrar_imagen = tk.Label(ventana_principal, image= imagen)
+    mostrar_imagen.place(x=0, y=0, width=700, height=400)
+
     jugadores_label = tk.Label(ventana_principal, text='Jugadores: ')
     jugadores_label.pack()
 
