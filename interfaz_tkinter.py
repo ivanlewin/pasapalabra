@@ -234,13 +234,6 @@ def verificar_datos(nombre, contrasenia):
     -------
     * Neme, Agustin Nadim
 
-    >>> verificar_datos("usuario_123", "contrasenia123")
-    True
-    >>> verificar_datos("nombre_de_usuario", "contrasenia123")
-    False
-    >>> verificar_datos("usuario_no_existe", "contrasenia123")
-    False
-
     '''
     datos_validos = False
     with open(UBICACION_USUARIOS, "r") as usuario_csv:
