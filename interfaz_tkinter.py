@@ -2,6 +2,7 @@ import csv
 import doctest
 import random
 import tkinter as tk
+from tkinter import messagebox
 
 UBICACION_USUARIOS = './archivos/usuarios.csv'
 UBICACION_ICONO = './archivos/herencia.ico'
@@ -322,11 +323,13 @@ def iniciar_sesion(nombre_login_entry, contrasenia_login_entry, resultado_label,
     resultado_label.config(text=mensaje)
     resultado_label.pack()
 
+
 def comenzar_juego(ventana):
     if len(jugadores) < 1:
         messagebox.showerror("Error de jugadores", "Para comenzar el juego debe haber al menos un jugador.")
     else:
         ventana.destroy()
+
 
 def formatear_ventanas(ventana, titulo):
     '''
@@ -379,8 +382,8 @@ def ventana_registro(ventana_principal):
     contrasenia_entry = tk.Entry(ventana_registro, show='*')
     contrasenia_entry.pack()
 
-    contrasenia_entry.bind('<Button-1>',lambda event: validar_contrasenia(contrasenia_entry.get(), resultado_label))
-    contrasenia_entry.bind('<KeyRelease>',lambda event: validar_contrasenia(contrasenia_entry.get(), resultado_label))
+    contrasenia_entry.bind('<Button-1>', lambda event: validar_contrasenia(contrasenia_entry.get(), resultado_label))
+    contrasenia_entry.bind('<KeyRelease>', lambda event: validar_contrasenia(contrasenia_entry.get(), resultado_label))
 
     repetir_contrasenia_label = tk.Label(ventana_registro, text='Repetir contraseña:')
     repetir_contrasenia_label.pack()
@@ -440,7 +443,6 @@ def ventana_login(ventana_principal, jugadores_listbox):
     boton_cerrar.pack()
 
 
-from tkinter import messagebox
 def ventana_main():
     '''
     Ventana main que muestra toda la informacion al jugador. Puede registrarse, iniciar sesion o cerrar el programa en caso necesario.
@@ -453,7 +455,7 @@ def ventana_main():
     formatear_ventanas(ventana_principal, 'Bienvenido al juego pasapalabra - Heredero')
 
     imagen = tk.PhotoImage(file="archivos/rosco_pasapalabra.png").subsample(2)
-    mostrar_imagen = tk.Label(ventana_principal, image= imagen)
+    mostrar_imagen = tk.Label(ventana_principal, image=imagen)
     mostrar_imagen.place(x=0, y=0, width=700, height=400)
 
     jugadores_label = tk.Label(ventana_principal, text='Jugadores: ')
